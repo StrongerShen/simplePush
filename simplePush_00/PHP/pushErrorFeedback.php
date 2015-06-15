@@ -1,5 +1,5 @@
 <?php
-	//到APNs取回推播訊息的error feedback
+	//到APNs取回推播訊息的error feedback 
 	
 	$passphrase = 'twtm2015';
 
