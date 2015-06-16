@@ -4,7 +4,7 @@
 	$passphrase = 'twtm2015';
 
 	$ctx = stream_context_create();
-	stream_context_set_option($ctx, 'ssl', 'local_cert', '../simple_push/apns-dev.pem');
+	stream_context_set_option($ctx, 'ssl', 'local_cert', 'apns-dev.pem');
 	stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 	
 	// Open a connection to the APNS server
