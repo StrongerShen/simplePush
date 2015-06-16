@@ -1,5 +1,15 @@
 <?php
-	$db = new PDO("mysql:host=192.168.0.12;dbname=userdbs;port:3306","root","root");
+
+	// include db config file
+	require_once ('db_config.php');
+
+	// get development environment settings
+	$get_db_config = $db_config['development'];
+	
+	// set pdo connect
+	$db = new PDO("mysql:host={$get_db_config['host']};dbname={$get_db_config['dbname']};port:{$get_db_config['port']}",
+					$get_db_config['username'],
+					$get_db_config['password']);
 	$db->exec("set names utf8");
 	if (!$db) {
 		exit("...connect database error ".$db->errorCode().":".$db->errorInfo());
