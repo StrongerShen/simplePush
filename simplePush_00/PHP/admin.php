@@ -10,7 +10,7 @@ require_once("connectsql.php");
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="SimplePush.php">
+<form id="form1" name="form1" method="post" action="pushNotification.php">
   <p>
     <label for="msg">Message</label>
     <input type="text" name="msg" id="msg" />
