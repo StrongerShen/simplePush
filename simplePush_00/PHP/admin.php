@@ -31,7 +31,7 @@ while($rows = $result->fetch()){
 		$member_id = $rows['member_id'];
 		$chkID = "CheckboxGroup1_" . $i;
 		$i++;
-		echo "<label><input type='checkbox' name='list[]' value='$member_id' id='$chkID' />$member_name</label><br />";
+		echo "<label><input type='checkbox' name='list[]' value='$member_id' id='$chkID' />$member_id $member_name</label><br />";
 	}
 }
 ?>
