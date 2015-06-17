@@ -1,14 +1,16 @@
 <?php
 require_once("connectsql.php");
+require("push_config.php");
 
 // Put your private key's passphrase here:
-$passphrase = 'twtm2015';
+// $passphrase = 'twtm2015';
 //$deviceToken = '1ec0f3489a33feaf98d0fc7b75ae8ec7818b55f051c54252b5497ca70920139c';//JamesID
+
 $message = $_POST["msg"];
 $devicetoken = $_POST["device_token"];
 $lists = $_POST["list"];
 
-//echo "$message</br>, $devicetoken</br> $CheckboxGroup1</br>";
+// echo "$message</br>, $devicetoken</br> $CheckboxGroup1</br>";
 
 // foreach($lists as $value)
 // {
@@ -23,17 +25,17 @@ stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
 $fp = stream_socket_client(
-	'ssl://gateway.sandbox.push.apple.com:2195', $err,
+	'ssl://'.$push_config['development']['push_server'], $err,
 	$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
 if (!$fp) exit("<p>Failed to connect: $err $errstr </p>");
 echo "<p>Connected to APNS</p>";
 
-
 foreach ($lists as $value) {
-	$sql="select device_token from users where member_id='$value' ";
-	$result=mysql_query($sql,$link);
-	while($post=mysql_fetch_row($result)){
+	$result = $db->query("select device_token from users where member_id='$value'");
+// 	$sql="select device_token from users where member_id='$value' ";
+// 	$result=mysql_query($sql,$link);
+	while($post=$result->fetch()){
 		if ($post[0]) 
 		{
 			$deviceToken = $post[0];
@@ -56,7 +58,7 @@ foreach ($lists as $value) {
 		// $msg = chr(0). pack('n',32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
 		
 		$id = time();
-		$expire = time() + 600;
+		$expire = time() + 600;//10 minutes
 		if ($expire) {
 			$msg = chr(1) . pack('N',$id) . pack('N',$expire) .pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
 		}

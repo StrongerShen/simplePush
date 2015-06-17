@@ -15,38 +15,20 @@ require_once("connectsql.php");
     <label for="msg">Message</label>
     <input type="text" name="msg" id="msg" />
   </p>
-  <p>
-    <label for="device_token">device token</label>
-    <select name="device_token" id="device_token">
-<?php
-$sql="select device_token,member_name,member_id from users order by member_id";
-$result=mysql_query($sql,$link);
-while($post=mysql_fetch_assoc($result)){
-	//if ($post[0]) 
-	{
-		$deviceToken = $post['device_token'];
-		$member_name = $post['member_name'];
-		$member_id = $post['member_id'];
-		echo "<option value=$member_id>$member_name</option>";
-	}
-}
-	
-?>
-    </select>
-  </p>
   <p>&nbsp;</p>
   <p>
 
 <?php
-$sql="select device_token,member_name,member_id from users order by member_id";
-$result=mysql_query($sql,$link);
+$result=$db->query("select device_token,member_name,member_id from users order by member_id");
+// $sql="select device_token,member_name,member_id from users order by member_id";
+// $result=mysql_query($sql,$link);
 $i=1;
-while($post=mysql_fetch_assoc($result)){
+while($rows = $result->fetch()){
 	//if ($post[0]) 
 	{
-		$deviceToken = $post['device_token'];
-		$member_name = $post['member_name'];
-		$member_id = $post['member_id'];
+		$deviceToken = $rows['device_token'];
+		$member_name = $rows['member_name'];
+		$member_id = $rows['member_id'];
 		$chkID = "CheckboxGroup1_" . $i;
 		$i++;
 		echo "<label><input type='checkbox' name='list[]' value='$member_id' id='$chkID' />$member_name</label><br />";
