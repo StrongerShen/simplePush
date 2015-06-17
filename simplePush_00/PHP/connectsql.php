@@ -1,4 +1,13 @@
 <?php
+	/*
+	 ==============================
+	 功能說明 : 連線Database
+	 建立者 : Samma
+	 建立日期 : 2015/06/16
+	 異動記錄 :
+	
+	 ==============================
+	 */
 
 	// include db config file
 	require_once ('db_config.php');

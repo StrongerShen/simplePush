@@ -1,4 +1,14 @@
 <?php
+	/*
+	 ==============================
+	 功能說明 : APNS的連線資訊設定檔
+	 建立者 : Samma
+	 建立日期 : 2015/06/16
+	 異動記錄 :
+	
+	 ==============================
+	 */
+
 	$push_config = array(
 			
 			// for development environment settings
