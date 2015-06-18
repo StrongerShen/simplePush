@@ -8,6 +8,7 @@
 	 2015/06/16	Samma	1、調整連結Feedback Service的連線資料改由push_config.php讀取
 						2、對DB的處理改為PDO方式
 						3、從Feedback Service取回的資料，寫入MySQL的push_error_log table
+	 2015/06/18	Samma	1、加入 transaction 控制
 	 ==============================
 	 */
 
@@ -34,11 +35,6 @@
 			$this->passphrase	= $get_push_config['passphrase'];
 		}
 		
-		//解構元
-		function __destruct() {
-			//關閉 Database 連線
-		}
-		
 		function writePushError() {
 			
 			//Database Connect
@@ -57,44 +53,56 @@
 				$data = $result[0];
 				$count = $data['cnt'];
 				
-				//write data to push_error_log
-				if ($count > 0) {
+				//如果 Database 捕捉到例外(ex.SQL syntax 錯誤等等)，所有 transaction rollback
+				try {
 					
-					//update
-					$sth = $db->prepare("update push_error_log
+					$db->beginTransaction();
+					
+					//write data to push_error_log
+					if ($count > 0) {	//如果 device token 已經存在
+							
+						//update 
+						$sth = $db->prepare("update push_error_log
 										 	set final_push_time = :time,
 												receive_time = :rt
-										  where device_token = :dt 
+										  where device_token = :dt
 										");
-					$sth->bindParam("time",$device['timestamp'],PDO::PARAM_STR);
-					$sth->bindParam("rt",date('Y-m-d H:i'),PDO::PARAM_STR);
-					$sth->bindParam("dt",$device['device_token'],PDO::PARAM_STR,256);
-					$sth->execute();
-					
-				} else {
-					
-					//insert
-					$sth = $db->prepare("insert into push_error_log 
+						$sth->bindParam("time",$device['timestamp'],PDO::PARAM_STR);
+						$sth->bindParam("rt",date('Y-m-d H:i'),PDO::PARAM_STR);
+						$sth->bindParam("dt",$device['device_token'],PDO::PARAM_STR,256);
+						$sth->execute();
+							
+					} else {
+							
+						//insert
+						$sth = $db->prepare("insert into push_error_log
 											(device_token, final_push_time)
 										 values
 											(:dt, :time)
 										");
+						$sth->bindParam("dt",$device['device_token'],PDO::PARAM_STR,256);
+						$sth->bindParam("time",$device['timestamp'],PDO::PARAM_STR);
+						$sth->execute();
+					}
+					
+					//update users.stop_push_mk
+					$sth = $db->prepare("update users
+											set stop_push_mk = '1'
+										  where device_token = :dt
+										");
 					$sth->bindParam("dt",$device['device_token'],PDO::PARAM_STR,256);
-					$sth->bindParam("time",$device['timestamp'],PDO::PARAM_STR);
 					$sth->execute();
+					
+					echo "write push error devie_token => " .$device['device_token']. PHP_EOL;
+
+					$db->commit();
+					
+				} catch (PDOException $err) {
+					$db->rollback();
+					echo "Error:".$err->getMessage();
 				}
 				
-				//update users.stop_push_mk
-				$sth = $db->prepare("update users
-										set stop_push_mk = '1'
-									  where device_token = :dt
-										");
-				$sth->bindParam("dt",$device['device_token'],PDO::PARAM_STR,256);
-				$sth->execute();
-				
-				echo "write push error devie_token => " .$device['device_token']. PHP_EOL;
-				
-			}	//end foreach
+			}	//end foreach ($feedBackData as $device)
 			
 			//close Database Connect
 			$db = null;
