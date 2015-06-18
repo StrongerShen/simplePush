@@ -2,6 +2,10 @@
 	/*
 	 ==============================
 	 功能說明 : 依傳入的 news_id 回饋完整訊息
+	 	Input  =>	news_id	:	訊息ID
+	 	Output =>	errCode	:	錯誤代碼 (沒有錯誤時回傳0),
+					errMsg	:	錯誤訊息,
+					fullMsg	:	完整訊息
 	 建立者 : Samma
 	 建立日期 : 2015/06/17
 	 異動記錄 :
@@ -13,8 +17,8 @@
 	require_once('connectsql.php');
 
 	//receive message id
-	//$news_id = $_POST['news_id'];
-	$news_id = '001001';
+	$news_id = $_POST['news_id'];
+	//$news_id = '001001';
 	
 	//handle error
 	$errCode = 0;
