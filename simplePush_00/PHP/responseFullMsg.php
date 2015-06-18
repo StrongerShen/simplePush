@@ -18,7 +18,7 @@
 
 	//receive message id
 	$news_id = $_POST['news_id'];
-	//$news_id = '001001';
+	//$news_id = '1001';
 	
 	//handle error
 	$errCode = 0;

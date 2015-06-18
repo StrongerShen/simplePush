@@ -12,28 +12,30 @@ require_once("connectsql.php");
 <body>
 <form id="form1" name="form1" method="post" action="pushNotification.php">
   <p>
-    <label for="msg">Message</label>
-    <input type="text" name="msg" id="msg" />
+    <label for="msg">News Broadcast</label>
+	<br/>
+    <textarea rows="6" cols="50" name="msg" id="msg"></textarea>
   </p>
   <p>&nbsp;</p>
   <p>
 
 <?php
-$result=$db->query("select device_token,member_name,member_id from users order by member_id");
-// $sql="select device_token,member_name,member_id from users order by member_id";
-// $result=mysql_query($sql,$link);
-$i=1;
-while($rows = $result->fetch()){
-	//if ($post[0]) 
-	{
+
+	$result=$db->query("select device_token,member_name,member_id from users order by member_id");
+
+	$i = 1;
+
+	while($rows = $result->fetch()) {
+	
 		$deviceToken = $rows['device_token'];
 		$member_name = $rows['member_name'];
 		$member_id = $rows['member_id'];
 		$chkID = "CheckboxGroup1_" . $i;
 		$i++;
+		
 		echo "<label><input type='checkbox' name='list[]' value='$member_id' id='$chkID' />$member_id $member_name</label><br />";
+
 	}
-}
 ?>
   </p>
   <p>
