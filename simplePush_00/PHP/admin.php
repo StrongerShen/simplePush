@@ -1,4 +1,18 @@
 <?php
+/*
+ ==============================
+    功能說明 : 	使用 Web 介面進行推播
+
+    Input  =>	(string)    member_id   :	chechbox 勾選對象得到 member_id
+                (string)    message     :   輸入推播訊息
+    Output =>   (string)    member_id   :	送出推播對象的 member_id
+                (string)    message     :   送出推播訊息
+    建立者 : James
+    建立日期 : 2015/06/18
+    異動記錄 :
+
+ ==============================
+ */
 require_once("connectsql.php");
 ?>
 

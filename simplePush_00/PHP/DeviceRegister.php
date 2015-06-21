@@ -1,4 +1,19 @@
 <?php
+/*
+ ==============================
+    功能說明 : 	使用者名稱、裝置名稱、裝置代號，寫入資料庫
+
+    Input  =>	(string)    device_token   :   裝置代號
+                (string)    member_id      :   使用者名稱
+                (string)    member_name    :   裝置名稱
+
+    建立者 : James
+    建立日期 : 2015/06/18
+    異動記錄 :
+
+ ==============================
+ */
+
 require_once("connectsql.php");
 
 $device_token = $_POST['device_token'];
