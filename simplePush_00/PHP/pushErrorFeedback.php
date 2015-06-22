@@ -9,6 +9,7 @@
 						2、對DB的處理改為PDO方式
 						3、從Feedback Service取回的資料，寫入MySQL的push_error_log table
 	 2015/06/18	Samma	1、加入 transaction 控制
+	 2015/06/22	Samma	1、調整啟動方法名稱由 writePushError() 調整為 start()
 	 ==============================
 	 */
 
@@ -18,7 +19,7 @@
 	
 	//建立處理Feedback Service資料的物件
 	$feedbackObj = new APNS_Feedback($get_push_config);
-	$feedbackObj->writePushError();
+	$feedbackObj->start();
 
 ////////////////////////////////////////////////////////////////
 
@@ -35,7 +36,7 @@
 			$this->passphrase	= $get_push_config['passphrase'];
 		}
 		
-		function writePushError() {
+		function start() {
 			
 			//Database Connect
 			require_once('connectsql.php');

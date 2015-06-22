@@ -4,28 +4,29 @@
     功能說明 : 	存檔：將推播相關訊息存入資料庫(Table `news`)
                 推播：製作推播內容，與 APNS 建立連線，並傳送至 APNS，發出推播給 users
 
-    Input  =>	(array)     lists       :	推播對象與對象的 Member Id([0] device_token ; [1] member_id)
-                (string)    message     :   推播訊息
-    Output =>   (resource)  fp          :   與 APNS push server (development) 建立連線
-	 			(string)    msg	    :	推播 command 1 的格式
-                                        // The enhanced notification format
-                                        $msg = chr(1)                       // command (1 byte)
-                                             . pack('N', $messageId)        // identifier (4 bytes)
-                                             . pack('N', time() + 86400)    // expire after 1 day (4 bytes)
-                                             . pack('n', 32)                // token length (2 bytes)
-                                             . pack('H*', $deviceToken)     // device token (32 bytes)
-                                             . pack('n', strlen($payload))  // payload length (2 bytes)
-                                             . $payload;                    // the JSON payload
-                // Table `news`
-                (int)    seq_no	:	user 的流水號
-
+    Input  =>	(array)		lists 			:	推播對象的 Member Id
+                (string)	message 		:   推播訊息
+    Output =>   Enhanced notification format
+	Enhanced notification format (推播 command 1 的格式)
+           =>	chr(1)						:	command (1 byte)
+                pack('N', $messageId)		:	identifier (4 bytes)
+                pack('N', time() + 86400)	:	expire after 1 day (4 bytes)
+                pack('n', 32)				:	token length (2 bytes)
+                pack('H*', $deviceToken)	:	device token (32 bytes)
+                pack('n', strlen($payload))	:	payload length (2 bytes)
+                payload(json)				:	34 bytes
+                								$body['aps'] = array(
+														alert	:	訊息內容
+														sound	:	裝置收到推播的音效
+														badge	:	裝置 icon 右上角顯示的未讀訊息數
+												)			
     建立者 : James
     建立日期 : 2015/06/20
     異動記錄 :
-    2015/06/20	James v1.0 實作推播功能與計算未讀訊息，以及推播內容存入資料庫
-    2015/06/21	James v1.1 重構程式
-    2015/06/22	James v1.2 table `news` 欄位增加兩欄 `mem_No`, `seq_no`，所需的修改。
-
+    2015/06/20	James	v1.0 實作推播功能與計算未讀訊息，以及推播內容存入資料庫
+    2015/06/21	James	v1.1 重構程式
+    2015/06/22	James	v1.2 table `news` 欄位增加兩欄 `mem_No`, `seq_no`，所需的修改。
+	2015/06/22	Samma	程式整理與 SQL 微調，並加上 Database 資料異動時，try catch 處理
  ==============================
  */
 try {
@@ -65,24 +66,37 @@ class APNS_Push
         $lists = $_POST["list"];
         $message = $_POST["msg"];
 
-        // echo "$message</br>";
-//         foreach($lists as $member_id){
-//         	echo "checked: $member_id</br>";
-//         }
-
         if ($lists && $message){
+
             foreach ($lists as $value) {
-                $result = $this->db->prepare("SELECT device_token,mem_no FROM users WHERE member_id='$value' AND stop_push_mk = 0");
+            	
+                $result = $this->db->prepare("SELECT device_token,mem_no FROM users WHERE member_id='$value' AND stop_push_mk = '0'");
                 $result->execute();
                 $temp = $result->fetch();
-//                echo $temp[0]."<br>".$temp[1]."<br>";
+
                     if ($temp && $temp[0] != NULL && $temp[1] != NULL) {
-                        $this->insertDataBase($message, $temp[0], $temp[1]);
-                        $this->sendNotification($message, $temp[0], $temp[1]);
+                    	
+                    	//如果該條訊息 insert 失敗，不執行推播，所以 try {} 裡面也要包住執行推播的方法
+                    	try {
+                    		
+                    		$this->db->beginTransaction();
+
+                    		$this->insertDataBase($message, $temp[0], $temp[1]);
+                    		$this->sendNotification($message, $temp[0], $temp[1]);
+                    		
+                    		$this->db->commit();
+                    		
+                    	} catch (PDOException $err) {
+                    		$this->db->rollback();
+                    		echo "Error:".$err->getMessage();
+                    	}
+                        
                     }
 
-            }
-        }
+            }	// end foreach ($lists as $value)
+            	
+        }	//end if ($lists && $message)
+        	
         $this->disconnectFromAPNS();
     }
 
@@ -109,10 +123,11 @@ class APNS_Push
         echo "<p>Close connect with APNS</p>";
     }
 
-        // 傳送推播內容至 APNS 給指定對象
-	function sendNotification($message,$deviceToken,$memNo){
+    // 傳送推播內容至 APNS 給指定對象
+	function sendNotification($message, $deviceToken, $memNo){
+		
         // 取得 user 未讀訊息的 badgeNember 且 user 的 stop_push_mk 為0的對象(可推播對象)
-        $result = $this->db->prepare("SELECT COUNT(seq_no) FROM news WHERE have_read = 0 AND mem_No = '$memNo'");
+        $result = $this->db->prepare("SELECT COUNT(seq_no) FROM news WHERE have_read = '0' AND mem_No = $memNo");
 		$result->execute();
 		$temp = $result->fetch();
 		$badge = $temp[0];
@@ -137,14 +152,15 @@ class APNS_Push
 		$fwresult = fwrite($this->fp, $msg, strlen($msg));
 
 		if (!$fwresult)
-			echo "Message not delivered.</br>";
+			echo "mem_No=".$memNo." Message not delivered.</br>";
 		else
-			echo "Message successfully delivered.</br>";
+			echo "mem_No=".$memNo." Message successfully delivered.</br>";
 	}
+	
     //存檔：將推播訊息存入資料表
-	function insertDataBase($message,$deviceToken,$memNo){
+	function insertDataBase($message, $deviceToken, $memNo){
         // 組成流水號 seq_no
-        $result = $this->db->prepare("SELECT MAX(seq_no) FROM news WHERE mem_No = '$memNo'");
+        $result = $this->db->prepare("SELECT MAX(seq_no) FROM news WHERE mem_No = $memNo");
         $result->execute();
         $temp = $result->fetch();
         $seqNo = $temp[0];
@@ -152,10 +168,11 @@ class APNS_Push
             $seqNo = 0;
         }
         $seqNo++;
+        
         // 寫入資料庫 table `news` mem_No & seq_no & device_token & msg
         $result = $this->db->prepare("INSERT INTO news (mem_No, seq_no, msg, device_token) VALUES (?, ?, ?, ?)");
         $result->execute(array($memNo, $seqNo, $message, $deviceToken));
-        echo "inserDB1!<br>";
+        //echo "inserDB1!<br>";
     }
 
 }
