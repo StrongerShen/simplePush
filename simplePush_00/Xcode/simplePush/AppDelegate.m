@@ -47,13 +47,13 @@ static NSString * const kJSON = @"http://192.168.0.11/PHP_LAB/simple_push_sir/De
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    UIAlertView *errorAlterView=[[UIAlertView alloc]initWithTitle:@"title"
-                                                          message:@"applicationWillEnterForeground"
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil, nil];
-    
-    [errorAlterView show];
+//    UIAlertView *errorAlterView=[[UIAlertView alloc]initWithTitle:@"title"
+//                                                          message:@"applicationWillEnterForeground"
+//                                                         delegate:nil
+//                                                cancelButtonTitle:@"OK"
+//                                                otherButtonTitles:nil, nil];
+//    
+//    [errorAlterView show];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -66,61 +66,18 @@ static NSString * const kJSON = @"http://192.168.0.11/PHP_LAB/simple_push_sir/De
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSString* newToken = [deviceToken description];
-    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString* receiveDeviceToken = [deviceToken description];
+    receiveDeviceToken = [receiveDeviceToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    receiveDeviceToken = [receiveDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    NSLog(@"Device token: %@", newToken);
-    
-    //判斷手機上的Device Token是否存在(NSUserDefaults)
-    
-    //處理使用者帳號、名稱、密碼...等資訊
-    NSString *memID = @"Stronger2";
-    NSString *memName = @"Stronger iPad Air 2";
-    
-    //將Device Token與user資訊傳到provider server
-    //產生網址物件
-    NSURL *url = [NSURL URLWithString:kJSON];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
-    
-    [request setHTTPMethod:@"POST"];
-    NSString *postString = [NSString stringWithFormat:@"device_token=%@&memID=%@&memName=%@",newToken, memID, memName];
-    [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
-
-    //多執行緒的queue => 背景執行
-    NSOperationQueue *queue = [[ NSOperationQueue alloc] init ];
-    //建立連線，以非同步的方式
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:queue
-     //資料連結後執行，並傳入response、data、error
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                               
-                               if ([data length] > 0 && connectionError == nil) {
-                                   //解碼 => 把遠端的資料解開變成Dictionary，Serialization => 轉換二進制資料
-                                   NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
-                                                                                        options:NSJSONReadingAllowFragments
-                                                                                          error:nil];
-                                   NSLog(@"%@", dict);
-                                   if ([dict[@"ret_code"] isEqualToString:@"YES"]) {
-                                       NSLog(@"更新Device Token完成");
-                                       //因為是放到queue執行，要更新到畫面上的(拉回前景),用以下方式
-                                       /*
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                        [self showAlertView:@"資料下載" andMessaage:@"下載完成"];
-                                        });
-                                        */
-                                   } else {
-                                       NSLog(@"Device Token已經存在");
-                                   }
-                               } else if ([data length] == 0 && connectionError == nil) {
-                                   NSLog(@"error1");
-                               } else if (connectionError != nil) {
-                                   NSLog(@"error2");
-                               }
-                               
-                           }];
-
-    
+    //將deviceToken 傳送至 homeViewController
+    if (receiveDeviceToken) {
+        NSDictionary *passDTdictionary = @{@"device_Token":receiveDeviceToken};
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center postNotificationName:@"passDT" object:nil userInfo:passDTdictionary];
+    }else {
+        NSLog(@"receiveDeviceToken 不存在");
+    }
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

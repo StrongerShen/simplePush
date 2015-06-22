@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32EA0F9A1B329B5200E391D3 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA0F991B329B5200E391D3 /* HomeViewController.m */; };
+		32EA0F9D1B32CC4400E391D3 /* PushNotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA0F9C1B32CC4400E391D3 /* PushNotificationTableViewController.m */; };
+		630F21A36498CA9CB67779F3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8450C25B79822D7F624825A /* libPods.a */; };
 		7AF0CA071B21436000B70E7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF0CA061B21436000B70E7F /* main.m */; };
 		7AF0CA0A1B21436000B70E7F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF0CA091B21436000B70E7F /* AppDelegate.m */; };
-		7AF0CA0D1B21436000B70E7F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF0CA0C1B21436000B70E7F /* ViewController.m */; };
+		7AF0CA0D1B21436000B70E7F /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF0CA0C1B21436000B70E7F /* RegisterViewController.m */; };
 		7AF0CA101B21436000B70E7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AF0CA0E1B21436000B70E7F /* Main.storyboard */; };
 		7AF0CA121B21436000B70E7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AF0CA111B21436000B70E7F /* Images.xcassets */; };
 		7AF0CA151B21436000B70E7F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AF0CA131B21436000B70E7F /* LaunchScreen.xib */; };
@@ -27,19 +30,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		121C0572CFC731D44979D2B4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		32EA0F981B329B5200E391D3 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		32EA0F991B329B5200E391D3 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		32EA0F9B1B32CC4400E391D3 /* PushNotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationTableViewController.h; sourceTree = "<group>"; };
+		32EA0F9C1B32CC4400E391D3 /* PushNotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationTableViewController.m; sourceTree = "<group>"; };
 		7AF0CA011B21436000B70E7F /* simplePush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simplePush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF0CA051B21436000B70E7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF0CA061B21436000B70E7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7AF0CA081B21436000B70E7F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7AF0CA091B21436000B70E7F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7AF0CA0B1B21436000B70E7F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		7AF0CA0C1B21436000B70E7F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7AF0CA0B1B21436000B70E7F /* RegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		7AF0CA0C1B21436000B70E7F /* RegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		7AF0CA0F1B21436000B70E7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7AF0CA111B21436000B70E7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7AF0CA141B21436000B70E7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		7AF0CA1A1B21436000B70E7F /* simplePushTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = simplePushTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF0CA1F1B21436000B70E7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF0CA201B21436000B70E7F /* simplePushTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = simplePushTests.m; sourceTree = "<group>"; };
+		99EC75F355242BB58DE2D588 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D8450C25B79822D7F624825A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				630F21A36498CA9CB67779F3 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +71,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E571D8A97231A39928873B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8450C25B79822D7F624825A /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4E92B9626E4B404BE474430A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				121C0572CFC731D44979D2B4 /* Pods.debug.xcconfig */,
+				99EC75F355242BB58DE2D588 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7AF0C9F81B21436000B70E7F = {
 			isa = PBXGroup;
 			children = (
 				7AF0CA031B21436000B70E7F /* simplePush */,
 				7AF0CA1D1B21436000B70E7F /* simplePushTests */,
 				7AF0CA021B21436000B70E7F /* Products */,
+				4E92B9626E4B404BE474430A /* Pods */,
+				1E571D8A97231A39928873B3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,9 +113,13 @@
 			children = (
 				7AF0CA081B21436000B70E7F /* AppDelegate.h */,
 				7AF0CA091B21436000B70E7F /* AppDelegate.m */,
-				7AF0CA0B1B21436000B70E7F /* ViewController.h */,
-				7AF0CA0C1B21436000B70E7F /* ViewController.m */,
+				32EA0F981B329B5200E391D3 /* HomeViewController.h */,
+				32EA0F991B329B5200E391D3 /* HomeViewController.m */,
+				7AF0CA0B1B21436000B70E7F /* RegisterViewController.h */,
+				7AF0CA0C1B21436000B70E7F /* RegisterViewController.m */,
 				7AF0CA0E1B21436000B70E7F /* Main.storyboard */,
+				32EA0F9B1B32CC4400E391D3 /* PushNotificationTableViewController.h */,
+				32EA0F9C1B32CC4400E391D3 /* PushNotificationTableViewController.m */,
 				7AF0CA111B21436000B70E7F /* Images.xcassets */,
 				7AF0CA131B21436000B70E7F /* LaunchScreen.xib */,
 				7AF0CA041B21436000B70E7F /* Supporting Files */,
@@ -126,9 +160,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7AF0CA241B21436000B70E7F /* Build configuration list for PBXNativeTarget "simplePush" */;
 			buildPhases = (
+				305C0AFB280922EE468E2BD4 /* Check Pods Manifest.lock */,
 				7AF0C9FD1B21436000B70E7F /* Sources */,
 				7AF0C9FE1B21436000B70E7F /* Frameworks */,
 				7AF0C9FF1B21436000B70E7F /* Resources */,
+				C120342DB5A2ED70A05A575F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -214,13 +250,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		305C0AFB280922EE468E2BD4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C120342DB5A2ED70A05A575F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7AF0C9FD1B21436000B70E7F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7AF0CA0D1B21436000B70E7F /* ViewController.m in Sources */,
+				7AF0CA0D1B21436000B70E7F /* RegisterViewController.m in Sources */,
+				32EA0F9D1B32CC4400E391D3 /* PushNotificationTableViewController.m in Sources */,
 				7AF0CA0A1B21436000B70E7F /* AppDelegate.m in Sources */,
+				32EA0F9A1B329B5200E391D3 /* HomeViewController.m in Sources */,
 				7AF0CA071B21436000B70E7F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +416,7 @@
 		};
 		7AF0CA251B21436000B70E7F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 121C0572CFC731D44979D2B4 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = simplePush/Info.plist;
@@ -355,6 +427,7 @@
 		};
 		7AF0CA261B21436000B70E7F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99EC75F355242BB58DE2D588 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = simplePush/Info.plist;
@@ -416,6 +489,7 @@
 				7AF0CA261B21436000B70E7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7AF0CA271B21436000B70E7F /* Build configuration list for PBXNativeTarget "simplePushTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +498,7 @@
 				7AF0CA291B21436000B70E7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

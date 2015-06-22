@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
-
-
+#import "AFNetworking.h"
+@interface RegisterViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITextField *inputNameTF;
+@property (weak, nonatomic) IBOutlet UITextField *inputDeviceNameTF;
+@property (strong,nonatomic) NSDictionary *receiveDictFromHVC;
 @end
 

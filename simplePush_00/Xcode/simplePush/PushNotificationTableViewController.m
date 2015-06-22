@@ -7,9 +7,8 @@
 //
 
 #import "PushNotificationTableViewController.h"
-
 @interface PushNotificationTableViewController ()
-
+@property(strong,nonatomic)NSMutableArray *userMessageListArray;
 @end
 
 @implementation PushNotificationTableViewController
@@ -17,28 +16,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    self.userMessageListArray = [NSMutableArray new];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //將使用者的ID從userDefault撈出
+    //根據這個ID去撈訊息list回來、訊息已未讀的Tag撈出
+    //點擊訊息將訊息Identifiler
+    //將清單放入到userMessageListArray顯示在table身上
+    //如果資料
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return 0;
 }

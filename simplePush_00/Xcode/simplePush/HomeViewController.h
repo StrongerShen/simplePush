@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AFNetworking.h"
 @interface HomeViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UITextField *inputNameTF;
+@property (weak, nonatomic) IBOutlet UITextField *inputDeviceNameTF;
 @end
