@@ -43,22 +43,28 @@
     //設定要POST的參數
     NSDictionary *parameters = @{@"memID":memID,@"memName":memName,@"device_token":device_token};
     
-    //設定Host url
+    //設定HostURL
     NSURL *url = [NSURL URLWithString:hostUrl];
     
-    //設定manager
+    //設定連線manager
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:url];
     
     //設定manager 願意接收輸入的type
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
-    //POST
+    //將會員資料POST至PHP
     [manager POST:@"DeviceRegister.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         //成功的話就執行此block
         NSLog(@"Request Sucessufully!");
         NSLog(@"responseObject :%@",responseObject);
         NSLog(@"使用者:%@ , 持有裝置名:%@ , Device Token:%@",responseObject[@"ret_id"],responseObject[@"ret_user_name"],responseObject[@"return_deviceToken"]);
+        
+        //將回傳的使用者資料寫入至userDefault
+        [userDefault setObject:responseObject[@"ret_id"] forKey:@"memID"];
+        [userDefault setObject:responseObject[@"ret_user_name"] forKey:@"memName"];
+        [userDefault setObject:responseObject[@"return_deviceToken"] forKey:@"device_token"];
+        [userDefault synchronize];
         
         //切換到pushNotificationVC
         if (responseObject) {

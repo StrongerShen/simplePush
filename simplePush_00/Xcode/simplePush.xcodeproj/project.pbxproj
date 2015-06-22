@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		32EA0F9A1B329B5200E391D3 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA0F991B329B5200E391D3 /* HomeViewController.m */; };
 		32EA0F9D1B32CC4400E391D3 /* PushNotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32EA0F9C1B32CC4400E391D3 /* PushNotificationTableViewController.m */; };
+		32F39BA01B37F1CD00B39DD1 /* CustomPushNotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F39B9F1B37F1CD00B39DD1 /* CustomPushNotificationTableViewCell.m */; };
 		630F21A36498CA9CB67779F3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8450C25B79822D7F624825A /* libPods.a */; };
 		7AF0CA071B21436000B70E7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF0CA061B21436000B70E7F /* main.m */; };
 		7AF0CA0A1B21436000B70E7F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF0CA091B21436000B70E7F /* AppDelegate.m */; };
@@ -35,6 +36,8 @@
 		32EA0F991B329B5200E391D3 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		32EA0F9B1B32CC4400E391D3 /* PushNotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationTableViewController.h; sourceTree = "<group>"; };
 		32EA0F9C1B32CC4400E391D3 /* PushNotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationTableViewController.m; sourceTree = "<group>"; };
+		32F39B9E1B37F1CC00B39DD1 /* CustomPushNotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPushNotificationTableViewCell.h; sourceTree = "<group>"; };
+		32F39B9F1B37F1CD00B39DD1 /* CustomPushNotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPushNotificationTableViewCell.m; sourceTree = "<group>"; };
 		7AF0CA011B21436000B70E7F /* simplePush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simplePush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF0CA051B21436000B70E7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF0CA061B21436000B70E7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -117,9 +120,11 @@
 				32EA0F991B329B5200E391D3 /* HomeViewController.m */,
 				7AF0CA0B1B21436000B70E7F /* RegisterViewController.h */,
 				7AF0CA0C1B21436000B70E7F /* RegisterViewController.m */,
-				7AF0CA0E1B21436000B70E7F /* Main.storyboard */,
+				32F39B9E1B37F1CC00B39DD1 /* CustomPushNotificationTableViewCell.h */,
+				32F39B9F1B37F1CD00B39DD1 /* CustomPushNotificationTableViewCell.m */,
 				32EA0F9B1B32CC4400E391D3 /* PushNotificationTableViewController.h */,
 				32EA0F9C1B32CC4400E391D3 /* PushNotificationTableViewController.m */,
+				7AF0CA0E1B21436000B70E7F /* Main.storyboard */,
 				7AF0CA111B21436000B70E7F /* Images.xcassets */,
 				7AF0CA131B21436000B70E7F /* LaunchScreen.xib */,
 				7AF0CA041B21436000B70E7F /* Supporting Files */,
@@ -289,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7AF0CA0D1B21436000B70E7F /* RegisterViewController.m in Sources */,
+				32F39BA01B37F1CD00B39DD1 /* CustomPushNotificationTableViewCell.m in Sources */,
 				32EA0F9D1B32CC4400E391D3 /* PushNotificationTableViewController.m in Sources */,
 				7AF0CA0A1B21436000B70E7F /* AppDelegate.m in Sources */,
 				32EA0F9A1B329B5200E391D3 /* HomeViewController.m in Sources */,

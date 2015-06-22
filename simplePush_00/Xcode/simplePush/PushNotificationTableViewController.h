@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomPushNotificationTableViewCell.h"
 
+#import "AFNetworking.h"
 @interface PushNotificationTableViewController : UITableViewController
+@property(strong,nonatomic)NSMutableArray *userMessageListArray;
+@property(strong,nonatomic)NSString *memID;
+@property(strong,nonatomic)NSString *memName;
+@property(strong,nonatomic)NSString *device_token;
 
 @end

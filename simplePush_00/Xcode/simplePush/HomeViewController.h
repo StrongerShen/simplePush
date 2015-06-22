@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RegisterViewController.h"
+
 #import "AFNetworking.h"
 @interface HomeViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *inputNameTF;

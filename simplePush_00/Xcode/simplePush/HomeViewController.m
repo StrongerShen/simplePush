@@ -7,7 +7,6 @@
 //
 
 #import "HomeViewController.h"
-#import "RegisterViewController.h"
 #define hostUrl @"http://192.168.0.12/PHP/"
 @interface HomeViewController ()
 
@@ -26,7 +25,7 @@
 }
 -(void)setDeviceTokenToUserDefault:(NSNotification *)notification{
     NSDictionary *receiveDictionary = notification.userInfo;
-    NSLog(@"收到傳送DT為:%@",receiveDictionary[@"device_Token"]);
+    NSLog(@"收到從AppDelegate傳送過來的DT為:%@",receiveDictionary[@"device_Token"]);
     
     //將收到的deviceToken存入userDefault
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
