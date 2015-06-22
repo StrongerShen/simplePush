@@ -70,7 +70,7 @@ static NSString * const kJSON = @"http://192.168.0.11/PHP_LAB/simple_push_sir/De
     receiveDeviceToken = [receiveDeviceToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     receiveDeviceToken = [receiveDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    //將deviceToken 傳送至 homeViewController
+    //將deviceToken 傳送至 HomeViewController.m
     if (receiveDeviceToken) {
         NSDictionary *passDTdictionary = @{@"device_Token":receiveDeviceToken};
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];

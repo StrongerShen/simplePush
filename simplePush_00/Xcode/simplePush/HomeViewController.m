@@ -28,13 +28,13 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)setDeviceTokenToUserDefault:(NSNotification *)notification{
-    NSDictionary *receiveDictionary = notification.userInfo;
-    NSLog(@"收到從AppDelegate傳送過來的DT為:%@",receiveDictionary[@"device_Token"]);
+    NSDictionary *receiveDict = notification.userInfo;
+    NSLog(@"收到從AppDelegate傳送過來的DT為:%@",receiveDict[@"device_Token"]);
     
     //將收到的deviceToken存入userDefault
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    [userDefault setObject:receiveDictionary[@"device_Token"] forKey:@"device_Token"];
-    [userDefault synchronize];
+    [userDefault setObject:receiveDict[@"device_Token"] forKey:@"device_Token"];
+    [userDefault synchronize];    
 }
 
 - (IBAction)submitButton:(id)sender {

@@ -38,7 +38,7 @@
     //撈取本機裝置的deviceToken
     //TODO: 這裡會有問題，取不到 NSUserDefaults 內的 @"deviceToken"
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    NSString *device_token = [userDefault objectForKey:@"deviceToken"];
+    NSString *device_token = [userDefault objectForKey:@"device_Token"];
     NSLog(@"deviceToken is :%@",device_token);
     
     //設定要POST的參數
@@ -68,8 +68,21 @@
         [userDefault synchronize];
         
         //切換到pushNotificationVC
-        if (responseObject) {
-            [self performSegueWithIdentifier:@"pushNotificationVC" sender:nil];
+        if ([responseObject[@"ret_code"] isEqualToString:@"YES"]) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"恭喜" message:@"註冊成功" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *sucessfullAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self performSegueWithIdentifier:@"pushNotificationVC" sender:nil];
+            }];
+            [alertController addAction:sucessfullAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }else if ([responseObject[@"ret_code"] isEqualToString:@"NO"]){
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"喔不" message:@"註冊失敗" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *failAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSLog(@"%@",responseObject[@"ret_desc"]);
+            }];
+            [alertController addAction:failAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
