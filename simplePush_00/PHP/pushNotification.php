@@ -17,13 +17,14 @@
                                              . pack('n', strlen($payload))  // payload length (2 bytes)
                                              . $payload;                    // the JSON payload
                 // Table `news`
-                (string)    newsIdNo	:	資料表 news 的欄位名稱，前2碼為 member_id + 後8碼流水號，共10碼
+                (int)    seq_no	:	user 的流水號
 
     建立者 : James
     建立日期 : 2015/06/20
     異動記錄 :
     2015/06/20	James v1.0 實作推播功能與計算未讀訊息，以及推播內容存入資料庫
     2015/06/21	James v1.1 重構程式
+    2015/06/22	James v1.2 table `news` 欄位增加兩欄 `mem_No`, `seq_no`，所需的修改。
 
  ==============================
  */
@@ -71,14 +72,15 @@ class APNS_Push
 
         if ($lists && $message){
             foreach ($lists as $value) {
-                $result = $this->db->prepare("SELECT device_token,mem_no FROM users WHERE member_id='$value'");
+                $result = $this->db->prepare("SELECT device_token,mem_no FROM users WHERE member_id='$value' AND stop_push_mk = 0");
                 $result->execute();
-                while ($temp = $result->fetch()) {
+                $temp = $result->fetch();
+//                echo $temp[0]."<br>".$temp[1]."<br>";
                     if ($temp && $temp[0] != NULL && $temp[1] != NULL) {
                         $this->insertDataBase($message, $temp[0], $temp[1]);
                         $this->sendNotification($message, $temp[0], $temp[1]);
                     }
-                }
+
             }
         }
         $this->disconnectFromAPNS();
@@ -109,8 +111,8 @@ class APNS_Push
 
         // 傳送推播內容至 APNS 給指定對象
 	function sendNotification($message,$deviceToken,$memNo){
-        // 取得 user 未讀訊息的 badgeNember
-		$result = $this->db->prepare("SELECT COUNT(news_id) FROM news WHERE have_read = 0 AND news_id LIKE '$memNo%'");
+        // 取得 user 未讀訊息的 badgeNember 且 user 的 stop_push_mk 為0的對象(可推播對象)
+        $result = $this->db->prepare("SELECT COUNT(seq_no) FROM news WHERE have_read = 0 AND mem_No = '$memNo'");
 		$result->execute();
 		$temp = $result->fetch();
 		$badge = $temp[0];
@@ -141,17 +143,19 @@ class APNS_Push
 	}
     //存檔：將推播訊息存入資料表
 	function insertDataBase($message,$deviceToken,$memNo){
-        // 組成 news_id (PK)：mem_no (2碼) + 8碼流水號
-        $result = $this->db->prepare("SELECT count(news_id) FROM news");
+        // 組成流水號 seq_no
+        $result = $this->db->prepare("SELECT MAX(seq_no) FROM news WHERE mem_No = '$memNo'");
         $result->execute();
         $temp = $result->fetch();
-        $newsIdNo = $temp[0];
-        $newsIdNo++;
-        $newsId = $memNo.sprintf("%08s",$newsIdNo);
-
-        // 寫入資料庫 table `news` news_id & device_token & msg
-        $result = $this->db->prepare("INSERT INTO news (news_id, msg, device_token) VALUES (?, ?, ?)");
-        $result->execute(array((string)$newsId, $message, $deviceToken));
+        $seqNo = $temp[0];
+        if ($seqNo==NULL){
+            $seqNo = 0;
+        }
+        $seqNo++;
+        // 寫入資料庫 table `news` mem_No & seq_no & device_token & msg
+        $result = $this->db->prepare("INSERT INTO news (mem_No, seq_no, msg, device_token) VALUES (?, ?, ?, ?)");
+        $result->execute(array($memNo, $seqNo, $message, $deviceToken));
+        echo "inserDB1!<br>";
     }
 
 }
