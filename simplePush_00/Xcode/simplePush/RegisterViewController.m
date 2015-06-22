@@ -36,6 +36,7 @@
     memName = self.inputDeviceNameTF.text;
     
     //撈取本機裝置的deviceToken
+    //TODO: 這裡會有問題，取不到 NSUserDefaults 內的 @"deviceToken"
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *device_token = [userDefault objectForKey:@"deviceToken"];
     NSLog(@"deviceToken is :%@",device_token);
