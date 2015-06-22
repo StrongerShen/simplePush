@@ -45,9 +45,9 @@
 			
 			//更新已讀註記
 			$sth = $db->prepare("update news
-							set have_read = '1',
-								read_time = DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 8 HOUR)
-						  where news_id = :id
+									set have_read = '1',
+										read_time = DATE_ADD(CURRENT_TIMESTAMP,INTERVAL 8 HOUR)
+								  where news_id = :id
 						");
 			$sth->bindParam("id",$news_id,PDO::PARAM_INT);
 			$sth->execute();
@@ -68,6 +68,8 @@
 		
 	}	//end if ( !$msg )
 	
+	//close Database Connection
+	$db = null;
 	
 	//回傳格式 => JSON
 	$msgContent = array(

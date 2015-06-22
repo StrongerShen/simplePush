@@ -10,51 +10,64 @@
     建立者 : James
     建立日期 : 2015/06/18
     異動記錄 :
-
+	2015/06/22	Samma	1、改寫為mvc處理架構
  ==============================
  */
-require_once("connectsql.php");
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Admin push</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>News Push</title>
+  <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready( initChkbox );
+
+    function initChkbox() {
+
+      //如果本支程式以 HTML 存檔，URL 會以 FILE 開頭，變成不同網域存取而限制，無法取回 JSON 資料，因此存為 PHP 檔
+      $.ajax({
+        url:    "getUserList.php",
+        type:   "post",
+        dataType: "json",
+        success:  function( result ) {
+          var chk_box = "";
+          var chkID = "";
+          var cnt = 0;
+          for(var i in result) {
+            chkID = "CheckboxGroup1_" + cnt;
+            chk_box = chk_box.concat("<label><input type='checkbox' name='list[]' value='" + result[i]["member_id"] + "' id='" + chkID + "' />" + result[i]["member_id"] + " " + result[i]["member_name"] + "</label><br />");
+            cnt ++;
+          }
+          $("#chk_box").html(chk_box);
+        },
+        error:    function(  result ) {
+          
+          alert("ajax execute error => " + result.statusText );
+        }
+      });
+
+    }
+    
+  </script>
 </head>
 
 <body>
 <form id="form1" name="form1" method="post" action="pushNotification.php">
   <p>
     <label for="msg">News Broadcast</label>
-	<br/>
+    <br/>
     <textarea rows="6" cols="50" name="msg" id="msg"></textarea>
   </p>
   <p>&nbsp;</p>
-  <p>
 
-<?php
-
-	$result=$db->query("select device_token,member_name,member_id from users order by member_id");
-
-	$i = 1;
-
-	while($rows = $result->fetch()) {
-	
-		$deviceToken = $rows['device_token'];
-		$member_name = $rows['member_name'];
-		$member_id = $rows['member_id'];
-		$chkID = "CheckboxGroup1_" . $i;
-		$i++;
-		
-		echo "<label><input type='checkbox' name='list[]' value='$member_id' id='$chkID' />$member_id $member_name</label><br />";
-
-	}
-?>
-  </p>
+  <div id="chk_box"></div>
+  
   <p>
     <input type="submit" name="Submit" id="button" value="Send" />
   </p>
 </form>
 </body>
 </html>
+
