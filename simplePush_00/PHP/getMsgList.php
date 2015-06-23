@@ -8,19 +8,20 @@
 	 			msgNumNread		:	該使用者總共有幾條訊息 (未讀)
 	 			msgNumYread		:	該使用者總共有幾條訊息 (已讀)
 	 			content(array)	:	訊息列表內容
+	 								newsId		:	訊息 ID
 					 				sendTime	:	訊息發送時間
 					 				preMsg		:	訊息前一段文字，固定 10 個字元，不足 10 字元的訊息以原長度為主
 					 				haveRead	:	訊息是否已讀 [ 0:未讀 ; 1:已讀 ]
 	 建立者 : Samma
 	 建立日期 : 2015/06/18
 	 異動記錄 :
-	 
+	 2015/06/23	Samma	1、回傳內容增加newsId
 	 ==============================
 	 */
 
 	//receive member_id
-	$member_id = $_POST['member_id'];
-	//$member_id = 'Samma';
+	//$member_id = $_POST['member_id'];
+	$member_id = 'James1';
 	
 	//handle error
 	$errCode = 0;
@@ -32,7 +33,8 @@
 	try {
 		
 		//依指定的訊息 ID 從Database 取出訊息的完整內容
-		$sth = $db->prepare("select concat(substr(b.msg,1,10),'...') pre_msg,
+		$sth = $db->prepare("select b.news_id,
+									concat(substr(b.msg,1,10),'...') pre_msg,
 									b.have_read,
 									date_format(b.send_time, '%Y-%m-%d %H:%i:%s') send_time
 							   from users a, news b
@@ -53,6 +55,7 @@
 		
 		while ( $row = $sth->fetch() ) {
 		
+			$news_id = $row['news_id'];
 			$pre_msg = $row['pre_msg'];
 			$have_read = $row['have_read'];
 			$send_time = $row['send_time'];
@@ -65,6 +68,7 @@
 		
 			//資訊息內容串成陣列
 			$msgArray[$i] = array(
+					'newsId'	=>	$news_id,
 					'sendTime'	=>	$send_time,
 					'preMsg'	=>	$pre_msg,
 					'haveRead'	=>	$have_read
