@@ -199,7 +199,7 @@
         <!--Push Notification Table View Controller-->
         <scene sceneID="DVs-Kl-AKd">
             <objects>
-                <tableViewController id="IgP-Ec-xIe" customClass="PushNotificationTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MSGLIST" id="IgP-Ec-xIe" customClass="PushNotificationTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="NSt-4b-Nt2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -23,9 +23,6 @@
     NSLog(@"在RegisterViewController根據回傳資料確實有寫入到userDefault,memID:%@、memName:%@、device_token:%@",memID,memName,device_token);
     
     userMessageListArray = [NSMutableArray new];
-    //將list放入到userMessageListArray顯示在table，圖片根據Tag換成已讀未讀圖片
-    //如果點一則訊息進去，根據訊息的identifiler從SQL撈出訊息內容
-    //更改Tag為1(已讀)，並且修改圖片為已讀
 }
 
 - (void)didReceiveMemoryWarning {
