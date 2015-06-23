@@ -3,14 +3,21 @@
  ==============================
     功能說明 : 	使用者名稱、裝置名稱、裝置代號，寫入資料庫
 
-    Input  =>	(string)    device_token   :   裝置代號
-                (string)    member_id      :   使用者名稱
-                (string)    member_name    :   裝置名稱
+    Input	=>	(string)	device_token	:   裝置代號
+                (string)    member_id		:   使用者名稱
+                (string)    member_name		:   裝置名稱
+    Output	=>	ret_code					:	處理結果 (YES / NO)
+    			ret_desc					:	處理結果說明
+    			user_id						:	對應users.mem_No
+    			user_name					:	對應users.member_id
+    			device_name					:	對應users.member_name
+    			device_token				:	對應users.device_token
 
     建立者 : James
     建立日期 : 2015/06/18
     異動記錄 :
 	2015/06/22	Samma	1、增加 try catch 處理
+	2015/06/23	Samma	1、增加回傳 user_name、device_name、device_token
  ==============================
  */
 
@@ -20,7 +27,7 @@
 	$member_id = $_POST['memID'];
 	$member_name = $_POST['memName'];
 	
-	$message = array("ret_code"=>"", "ret_desc"=>"", "user_id"=>"");
+	$message = array("ret_code"=>"", "ret_desc"=>"", "user_id"=>"", "user_name"=>"", "device_name"=>"", "device_token"=>"");
 	
 	$result = $db->query("select * from users where device_token='$device_token' ") or die('901');
 	
@@ -63,6 +70,9 @@
 	$result = $db->query("select * from users where device_token='$device_token' ") or die('query member ID failure');
 	foreach ($result as $row) {
 		$message["user_id"] = $row['mem_No'];
+		$message["user_name"] = $row['member_id'];
+		$message["device_name"] = $row['member_name'];
+		$message["device_token"] = $row['device_token'];
 	}
 
 	//close Database Connect
