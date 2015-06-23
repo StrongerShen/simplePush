@@ -7,22 +7,23 @@
 //
 
 #import "PushNotificationTableViewController.h"
-#define hostUrl @"http://192.168.0.12/PHP/"
+
 @interface PushNotificationTableViewController ()
 @end
 @implementation PushNotificationTableViewController
-@synthesize memID,memName,device_token,userMessageListArray;
+@synthesize memNo,memID,memName,device_token,userMessageListArray;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     //將使用者的ID、裝置名稱、DT從userDefault撈出
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    memNo = [userDefault objectForKey:@"memNo"];
     memID = [userDefault objectForKey:@"memID"];
     memName = [userDefault objectForKey:@"memName"];
     device_token = [userDefault objectForKey:@"device_token"];
-    NSLog(@"在RegisterViewController根據回傳資料確實有寫入到userDefault,memID:%@、memName:%@、device_token:%@",memID,memName,device_token);
+    NSLog(@"在HomeViewController的Request回傳資料有寫入到userDefault,使用者編號:%@、使用者名字:%@、使用者持有裝置名:%@、device_token:%@",memNo,memID,memName,device_token);
     
-    userMessageListArray = [NSMutableArray new];
+    [self getUserMessageListArray];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -104,6 +105,8 @@
 #pragma mark -- 透過上傳使用者的ID，根據這個ID去撈訊息list回來、訊息的Tag(撈出判斷訊息讀取否)、訊息的identiFiler
 -(void)getUserMessageListArray{
     
+    userMessageListArray = [NSMutableArray new];
+    
     //設定要POST的參數
     NSDictionary *parameters = @{@"member_id":memID};
     
@@ -117,7 +120,7 @@
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
     //將會員資料POST至PHP
-    [manager POST:@"DeviceRegister.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:@"getMsgList.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         //成功的話就執行此block
         NSLog(@"Request Sucessufully!");

@@ -7,8 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "PushNotificationTableViewController.h"
-static NSString * const kJSON = @"http://192.168.0.11/PHP_LAB/simple_push_sir/DeviceRegister.php";
 
 @interface AppDelegate ()
 
@@ -34,9 +32,9 @@ static NSString * const kJSON = @"http://192.168.0.11/PHP_LAB/simple_push_sir/De
     
     //判斷NSUserDefaults裡的device token若已存在值，設定rootViewController
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *device_token = [defaults objectForKey:@"device_Token"];
+    NSString *device_token = [defaults objectForKey:@"device_token"];
     
-    //已登入時，連結loadingViewController
+    //已登入時，連結logingViewController
     if ([device_token length] > 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
         PushNotificationTableViewController *msgViewController = [storyboard instantiateViewControllerWithIdentifier:@"MSGLIST"];
@@ -83,7 +81,7 @@ static NSString * const kJSON = @"http://192.168.0.11/PHP_LAB/simple_push_sir/De
     
     //將deviceToken 傳送至 HomeViewController.m
     if (receiveDeviceToken) {
-        NSDictionary *passDTdictionary = @{@"device_Token":receiveDeviceToken};
+        NSDictionary *passDTdictionary = @{@"device_token":receiveDeviceToken};
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center postNotificationName:@"passDT" object:nil userInfo:passDTdictionary];
     }else {

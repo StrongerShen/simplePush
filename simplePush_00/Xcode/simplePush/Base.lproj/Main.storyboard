@@ -73,7 +73,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="submitButton:" destination="9vO-rB-Ynz" eventType="touchUpInside" id="mFx-m5-Hxe"/>
+                                    <action selector="submitButton:" destination="9vO-rB-Ynz" eventType="touchUpInside" id="xF8-kp-l4D"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -98,103 +98,12 @@
                     <connections>
                         <outlet property="inputDeviceNameTF" destination="uJw-x9-fOf" id="vw4-s1-E4B"/>
                         <outlet property="inputNameTF" destination="fFK-x7-7am" id="LS3-vc-OOo"/>
-                        <segue destination="vXZ-lx-hvc" kind="presentation" identifier="toRegisterViewController" id="bdU-TX-y7P"/>
                         <segue destination="IgP-Ec-xIe" kind="presentation" identifier="toPushNotificationVC" id="FvV-Bk-1Yz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="khS-DP-W6T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-657" y="55"/>
-        </scene>
-        <!--Register View Controller-->
-        <scene sceneID="ufC-wZ-h7g">
-            <objects>
-                <viewController id="vXZ-lx-hvc" customClass="RegisterViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你的英文名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maX-a6-nUX">
-                                <rect key="frame" x="115" y="226" width="85" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你的裝置名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTy-SM-kG8">
-                                <rect key="frame" x="115" y="277" width="85" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="例如 : iPhone 6 Plus、iPad mini2" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bOU-Rn-KmI">
-                                <rect key="frame" x="229" y="273" width="257" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKX-pn-yCN">
-                                <rect key="frame" x="169" y="355" width="60" height="30"/>
-                                <state key="normal" title="送出資料">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="submitButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dCF-ND-u1i"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="註冊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkC-eM-aAk">
-                                <rect key="frame" x="205" y="40" width="190" height="93"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="190" id="2oz-Ho-7Xq"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="46"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="例如 : George、James、Samma" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xej-oD-2wN">
-                                <rect key="frame" x="229" y="223" width="257" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2n-ZG-NKn">
-                                <rect key="frame" x="260" y="355" width="60" height="30"/>
-                                <state key="normal" title="不爽註冊">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="backToHomeButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gZh-o6-BRA"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="aTy-SM-kG8" firstAttribute="leading" secondItem="maX-a6-nUX" secondAttribute="leading" id="0oG-aI-mCT"/>
-                            <constraint firstItem="lKX-pn-yCN" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" constant="-101" id="2Uu-Fx-rpI"/>
-                            <constraint firstItem="xej-oD-2wN" firstAttribute="trailing" secondItem="bOU-Rn-KmI" secondAttribute="trailing" id="62c-qO-tCy"/>
-                            <constraint firstItem="aTy-SM-kG8" firstAttribute="top" secondItem="maX-a6-nUX" secondAttribute="bottom" constant="30" id="7ay-vP-fOc"/>
-                            <constraint firstItem="maX-a6-nUX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="99" id="BKj-XE-sJs"/>
-                            <constraint firstItem="bOU-Rn-KmI" firstAttribute="leading" secondItem="xej-oD-2wN" secondAttribute="leading" id="Q2z-Qr-8SS"/>
-                            <constraint firstItem="bOU-Rn-KmI" firstAttribute="top" secondItem="xej-oD-2wN" secondAttribute="bottom" constant="20" id="SFv-N9-Z5G"/>
-                            <constraint firstItem="lKX-pn-yCN" firstAttribute="top" secondItem="bOU-Rn-KmI" secondAttribute="bottom" constant="52" id="TSA-W1-GGa"/>
-                            <constraint firstItem="maX-a6-nUX" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="206" id="Vx0-tR-oK2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xej-oD-2wN" secondAttribute="trailing" constant="98" id="WY9-zu-HjC"/>
-                            <constraint firstItem="maX-a6-nUX" firstAttribute="baseline" secondItem="xej-oD-2wN" secondAttribute="baseline" id="bPu-O4-uPa"/>
-                            <constraint firstItem="xej-oD-2wN" firstAttribute="leading" secondItem="maX-a6-nUX" secondAttribute="trailing" constant="29" id="jkn-KL-mhj"/>
-                            <constraint firstItem="lKX-pn-yCN" firstAttribute="centerX" secondItem="xkC-eM-aAk" secondAttribute="centerX" constant="-101" id="m0x-GC-dWN"/>
-                            <constraint firstItem="xkC-eM-aAk" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="20" id="uSo-lF-bWI"/>
-                            <constraint firstItem="xej-oD-2wN" firstAttribute="top" secondItem="xkC-eM-aAk" secondAttribute="bottom" constant="90" id="x9w-cv-KLq"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="inputDeviceNameTF" destination="bOU-Rn-KmI" id="tVT-zC-8kh"/>
-                        <outlet property="inputNameTF" destination="xej-oD-2wN" id="QaJ-K9-U1z"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="197" y="-241"/>
         </scene>
         <!--Push Notification Table View Controller-->
         <scene sceneID="DVs-Kl-AKd">
@@ -220,7 +129,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AP2-Lv-TRP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="197" y="457"/>
+            <point key="canvasLocation" x="143" y="55"/>
         </scene>
     </scenes>
 </document>

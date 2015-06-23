@@ -6,9 +6,11 @@
 //  Copyright (c) 2015年 Samma.Yang. All rights reserved.
 //
 
+//內建
 #import <UIKit/UIKit.h>
-#import "RegisterViewController.h"
 
+//自定義、第三方
+#import "API.h"
 #import "AFNetworking.h"
 @interface HomeViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *inputNameTF;

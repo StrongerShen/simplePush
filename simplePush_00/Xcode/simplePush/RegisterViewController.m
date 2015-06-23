@@ -7,7 +7,6 @@
 //
 
 #import "RegisterViewController.h"
-#define hostUrl @"http://192.168.0.12/PHP/"
 
 @interface RegisterViewController ()
 
@@ -36,7 +35,6 @@
     memName = self.inputDeviceNameTF.text;
     
     //撈取本機裝置的deviceToken
-    //TODO: 這裡會有問題，取不到 NSUserDefaults 內的 @"deviceToken"
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSString *device_token = [userDefault objectForKey:@"device_Token"];
     NSLog(@"deviceToken is :%@",device_token);
