@@ -8,7 +8,7 @@
 
 //內建
 #import <UIKit/UIKit.h>
-#import "PushNotificationTableViewController.h"
+#import "MessageListsTableViewController.h"
 
 //自定義、第三方
 #import "API.h"

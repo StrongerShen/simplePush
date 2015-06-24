@@ -42,7 +42,7 @@
     //已登入時，連結logingViewController
     if ([device_token length] > 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        PushNotificationTableViewController *msgViewController = [storyboard instantiateViewControllerWithIdentifier:@"MSGLIST"];
+        MessageListsTableViewController *msgViewController = [storyboard instantiateViewControllerWithIdentifier:@"MSGLIST"];
         self.window.rootViewController = msgViewController;
     }
     

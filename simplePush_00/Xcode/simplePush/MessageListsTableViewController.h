@@ -14,7 +14,7 @@
 #import "AFNetworking.h"
 #import "API.h"
 #import "MessageDetailViewController.h"
-@interface PushNotificationTableViewController : UITableViewController
+@interface MessageListsTableViewController : UITableViewController
 @property(strong,nonatomic)NSMutableArray *userMessageListArray;
 @property(strong,nonatomic)NSString *memNo;
 @property(strong,nonatomic)NSString *memID;

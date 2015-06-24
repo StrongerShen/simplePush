@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 Samma.Yang. All rights reserved.
 //
 
-#import "PushNotificationTableViewController.h"
+#import "MessageListsTableViewController.h"
 
-@interface PushNotificationTableViewController ()
+@interface MessageListsTableViewController ()
 @end
-@implementation PushNotificationTableViewController
+@implementation MessageListsTableViewController
 @synthesize memNo,memID,memName,device_token,userMessageListArray;
 - (void)viewDidLoad {
     [super viewDidLoad];
