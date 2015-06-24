@@ -51,7 +51,7 @@
                                     <action selector="CloseKBD:" destination="9vO-rB-Ynz" eventType="editingDidEndOnExit" id="RlE-zl-a0H"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MdF-sB-icd">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MdF-sB-icd">
                                 <rect key="frame" x="285" y="270" width="30" height="30"/>
                                 <color key="backgroundColor" red="0.72156862745098038" green="0.074509803921568626" blue="0.396078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -90,13 +90,13 @@
                                 <exclude reference="Lyh-ik-Mux"/>
                                 <exclude reference="yLy-wh-O4R"/>
                                 <exclude reference="4iE-cE-jkM"/>
-                                <exclude reference="Ow5-ZH-LNR"/>
-                                <exclude reference="UBl-l5-kJF"/>
-                                <exclude reference="u8a-e5-3Bi"/>
                                 <exclude reference="Ifm-wN-rWM"/>
                                 <exclude reference="NAI-F0-Kf9"/>
                                 <exclude reference="jET-Gu-mVB"/>
                                 <exclude reference="xnt-iD-ay9"/>
+                                <exclude reference="Ow5-ZH-LNR"/>
+                                <exclude reference="UBl-l5-kJF"/>
+                                <exclude reference="u8a-e5-3Bi"/>
                                 <exclude reference="J6q-Fn-nRk"/>
                                 <exclude reference="UUa-dB-IZr"/>
                                 <exclude reference="bRN-Wq-anF"/>
@@ -108,13 +108,13 @@
                                 <include reference="Lyh-ik-Mux"/>
                                 <include reference="yLy-wh-O4R"/>
                                 <include reference="4iE-cE-jkM"/>
-                                <include reference="Ow5-ZH-LNR"/>
-                                <include reference="UBl-l5-kJF"/>
-                                <include reference="u8a-e5-3Bi"/>
                                 <include reference="Ifm-wN-rWM"/>
                                 <include reference="NAI-F0-Kf9"/>
                                 <include reference="jET-Gu-mVB"/>
                                 <include reference="xnt-iD-ay9"/>
+                                <include reference="Ow5-ZH-LNR"/>
+                                <include reference="UBl-l5-kJF"/>
+                                <include reference="u8a-e5-3Bi"/>
                                 <include reference="J6q-Fn-nRk"/>
                                 <include reference="UUa-dB-IZr"/>
                                 <include reference="bRN-Wq-anF"/>
@@ -132,7 +132,7 @@
             </objects>
             <point key="canvasLocation" x="-657" y="55"/>
         </scene>
-        <!--Message Lists Table View Controller-->
+        <!--訊息清單-->
         <scene sceneID="DVs-Kl-AKd">
             <objects>
                 <tableViewController storyboardIdentifier="MSGLIST" id="IgP-Ec-xIe" customClass="MessageListsTableViewController" sceneMemberID="viewController">
@@ -146,10 +146,10 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mt4-0Z-Rfg" id="nJO-Sj-2Hc">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGq-q9-uAo">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Message content" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGq-q9-uAo">
                                             <rect key="frame" x="269" y="8" width="193" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                                 <rect key="frame" x="8" y="8" width="193" height="21"/>
@@ -161,10 +161,10 @@
                                                 <rect key="frame" x="300" y="11" width="92" height="38"/>
                                             </variation>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Rq-hU-0Wh">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SendTime" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Rq-hU-0Wh">
                                             <rect key="frame" x="269" y="30" width="207" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                                 <rect key="frame" x="8" y="30" width="207" height="21"/>
@@ -172,6 +172,7 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.31764705879999999" green="0.1019607843" blue="0.50980392159999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="messageLabel" destination="nGq-q9-uAo" id="gza-KL-41Z"/>
                                     <outlet property="readOrNotImageView" destination="ZmW-S8-ONg" id="77i-rs-yEu"/>
@@ -184,7 +185,7 @@
                             <outlet property="delegate" destination="IgP-Ec-xIe" id="Wy6-sU-H7w"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="fgG-ML-v7w"/>
+                    <navigationItem key="navigationItem" title="訊息清單" id="fgG-ML-v7w"/>
                     <connections>
                         <segue destination="nSA-Rz-ZtX" kind="show" id="Cph-m5-Qay"/>
                     </connections>

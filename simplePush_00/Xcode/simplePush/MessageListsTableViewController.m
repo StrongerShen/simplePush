@@ -11,7 +11,7 @@
 @interface MessageListsTableViewController ()
 @end
 @implementation MessageListsTableViewController
-@synthesize memNo,memID,memName,device_token,userMessageListArray;
+@synthesize memNo,memID,memName,device_token,userMessageListArray,scrollCoordinator;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -22,10 +22,29 @@
     memName = [userDefault objectForKey:@"memName"];
     device_token = [userDefault objectForKey:@"device_token"];
     NSLog(@"在HomeViewController的Request回傳資料有寫入到userDefault,使用者編號:%@、使用者名字:%@、使用者持有裝置名:%@、device_token:%@",memNo,memID,memName,device_token);
+    
+    //設定ToolBar、NavigationBar顏色
+    UIColor *blueColour = [UIColor colorWithRed:0.248 green:0.753 blue:0.857 alpha:1.000];
+//    self.navigationController.toolbarHidden = YES;
+    self.navigationController.navigationBar.barTintColor = blueColour;  //改變Bar顏色
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];   //改變BarItem顏色
+//    self.tabBarController.tabBar.barTintColor = blueColour;
+//    self.tabBarController.tabBar.tintColor = [UIColor whiteColor];
+    
+    //滾動螢幕時觸發隱藏ToolBar、NavigationBar
+    scrollCoordinator = [[JDFPeekabooCoordinator alloc] init];
+    scrollCoordinator.scrollView = self.tableView;
+    scrollCoordinator.topView = self.navigationController.navigationBar;
+//    scrollCoordinator.bottomView = self.tabBarController.tabBar;
+//    scrollCoordinator.containingView = self.tabBarController.view;
+    scrollCoordinator.containingView = self.view;
+    scrollCoordinator.topViewMinimisedHeight = 20.0f;
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     
+    [scrollCoordinator enable];
     [self getUserMessageListArray];
     [self.tableView reloadData];
 }

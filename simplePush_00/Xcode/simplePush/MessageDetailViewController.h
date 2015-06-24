@@ -12,8 +12,10 @@
 //自定義、第三方
 #import "AFNetworking.h"
 #import "API.h"
+#import "JDFPeekabooCoordinator.h"
 
 @interface MessageDetailViewController : UIViewController
 @property(strong,nonatomic)NSString *receiveMessageID;
 @property (weak, nonatomic) IBOutlet UITextView *fullMessageTextView;
+@property(strong,nonatomic)JDFPeekabooCoordinator *scrollCoordinator;
 @end

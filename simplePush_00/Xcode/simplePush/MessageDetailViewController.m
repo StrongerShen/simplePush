@@ -12,23 +12,42 @@
 @end
 
 @implementation MessageDetailViewController
-@synthesize receiveMessageID,fullMessageTextView;
+@synthesize receiveMessageID,fullMessageTextView,scrollCoordinator;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     NSLog(@"確實收到由cell傳送過來的MessageID:%@",receiveMessageID);
     [self getUserMessageListArray];
+    
+    //設定ToolBar、NavigationBar顏色
+    UIColor *blueColour = [UIColor colorWithRed:0.248 green:0.753 blue:0.857 alpha:1.000];
+//    self.navigationController.toolbarHidden = YES;
+    self.navigationController.navigationBar.barTintColor = blueColour;  //改變Bar顏色
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];   //改變BarItem顏色
+    
+    //滾動螢幕時觸發隱藏ToolBar、NavigationBar
+    scrollCoordinator = [[JDFPeekabooCoordinator alloc] init];
+
 }
 
-//TODO:將SQL內TAG修改成已讀
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    
+    [scrollCoordinator enable];
+}
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
+    
+    [scrollCoordinator disable];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
+
 -(void)getUserMessageListArray{
     
     //設定要POST的參數
