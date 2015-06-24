@@ -22,11 +22,13 @@
     memName = [userDefault objectForKey:@"memName"];
     device_token = [userDefault objectForKey:@"device_token"];
     NSLog(@"在HomeViewController的Request回傳資料有寫入到userDefault,使用者編號:%@、使用者名字:%@、使用者持有裝置名:%@、device_token:%@",memNo,memID,memName,device_token);
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     
     [self getUserMessageListArray];
     [self.tableView reloadData];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
