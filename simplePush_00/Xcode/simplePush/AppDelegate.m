@@ -14,7 +14,6 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
@@ -30,10 +29,16 @@
          (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     }
     
+    
+    
     //判斷NSUserDefaults裡的device token若已存在值，設定rootViewController
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *device_token = [defaults objectForKey:@"device_token"];
     
+    NSString *memNO = [defaults objectForKey:@"memNo"];
+    NSString *memID = [defaults objectForKey:@"memID"];
+    NSString *memName = [defaults objectForKey:@"memName"];
+    NSString *device_token = [defaults objectForKey:@"device_token"];
+    NSLog(@"背景移除後，重新進來APP，抓取使用者NO:%@,使用者名字:%@，裝置名稱:%@,DT:%@",memNO,memID,memName,device_token);
     //已登入時，連結logingViewController
     if ([device_token length] > 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
@@ -56,13 +61,13 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-//    UIAlertView *errorAlterView=[[UIAlertView alloc]initWithTitle:@"title"
-//                                                          message:@"applicationWillEnterForeground"
-//                                                         delegate:nil
-//                                                cancelButtonTitle:@"OK"
-//                                                otherButtonTitles:nil, nil];
-//    
-//    [errorAlterView show];
+    //    UIAlertView *errorAlterView=[[UIAlertView alloc]initWithTitle:@"title"
+    //                                                          message:@"applicationWillEnterForeground"
+    //                                                         delegate:nil
+    //                                                cancelButtonTitle:@"OK"
+    //                                                otherButtonTitles:nil, nil];
+    //
+    //    [errorAlterView show];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

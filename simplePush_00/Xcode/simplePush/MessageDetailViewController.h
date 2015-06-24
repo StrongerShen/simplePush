@@ -6,8 +6,14 @@
 //  Copyright (c) 2015年 Samma.Yang. All rights reserved.
 //
 
+//內建
 #import <UIKit/UIKit.h>
 
-@interface MessageDetailViewController : UIViewController
+//自定義、第三方
+#import "AFNetworking.h"
+#import "API.h"
 
+@interface MessageDetailViewController : UIViewController
+@property(strong,nonatomic)NSString *receiveMessageID;
+@property (weak, nonatomic) IBOutlet UITextView *fullMessageTextView;
 @end

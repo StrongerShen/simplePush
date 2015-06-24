@@ -24,6 +24,7 @@
     NSLog(@"在HomeViewController的Request回傳資料有寫入到userDefault,使用者編號:%@、使用者名字:%@、使用者持有裝置名:%@、device_token:%@",memNo,memID,memName,device_token);
     
     [self getUserMessageListArray];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,7 +58,21 @@
     
     return customCell;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 60;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *newsId = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"newsId"]];
+    [self performSegueWithIdentifier:@"toMessage" sender:newsId];
+}
 
+#pragma mark -- 傳送MessageID
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"prepareForSegue接收到newsId:%@",sender);
+    MessageDetailViewController *mdvc = [segue destinationViewController];
+    mdvc.receiveMessageID = sender;
+}
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,7 +124,7 @@
     
     //設定要POST的參數
     NSDictionary *parameters = @{@"member_id":memID};
-    
+    NSLog(@"林北是用這號碼要訊息清單的:%@",parameters);
     //設定HostURL
     NSURL *url = [NSURL URLWithString:hostUrl];
     
@@ -127,7 +142,9 @@
         NSLog(@"responseObject :%@",responseObject);
         
         //取得訊息清單、發送時間、訊息大綱、已讀或未讀Tag
-        userMessageListArray = responseObject[@"content"];
+        userMessageListArray = [NSMutableArray arrayWithArray:responseObject[@"content"]];
+        NSLog(@"userMessageListArray內有 %lu 筆資料",(unsigned long)userMessageListArray.count);
+        [self.tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

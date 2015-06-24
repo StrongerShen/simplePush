@@ -11,11 +11,11 @@
 @interface API : NSObject
 
 //George host path
-#define hostUrl @"http://192.168.0.12/PHP/"
+//#define hostUrl @"http://192.168.0.12/PHP/"
 
 //James host path
 //#define hostUrl @"http://192.168.0.13/PHP/"
 
 //Samma host path
-//#define hostUrl @"http://192.168.0.11/PHP_LAB/tomin_push/"
+#define hostUrl @"http://192.168.0.11/PHP_LAB/tomin_push/"
 @end

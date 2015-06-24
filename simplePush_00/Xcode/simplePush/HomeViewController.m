@@ -85,8 +85,9 @@
                 [userDefault setObject:responseObject[@"device_name"] forKey:@"memName"];
                 [userDefault setObject:responseObject[@"device_token"] forKey:@"device_token"];
                 [userDefault synchronize];
+                NSLog(@"資料已寫入完成至UserDefault");
                 
-                [self performSegueWithIdentifier:@"pushNotificationVC" sender:nil];
+                [self performSegueWithIdentifier:@"toPushNotificationVC" sender:nil];
             }];
             
             [alertController addAction:sucessfullAction];

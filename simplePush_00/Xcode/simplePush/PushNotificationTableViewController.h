@@ -13,6 +13,7 @@
 //自定義、第三方
 #import "AFNetworking.h"
 #import "API.h"
+#import "MessageDetailViewController.h"
 @interface PushNotificationTableViewController : UITableViewController
 @property(strong,nonatomic)NSMutableArray *userMessageListArray;
 @property(strong,nonatomic)NSString *memNo;
