@@ -20,8 +20,8 @@
 	 */
 
 	//receive member_id
-	//$member_id = $_POST['member_id'];
-	$member_id = 'James1';
+	$member_id = $_POST['member_id'];
+	//$member_id = 'James1';
 	
 	//handle error
 	$errCode = 0;
