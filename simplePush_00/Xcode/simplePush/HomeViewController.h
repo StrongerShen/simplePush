@@ -15,4 +15,5 @@
 @interface HomeViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *inputNameTF;
 @property (weak, nonatomic) IBOutlet UITextField *inputDeviceNameTF;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @end

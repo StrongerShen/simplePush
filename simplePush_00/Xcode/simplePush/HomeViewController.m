@@ -12,15 +12,17 @@
 @end
 
 @implementation HomeViewController
-
-
-- (IBAction)CloseKBD:(id)sender {
-}
+@synthesize inputNameTF,inputDeviceNameTF,submitButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(setDeviceTokenToUserDefault:) name:@"passDT" object:nil];
+    
+    //修飾"確認"按鈕外觀
+    submitButton.layer.cornerRadius = 5;
+    submitButton.clipsToBounds = YES;
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -35,19 +37,23 @@
     [userDefault setObject:receiveDict[@"device_token"] forKey:@"device_token"];
     [userDefault synchronize];    
 }
+//收鍵盤
+- (IBAction)CloseKBD:(id)sender {
+}
+
 - (IBAction)submitButton:(id)sender{
     
     //收鍵盤
-    [self.inputNameTF resignFirstResponder];
-    [self.inputDeviceNameTF resignFirstResponder];
+    [inputNameTF resignFirstResponder];
+    [inputDeviceNameTF resignFirstResponder];
     
     //撈取持有者名字
     NSString *memID = [[NSString alloc]init];
-    memID = self.inputNameTF.text;
+    memID = inputNameTF.text;
     
     //撈取裝置名稱
     NSString *memName = [[NSString alloc]init];
-    memName = self.inputDeviceNameTF.text;
+    memName = inputDeviceNameTF.text;
     
     //撈取本機裝置的deviceToken
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
