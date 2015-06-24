@@ -16,6 +16,7 @@
     2015/06/21  James   v1.1 重構程式
     2015/06/22  James   v1.2 table `news` 欄位增加兩欄 `mem_No`, `seq_no`，所需的修改。
     2015/06/22  Samma   程式整理與 SQL 微調，並加上 Database 資料異動時，try catch 處理
+    2015/06/24	Samma	修正抓取 badge number 問題
  ==============================
  */
 try {
@@ -116,7 +117,8 @@ class APNS_Push
 	function sendNotification($message, $deviceToken, $memNo){
         // 取得可推播對象(stop_push_mk=0)的未讀訊息的數量(badge) : $temp[0]
         // 取得未讀訊息的 news_id : $temp[1]
-        $result = $this->db->prepare("SELECT COUNT(seq_no), MAX(news_id) FROM news WHERE have_read = '0' OR mem_No = $memNo");
+        // 2015/06/24 Samma 調整SQL語句邏輯問題 where 後面由 OR => AND
+        $result = $this->db->prepare("SELECT COUNT(seq_no), MAX(news_id) FROM news WHERE have_read = '0' AND mem_No = $memNo");
 		$result->execute();
 		$temp = $result->fetch();
 		$badge = $temp[0];
