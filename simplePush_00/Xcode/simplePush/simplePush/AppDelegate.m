@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "HomeViewController.h"
 
 @interface AppDelegate ()
 
@@ -14,9 +15,35 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    //ios本身系統版本判定
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+         (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+    }
+    
+    //判斷NSUserDefaults裡的device token若不存在值，設定rootViewController為login畫面
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *device_token = [defaults objectForKey:@"device_token"];
+    //    NSString *memNO = [defaults objectForKey:@"memNo"];
+    //    NSString *memID = [defaults objectForKey:@"memID"];
+    //    NSString *memName = [defaults objectForKey:@"memName"];
+    //    NSLog(@"背景移除後，重新進來APP，抓取使用者NO:%@,使用者名字:%@，裝置名稱:%@,DT:%@",memNO,memID,memName,device_token);
+    
+    //第一次使用將連結logingViewController
+    if ([device_token length] == 0) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        HomeViewController *login = [storyBoard instantiateViewControllerWithIdentifier:@"LOGIN"];
+        self.window.rootViewController = login;
+    }
+    
     return YES;
 }
 
@@ -31,7 +58,9 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -42,4 +71,37 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString* receiveDeviceToken = [deviceToken description];
+    receiveDeviceToken = [receiveDeviceToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    receiveDeviceToken = [receiveDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    //將deviceToken 傳送至 HomeViewController.m
+    if (receiveDeviceToken) {
+        
+        //將收到的deviceToken存入userDefault
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        [userDefault setObject:receiveDeviceToken forKey:@"device_token"];
+        [userDefault synchronize];
+    }else {
+        NSLog(@"receiveDeviceToken 不存在");
+    }
+}
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"Failed to get device token, error: %@", error);
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"didReceiveRemoteNotification");
+    UIAlertView *errorAlterView=[[UIAlertView alloc]initWithTitle:@"title"
+                                                          message:@"didReceiveRemoteNotification"
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil, nil];
+    
+    [errorAlterView show];
+}
 @end

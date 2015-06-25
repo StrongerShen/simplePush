@@ -1,15 +1,13 @@
 //
-//  ViewController.h
+//  SeverConfig.m
 //  simplePush
 //
 //  Created by GeorgeLuo on 2015/6/25.
 //  Copyright (c) 2015年 TOMIN. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SeverConfig.h"
 
-@interface ViewController : UIViewController
-
+@implementation SeverConfig
 
 @end
-
