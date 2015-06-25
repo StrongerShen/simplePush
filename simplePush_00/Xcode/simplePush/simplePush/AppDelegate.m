@@ -31,14 +31,14 @@
     
     //判斷NSUserDefaults裡的device token若不存在值，設定rootViewController為login畫面
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *device_token = [defaults objectForKey:@"device_token"];
+    NSString *mem_id = [defaults objectForKey:@"memID"];
     //    NSString *memNO = [defaults objectForKey:@"memNo"];
     //    NSString *memID = [defaults objectForKey:@"memID"];
     //    NSString *memName = [defaults objectForKey:@"memName"];
     //    NSLog(@"背景移除後，重新進來APP，抓取使用者NO:%@,使用者名字:%@，裝置名稱:%@,DT:%@",memNO,memID,memName,device_token);
     
     //第一次使用將連結logingViewController
-    if ([device_token length] == 0) {
+    if ([mem_id length] == 0) {
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
         HomeViewController *login = [storyBoard instantiateViewControllerWithIdentifier:@"LOGIN"];
         self.window.rootViewController = login;

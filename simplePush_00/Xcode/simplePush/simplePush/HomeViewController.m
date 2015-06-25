@@ -89,6 +89,7 @@
                 [userDefault synchronize];
                 
                 [self performSegueWithIdentifier:@"linkMessage" sender:nil];
+
             }];
             
             [alertController addAction:sucessfullAction];
@@ -97,12 +98,23 @@
         else if ([responseObject[@"ret_code"] isEqualToString:@"NO"]){
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"喔不" message:@"註冊失敗" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *failAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                NSLog(@"DT已經存在,請更換其他裝置:%@",responseObject[@"ret_desc"]);
+                NSLog(@"DT已經存在:%@",responseObject[@"ret_desc"]);
+                
+                //將回傳的使用者資料寫入至userDefault
+                [userDefault setObject:responseObject[@"user_id"] forKey:@"memNo"];
+                [userDefault setObject:responseObject[@"user_name"] forKey:@"memID"];
+                [userDefault setObject:responseObject[@"device_name"] forKey:@"memName"];
+                [userDefault setObject:responseObject[@"device_token"] forKey:@"device_token"];
+                [userDefault synchronize];
+                
+                [self performSegueWithIdentifier:@"linkMessage" sender:nil];
+                
             }];
             [alertController addAction:failAction];
             [self presentViewController:alertController animated:YES completion:nil];
             
         }
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
