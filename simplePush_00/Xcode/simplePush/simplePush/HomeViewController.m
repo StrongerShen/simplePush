@@ -101,14 +101,13 @@
             }];
             [alertController addAction:failAction];
             [self presentViewController:alertController animated:YES completion:nil];
-            
         }
+        [self performSegueWithIdentifier:@"linkMessage" sender:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         //成功的話就執行此block
         NSLog(@"Requst Fail!");
     }];
-    [self performSegueWithIdentifier:@"linkMessage" sender:nil];
 }
 
 @end
