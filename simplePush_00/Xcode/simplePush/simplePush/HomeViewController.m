@@ -7,6 +7,8 @@
 //
 
 #import "HomeViewController.h"
+#import "SeverConfig.h"
+#import "AFNetworking.h"
 
 @interface HomeViewController ()
 {
@@ -30,14 +32,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 -(void)getParameter
 {
@@ -87,8 +89,6 @@
                 [userDefault setObject:responseObject[@"device_name"] forKey:@"memName"];
                 [userDefault setObject:responseObject[@"device_token"] forKey:@"device_token"];
                 [userDefault synchronize];
-                
-                [self performSegueWithIdentifier:@"linkMessage" sender:nil];
             }];
             
             [alertController addAction:sucessfullAction];
@@ -103,12 +103,12 @@
             [self presentViewController:alertController animated:YES completion:nil];
             
         }
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         //成功的話就執行此block
         NSLog(@"Requst Fail!");
     }];
+    [self performSegueWithIdentifier:@"linkMessage" sender:nil];
 }
 
 @end

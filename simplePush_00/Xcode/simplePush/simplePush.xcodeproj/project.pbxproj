@@ -124,7 +124,6 @@
 			children = (
 				32CD04AA1B3BE82000C59A34 /* AppDelegate.h */,
 				32CD04AB1B3BE82000C59A34 /* AppDelegate.m */,
-				32CD04B01B3BE82000C59A34 /* Main.storyboard */,
 				32CD04CC1B3BE94A00C59A34 /* HomeViewController.h */,
 				32CD04CD1B3BE94A00C59A34 /* HomeViewController.m */,
 				32CD04CF1B3BE97500C59A34 /* CustomPushNotificationTableViewCell.h */,
@@ -133,6 +132,7 @@
 				32CD04D31B3BE98F00C59A34 /* MessageListsTableViewController.m */,
 				32CD04D51B3BE9A900C59A34 /* MessageDetailViewController.h */,
 				32CD04D61B3BE9A900C59A34 /* MessageDetailViewController.m */,
+				32CD04B01B3BE82000C59A34 /* Main.storyboard */,
 				32CD04B31B3BE82000C59A34 /* Images.xcassets */,
 				32CD04B51B3BE82000C59A34 /* LaunchScreen.xib */,
 				32CD04A61B3BE82000C59A34 /* Supporting Files */,
@@ -504,6 +504,7 @@
 				32CD04C81B3BE82000C59A34 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		32CD04C91B3BE82000C59A34 /* Build configuration list for PBXNativeTarget "simplePushTests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +513,7 @@
 				32CD04CB1B3BE82000C59A34 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
