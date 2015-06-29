@@ -13,11 +13,11 @@
 			
 			// for development environment settings
 			'development' => array(
-					'host' 		=> '192.168.0.12',
+					'host' 		=> '192.168.0.8',
 					'dbname' 	=> 'userdbs',
 					'port'		=> '3306',
 					'username'	=> 'root',
-					'password'	=> 'root'
+					'password'	=> 'twtm2015'
 			),
 			
 			// for production environment settings
