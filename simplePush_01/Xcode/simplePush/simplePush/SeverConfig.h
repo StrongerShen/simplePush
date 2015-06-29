@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface SeverConfig : NSObject
+
+//Mac mini Server
+#define hostUrl @"http://192.168.0.8/tomin/"
+
 //George host path
-#define hostUrl @"http://192.168.0.12/PHP/"
+//#define hostUrl @"http://192.168.0.12/PHP/"
 
 //James host path
 //#define hostUrl @"http://172.20.10.12/PHP/"

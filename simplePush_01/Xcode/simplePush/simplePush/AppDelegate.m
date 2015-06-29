@@ -28,9 +28,6 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
          (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     }
-    //TODO: badge 給初值（最新未讀訊息的數量）
-    //badge 歸零
-    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     
     //判斷NSUserDefaults裡的device token若不存在值，設定rootViewController為login畫面
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -39,6 +36,9 @@
     //    NSString *memID = [defaults objectForKey:@"memID"];
     //    NSString *memName = [defaults objectForKey:@"memName"];
     //    NSLog(@"背景移除後，重新進來APP，抓取使用者NO:%@,使用者名字:%@，裝置名稱:%@,DT:%@",memNO,memID,memName,device_token);
+    
+    //badge 歸零
+    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     
     //第一次使用將連結logingViewController
     if ([mem_id length] == 0) {

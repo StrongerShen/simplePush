@@ -133,6 +133,15 @@
         userMessageListArray = [NSMutableArray arrayWithArray:responseObject[@"content"]];
         [self.tableView reloadData];
         
+        //設定 badge: 最新的未讀訊息筆數
+        int badge=0;
+        for (NSDictionary *temp in userMessageListArray) {
+            if ([temp[@"haveRead"] isEqualToString:@"0"] ) {
+                badge++;
+            }
+        }
+        [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"Requst Fail!");
