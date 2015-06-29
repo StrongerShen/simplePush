@@ -145,13 +145,7 @@
                             <outlet property="delegate" destination="lZg-pH-HpK" id="AcX-Z1-vnD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="訊息列表" id="Odc-p9-Stb">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="zYk-34-Lt6">
-                            <connections>
-                                <action selector="refreshBtn:" destination="lZg-pH-HpK" id="wR6-8q-vla"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="訊息列表" id="Odc-p9-Stb"/>
                     <connections>
                         <segue destination="eRK-h5-Uwq" kind="show" identifier="toFullMessage" id="EXF-7x-Nlo"/>
                     </connections>

@@ -62,8 +62,8 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     
-    
-    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"RELOADLIST" object:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -101,13 +101,7 @@
     //badge++
     [UIApplication sharedApplication].applicationIconBadgeNumber++;
     
-    NSLog(@"didReceiveRemoteNotification");
-    UIAlertView *errorAlterView=[[UIAlertView alloc]initWithTitle:@"title"
-                                                          message:@"didReceiveRemoteNotification"
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil, nil];
-    
-    [errorAlterView show];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"RELOADLIST" object:nil];
 }
 @end

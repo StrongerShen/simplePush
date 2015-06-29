@@ -23,6 +23,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(getUserMessageListArray) name:@"RELOADLIST" object:nil];
+    
     //將使用者的 ID、裝置名稱、DT，從 userDefault 撈出
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     memNo = [userDefault objectForKey:@"memNo"];
@@ -57,59 +60,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return userMessageListArray.count;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    CustomPushNotificationTableViewCell *customCell = [tableView dequeueReusableCellWithIdentifier:@"CustomPushNotificationTableViewCell" forIndexPath:indexPath];
-    customCell.messageLabel.text = userMessageListArray[indexPath.row][@"preMsg"];
-    customCell.timeLabel.text = userMessageListArray[indexPath.row][@"sendTime"];
-    NSString *tag = userMessageListArray[indexPath.row][@"haveRead"];
-    if (tag != nil && [tag isEqualToString:@"0"]) {
-        customCell.readOrNotImageView.image = [UIImage imageNamed:@"Unread"];
-    }
-    else if (tag != nil && [tag isEqualToString:@"1"]){
-        customCell.readOrNotImageView.image = [UIImage imageNamed:@"Read"];
-    }
-    else{
-        NSLog(@"出現問題，沒有辦法判定Tag");
-    }
-    
-    return customCell;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //badge--
-    [UIApplication sharedApplication].applicationIconBadgeNumber--;
-    
-    NSString *newsId = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"newsId"]];
-    [self performSegueWithIdentifier:@"toFullMessage" sender:newsId];
-}
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    MessageDetailViewController *mdvc = [segue destinationViewController];
-    mdvc.receiveMessageID = sender;
-}
-- (IBAction)refreshBtn:(id)sender {
-    [self getUserMessageListArray];
-}
-
-#pragma mark -- 透過上傳使用者的ID，根據這個ID去撈訊息list回來、訊息的Tag(撈出判斷訊息讀取否)、訊息的identiFiler
+//透過上傳使用者的ID，根據這個ID去撈訊息list回來、訊息的Tag(撈出判斷訊息讀取否)、訊息的identiFiler
 -(void)getUserMessageListArray{
     
     userMessageListArray = [NSMutableArray new];
@@ -146,6 +97,56 @@
         
         NSLog(@"Requst Fail!");
     }];
+}
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    return userMessageListArray.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    CustomPushNotificationTableViewCell *customCell = [tableView dequeueReusableCellWithIdentifier:@"CustomPushNotificationTableViewCell" forIndexPath:indexPath];
+    customCell.messageLabel.text = userMessageListArray[indexPath.row][@"preMsg"];
+    customCell.timeLabel.text = userMessageListArray[indexPath.row][@"sendTime"];
+    NSString *tag = userMessageListArray[indexPath.row][@"haveRead"];
+    if (tag != nil && [tag isEqualToString:@"0"]) {
+        customCell.readOrNotImageView.image = [UIImage imageNamed:@"Unread"];
+    }
+    else if (tag != nil && [tag isEqualToString:@"1"]){
+        customCell.readOrNotImageView.image = [UIImage imageNamed:@"Read"];
+    }
+    else{
+        NSLog(@"出現問題，沒有辦法判定Tag");
+    }
+    
+    return customCell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 60;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //badge--
+    [UIApplication sharedApplication].applicationIconBadgeNumber--;
+    
+    NSString *newsId = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"newsId"]];
+    [self performSegueWithIdentifier:@"toFullMessage" sender:newsId];
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    MessageDetailViewController *mdvc = [segue destinationViewController];
+    mdvc.receiveMessageID = sender;
 }
 
 @end
