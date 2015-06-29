@@ -83,6 +83,9 @@
     return 60;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //badge--
+    [UIApplication sharedApplication].applicationIconBadgeNumber--;
+    
     NSString *newsId = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"newsId"]];
     [self performSegueWithIdentifier:@"toFullMessage" sender:newsId];
 }

@@ -28,6 +28,9 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
          (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     }
+    //TODO: badge 給初值（最新未讀訊息的數量）
+    //badge 歸零
+    [UIApplication sharedApplication].applicationIconBadgeNumber=0;
     
     //判斷NSUserDefaults裡的device token若不存在值，設定rootViewController為login畫面
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -95,6 +98,9 @@
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    //badge++
+    [UIApplication sharedApplication].applicationIconBadgeNumber++;
+    
     NSLog(@"didReceiveRemoteNotification");
     UIAlertView *errorAlterView=[[UIAlertView alloc]initWithTitle:@"title"
                                                           message:@"didReceiveRemoteNotification"

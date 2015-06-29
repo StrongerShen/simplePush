@@ -77,6 +77,9 @@
     return 60;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //badge--
+    [UIApplication sharedApplication].applicationIconBadgeNumber--;
+    
     NSString *newsId = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"newsId"]];
     [self performSegueWithIdentifier:@"toFullMessage" sender:newsId];
 }
@@ -114,7 +117,6 @@
         //取得訊息清單、發送時間、訊息大綱、已讀或未讀Tag
         userMessageListArray = [NSMutableArray arrayWithArray:responseObject[@"content"]];
         [self.tableView reloadData];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"Requst Fail!");
