@@ -34,11 +34,8 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKf-5F-Xgi">
-                                <rect key="frame" x="110" y="270" width="100" height="33"/>
+                                <rect key="frame" x="14" y="270" width="293" height="33"/>
                                 <color key="backgroundColor" red="0.54509803921568623" green="0.37254901960784315" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="t6B-uO-DHJ"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="確認送出">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,7 +63,9 @@
                             <constraint firstItem="RKf-5F-Xgi" firstAttribute="top" secondItem="jJZ-Oq-vAq" secondAttribute="bottom" constant="35" id="BG9-DU-SRn"/>
                             <constraint firstItem="xbZ-cd-qjL" firstAttribute="top" secondItem="KWE-Rt-QMh" secondAttribute="bottom" constant="50" id="JpB-Ns-7ta"/>
                             <constraint firstAttribute="centerX" secondItem="KWE-Rt-QMh" secondAttribute="centerX" id="NmD-Jy-CPB"/>
+                            <constraint firstItem="jJZ-Oq-vAq" firstAttribute="leading" secondItem="RKf-5F-Xgi" secondAttribute="leading" id="Nxt-p9-agp"/>
                             <constraint firstItem="jJZ-Oq-vAq" firstAttribute="top" secondItem="xbZ-cd-qjL" secondAttribute="bottom" constant="20" id="l2q-7G-3M6"/>
+                            <constraint firstItem="jJZ-Oq-vAq" firstAttribute="trailing" secondItem="RKf-5F-Xgi" secondAttribute="trailing" id="qZM-ei-DEi"/>
                             <constraint firstItem="KWE-Rt-QMh" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="30" id="y7j-SQ-bFg"/>
                         </constraints>
                     </view>
@@ -176,7 +175,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9f-Wb-hWB">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
