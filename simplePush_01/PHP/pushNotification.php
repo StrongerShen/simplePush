@@ -17,6 +17,7 @@
     2015/06/22  James   v1.2 table `news` 欄位增加兩欄 `mem_No`, `seq_no`，所需的修改。
     2015/06/22  Samma   程式整理與 SQL 微調，並加上 Database 資料異動時，try catch 處理
     2015/06/24	Samma	修正抓取 badge number 問題
+    2015/06/30	Samma	增加寫入msgTitle
  ==============================
  */
 try {
@@ -54,13 +55,14 @@ class APNS_Push
 
         // 取得推播對象的 device_token, mem_no
         $lists = $_POST["list"];
+        $msgTitle = $_POST["msgTitle"];
         $message = $_POST["msg"];
 
         if ($lists && $message){
 
             foreach ($lists as $value) {
             	
-                $result = $this->db->prepare("SELECT device_token,mem_no FROM users WHERE member_id='$value' AND stop_push_mk = '0'");
+                $result = $this->db->prepare("SELECT device_token,mem_No FROM users WHERE member_id='$value' AND stop_push_mk = '0'");
                 $result->execute();
                 $temp = $result->fetch();
 
@@ -71,8 +73,8 @@ class APNS_Push
                     		
                     		$this->db->beginTransaction();
 
-                    		$this->insertDataBase($message, $temp[0], $temp[1]);
-                    		$this->sendNotification($message, $temp[0], $temp[1]);
+                    		$this->insertDataBase($msgTitle, $message, $temp[0], $temp[1]);
+                    		$this->sendNotification($msgTitle, $temp[0], $temp[1]);
                     		
                     		$this->db->commit();
                     		
@@ -114,7 +116,7 @@ class APNS_Push
     }
 
     // 傳送推播內容至 APNS 給指定對象
-	function sendNotification($message, $deviceToken, $memNo){
+	function sendNotification($msgTitle, $deviceToken, $memNo){
         // 取得可推播對象(stop_push_mk=0)的未讀訊息的數量(badge) : $temp[0]
         // 取得未讀訊息的 news_id : $temp[1]
         // 2015/06/24 Samma 調整SQL語句邏輯問題 where 後面由 OR => AND
@@ -126,7 +128,7 @@ class APNS_Push
 
 		// Create the payload body
 		$body['aps'] = array(
-				'alert' => $message,
+				'alert' => $msgTitle,
 				'sound' => 'default',
 				'badge' => (int)$badge,
                 'newsId' => $newsIdMax
@@ -152,7 +154,7 @@ class APNS_Push
 	}
 	
     //存檔：將推播訊息存入資料表
-	function insertDataBase($message, $deviceToken, $memNo){
+	function insertDataBase($msgTitle, $message, $deviceToken, $memNo){
         // 組成流水號 seq_no
         $result = $this->db->prepare("SELECT MAX(seq_no) FROM news WHERE mem_No = $memNo");
         $result->execute();
@@ -164,8 +166,8 @@ class APNS_Push
         $seqNo++;
         
         // 寫入資料庫 table `news` mem_No & seq_no & device_token & msg
-        $result = $this->db->prepare("INSERT INTO news (mem_No, seq_no, msg, device_token) VALUES (?, ?, ?, ?)");
-        $result->execute(array($memNo, $seqNo, $message, $deviceToken));
+        $result = $this->db->prepare("INSERT INTO news (mem_No, seq_no, msg_title, msg, device_token) VALUES (?, ?, ?, ?, ?)");
+        $result->execute(array($memNo, $seqNo, $msgTitle, $message, $deviceToken));
         //echo "inserDB1!<br>";
     }
 

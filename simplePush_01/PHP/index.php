@@ -8,6 +8,8 @@
 	2015/06/22	Samma	1、改寫為mvc處理架構
 						2、javascript 另外拆出，獨立為 js 檔
 						3、更改檔名，由 admin.php 調整成 index.php，易識別為專案執行的第 1 支程式
+	2015/06/30	Samma	1、增加全選、取消全選功能 => getUserList.js
+						2、增加News Broadcast Title 欄位，原本的 News Broadcast 更名為 News Broadcast Content 
  ==============================
  */
 ?>
@@ -24,12 +26,25 @@
 <body>
 <form id="form1" name="form1" method="post" action="pushNotification.php">
   <p>
-    <label for="msg">News Broadcast</label>
+  	<label for="msgTitle">News Broadcast Title</label>
+  	<br/>
+  	<input type="text" name="msgTitle" id="msgTitle" size=50/>
+  </p>
+  <p>
+    <label for="msg">News Broadcast Content</label>
     <br/>
     <textarea rows="6" cols="50" name="msg" id="msg"></textarea>
   </p>
   <p>&nbsp;</p>
 
+  <p>
+  <div id="choiceAll">
+  	<!-- value=1表示選取狀態，value=0表示未選取狀態 -->
+  	<input type="radio" id="choiceSelect" name="choiceA">全選
+  	<input type="radio" id="choiceCancel" name="choiceA">取消全選
+  </div>
+  </p>
+  
   <div id="chk_box"></div>
   
   <p>
