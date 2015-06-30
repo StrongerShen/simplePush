@@ -16,12 +16,12 @@
 	 建立日期 : 2015/06/18
 	 異動記錄 :
 	 2015/06/23	Samma	1、回傳內容增加newsId
+	 2015/06/30	Samma	1、調整回傳的訊息改讀msgTitle
 	 ==============================
 	 */
 
 	//receive member_id
 	$member_id = $_POST['member_id'];
-	//$member_id = 'James1';
 	
 	//handle error
 	$errCode = 0;
@@ -34,7 +34,7 @@
 		
 		//依指定的訊息 ID 從Database 取出訊息的完整內容
 		$sth = $db->prepare("select b.news_id,
-									concat(substr(b.msg,1,10),'...') pre_msg,
+									concat(substr(b.msg_title,1,10),'...') pre_msg,
 									b.have_read,
 									date_format(b.send_time, '%Y-%m-%d %H:%i:%s') send_time
 							   from users a, news b
