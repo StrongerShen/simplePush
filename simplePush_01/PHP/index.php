@@ -10,6 +10,7 @@
 						3、更改檔名，由 admin.php 調整成 index.php，易識別為專案執行的第 1 支程式
 	2015/06/30	Samma	1、增加全選、取消全選功能 => getUserList.js
 						2、增加News Broadcast Title 欄位，原本的 News Broadcast 更名為 News Broadcast Content 
+						3、增加重設按鈕
  ==============================
  */
 ?>
@@ -49,6 +50,7 @@
   
   <p>
     <input type="submit" name="Submit" id="button" value="Send" />
+    <input type="reset"/>
   </p>
 </form>
 </body>
