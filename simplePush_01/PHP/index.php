@@ -2,7 +2,7 @@
 /*
  ==============================
     功能說明 : 	使用 Web 介面進行推播
-    建立者 : James
+    建立者 	: James
     建立日期 : 2015/06/18
     異動記錄 :
 	2015/06/22	Samma	1、改寫為mvc處理架構
@@ -41,8 +41,8 @@
   <p>
   <div id="choiceAll">
   	<!-- value=1表示選取狀態，value=0表示未選取狀態 -->
-  	<input type="radio" id="choiceSelect" name="choiceA">全選
-  	<input type="radio" id="choiceCancel" name="choiceA">取消全選
+  	<label><input type="radio" id="choiceSelect" name="choiceA">全選</label>
+  	<label><input type="radio" id="choiceCancel" name="choiceA">取消全選</label>
   </div>
   </p>
   
