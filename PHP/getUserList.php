@@ -11,7 +11,7 @@
 	 建立者 : Samma
 	 建立日期 : 2015/06/20
 	 異動記錄 :
-	 
+	 2015/07/04	Samma	加上裝置類型的過濾，以及變數名稱 $rows 誤 key 成 $row 的問題
 	 ==============================
 	 */
 
@@ -20,7 +20,10 @@
 		
 	try {
 		
-		$result=$db->query("select mem_No,device_token,member_name,member_id from users order by member_id");
+		$result=$db->query("select mem_No,device_token,member_name,member_id 
+							  from users 
+							 where device_type = '0'
+						  order by member_id");
 		
 		$i = 1;
 		$user_list = array();
@@ -30,7 +33,7 @@
 			$device_token = $rows['device_token'];
 			$member_name = $rows['member_name'];
 			$member_id = $rows['member_id'];
-			$member_no = $row["mem_No"];
+			$member_no = $rows["mem_No"];
 			
 			$user_list[$i] = array(
 					"member_id"		=>	$member_id,
