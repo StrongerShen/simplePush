@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">simplePush</string>
 
-    <string name="hello_world">Hello world!</string>
+
     <string name="action_settings">Settings</string>
+
+    <string name="token_error_message">An error occurred while either fetching the InstanceID token,
+        sending the fetched token to the server or subscribing to the PubSub topic. Please try
+        running the sample again.</string>
+    <string name="txtLogin">登入</string>
+    <string name="btnSubmit">確認送出</string>
+    <string name="edtUserNameHint">輸入英文名字，例如 : Patrick、Samma ...</string>
+    <string name="edtDeviceNameHint">輸入完整裝置名，例如 : HTC One(M7) ...</string>
+
 </resources>

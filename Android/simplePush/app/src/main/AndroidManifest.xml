@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    AndroidManifest like [iOS] AppDelegate
+
+    MyGcmListenerService           監聽接收來自 GCM 的推播
+
+    RegistrationIntentService      向 GCM 註冊並取 Instance ID，只做一次 (instanceID.getToken()取得 Device Token)
+
+    MyInstanceIDListenerService    Instance ID 溝通 google service 的識別碼
+                                        Instance ID is stable but may become invalid, if:
+                                            App deletes Instance ID
+                                            Device is factory reset
+                                            User uninstalls the app
+                                            User clears app data
+                                    監聽是否改變，有改變則呼叫 RegistrationIntentService 重新取得
+
+    Created by patrickchan on 15/7/6.
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tomin.patrickchan.simplepush" >
     <!-- [START gcm_permission] -->
@@ -19,6 +36,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- [START gcm_receiver] -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.tomin.patrickchan.simplepush" />
+            </intent-filter>
+        </receiver>
+        <!-- [END gcm_receiver] -->
+
+        <!-- [START gcm_listener] -->
+        <service
+            android:name="com.tomin.patrickchan.simplepush.MyGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <!-- [END gcm_listener] -->
+        <!-- [START instanceId_listener] -->
+        <service
+            android:name="com.tomin.patrickchan.simplepush.MyInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+        <!-- [END instanceId_listener] -->
+        <service
+            android:name=".RegistrationIntentService"
+            android:exported="false">
+        </service>
+
     </application>
 
 </manifest>
