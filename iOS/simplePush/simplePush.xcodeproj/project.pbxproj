@@ -122,6 +122,8 @@
 		32CD04A51B3BE82000C59A34 /* simplePush */ = {
 			isa = PBXGroup;
 			children = (
+				32CD04DE1B3BEA8500C59A34 /* SeverConfig.h */,
+				32CD04DF1B3BEA8500C59A34 /* SeverConfig.m */,
 				32CD04B01B3BE82000C59A34 /* Main.storyboard */,
 				32CD04AA1B3BE82000C59A34 /* AppDelegate.h */,
 				32CD04AB1B3BE82000C59A34 /* AppDelegate.m */,
@@ -136,8 +138,6 @@
 				32CD04B31B3BE82000C59A34 /* Images.xcassets */,
 				32CD04B51B3BE82000C59A34 /* LaunchScreen.xib */,
 				32CD04A61B3BE82000C59A34 /* Supporting Files */,
-				32CD04DE1B3BEA8500C59A34 /* SeverConfig.h */,
-				32CD04DF1B3BEA8500C59A34 /* SeverConfig.m */,
 			);
 			path = simplePush;
 			sourceTree = "<group>";

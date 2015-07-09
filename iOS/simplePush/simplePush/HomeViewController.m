@@ -58,7 +58,7 @@
     NSString *device_token = [userDefault objectForKey:@"device_token"];
     
     //設定要POST的參數
-    parameters = @{@"memID":memID,@"memName":memName,@"device_token":device_token};
+    parameters = @{@"memID":memID,@"memName":memName,@"device_token":device_token,@"device_type":@"0"};
 }
 
 - (IBAction)submitButton:(id)sender {
