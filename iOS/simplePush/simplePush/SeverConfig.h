@@ -11,7 +11,7 @@
 @interface SeverConfig : NSObject
 
 //Mac mini Server
-#define hostUrl @"http://192.168.0.8/tomin/"
+#define hostUrl @"http://tomin.tw/api/simplePush/"
 
 //George host path
 //#define hostUrl @"http://192.168.0.12/PHP/"

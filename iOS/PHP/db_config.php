@@ -5,7 +5,7 @@
 	 建立者 : Samma
 	 建立日期 : 2015/06/16
 	 異動記錄 :
-
+	 2015/07/09	Samma	調整Database連結IP
 	 ==============================
 	 */
 
@@ -13,7 +13,7 @@
 			
 			// for development environment settings
 			'development' => array(
-					'host' 		=> '192.168.0.8',
+					'host' 		=> '10.0.1.8',
 					'dbname' 	=> 'userdbs',
 					'port'		=> '3306',
 					'username'	=> 'root',
