@@ -5,8 +5,8 @@
 
     Input	=>	device_token	:   裝置代號
                 memID			:   使用者名稱
-                memberName		:   裝置名稱
-              	memberPwd		:	使用者密碼  			
+                memName			:   裝置名稱
+              	memPwd			:	使用者密碼  			
     Output	=>	ret_code					:	處理結果 (YES / NO)
     			ret_desc					:	處理結果說明
     			user_id						:	對應users.mem_No
@@ -28,7 +28,7 @@
 	$device_token = $_POST['device_token'];
 	$member_id = $_POST['memID'];
 	$member_name = $_POST['memName'];
-	$member_pwd = $_POST["memberPwd"];
+	$member_pwd = $_POST["memPwd"];
 	
 	if (empty($member_pwd) or strlen($member_pwd) == 0) {
 		$member_pwd = '123';

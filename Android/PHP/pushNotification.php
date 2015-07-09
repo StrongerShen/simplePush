@@ -1,6 +1,6 @@
 <?php
 
-	define("GOOGLE_API_KEY", "AIzaSyAE9B3nMnni6n4fKplimtKGetNOoGRLxMk");
+	define("GOOGLE_API_KEY", "AIzaSyB8cneIrOV1nRsr3pb8FD3XgC5tJLe637g");
 	define("GOOGLE_GCM_URL", "https://android.googleapis.com/gcm/send");
 	 
 	require_once("connectsql.php");
