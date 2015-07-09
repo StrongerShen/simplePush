@@ -2,7 +2,7 @@
 /*
  ==============================
     功能說明 :  存檔：將推播相關訊息存入資料庫(Table `news`)
-                推播：製作推播內容，與 APNS 建立連線，並傳送至 APNS，發出推播給 users
+               推播：製作推播內容，與 APNS 建立連線，並傳送至 APNS，發出推播給 users
 
     Input  =>       lists           :   推播對象的 Member Id
                     message         :   推播訊息
