@@ -50,9 +50,9 @@
 			
 			//當device token不存在時新增
 			$result = $db->query("INSERT INTO users
-								 (member_id, member_pwd, member_name, member_phone, device_token)
+								 (member_id, member_pwd, member_name, member_phone, device_token, device_type)
 							 	 VALUES
-								 ('$member_id', '$member_pwd','$member_name', 'new_member_phone', '$device_token')"
+								 ('$member_id', '$member_pwd','$member_name', 'new_member_phone', '$device_token', '1')"
 			) or die('903');
 			
 			//新增完成，處理結果["ret_code"]返回YES，代表OK
