@@ -5,5 +5,8 @@ package com.tomin.patrickchan.simplepush;
  */
 public class QuickstartPreferences {
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
+    public static final String DEVICE_TOKEN ="deviceToken";
+    public static final String DEVICE_NAME ="deviceName";
+    public static final String USER_NAME ="userName";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
 }

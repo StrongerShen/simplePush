@@ -30,6 +30,7 @@ public class RegistrationIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
         //SharedPreferences like [iOS] NSUserDefaults 儲存少量資料用
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -48,7 +49,9 @@ public class RegistrationIntentService extends IntentService {
                 Log.i(TAG, "GCM Registration Token: " + token);
 
                 // TODO: Implement this method to send any registration to your app's servers.
-                sendRegistrationToServer(token);
+                //sendRegistrationToServer(token);
+
+                sharedPreferences.edit().putString(QuickstartPreferences.DEVICE_TOKEN, token).apply();
 
                 // Subscribe to topic channels
                 subscribeTopics(token);
@@ -78,10 +81,9 @@ public class RegistrationIntentService extends IntentService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
-        // Add custom implementation, as needed.
-
-    }
+//    private void sendRegistrationToServer(String token) {
+//
+//    }
 
     /**
      * Subscribe to any GCM topics of interest, as defined by the TOPICS constant.

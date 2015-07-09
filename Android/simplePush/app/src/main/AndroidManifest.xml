@@ -21,6 +21,7 @@
     <!-- [START gcm_permission] -->
     <uses-permission android:name="android.permission.WAKE_LOCK" /><!--在睡眠狀態仍保持接收 -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" /><!--app 可以註冊和接收訊息 -->
+    <user-permission android:name="android.permission.INTERNET"/><!--開啟存取網路權限-->
     <!-- [END gcm_permission] -->
     <application
         android:allowBackup="true"
