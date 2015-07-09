@@ -3,9 +3,10 @@
  ==============================
     功能說明 : 	使用者名稱、裝置名稱、裝置代號，寫入資料庫
 
-    Input	=>	(string)	device_token	:   裝置代號
-                (string)    member_id		:   使用者名稱
-                (string)    member_name		:   裝置名稱
+    Input	=>	device_token	:   裝置代號
+                memID			:   使用者名稱
+                memberName		:   裝置名稱
+              	memberPwd		:	使用者密碼  			
     Output	=>	ret_code					:	處理結果 (YES / NO)
     			ret_desc					:	處理結果說明
     			user_id						:	對應users.mem_No
@@ -18,6 +19,7 @@
     異動記錄 :
 	2015/06/22	Samma	1、增加 try catch 處理
 	2015/06/23	Samma	1、增加回傳 user_name、device_name、device_token
+	2015/07/09	Samma	1、增加密碼預設功能
  ==============================
  */
 
@@ -26,6 +28,14 @@
 	$device_token = $_POST['device_token'];
 	$member_id = $_POST['memID'];
 	$member_name = $_POST['memName'];
+	$member_pwd = $_POST["memberPwd"];
+	
+	if (empty($member_pwd) or strlen($member_pwd) == 0) {
+		$member_pwd = '123';
+	}
+	
+	//md5密碼加密
+	$member_pwd = md5($member_pwd);
 	
 	$message = array("ret_code"=>"", "ret_desc"=>"", "user_id"=>"", "user_name"=>"", "device_name"=>"", "device_token"=>"");
 	
@@ -40,9 +50,9 @@
 			
 			//當device token不存在時新增
 			$result = $db->query("INSERT INTO users
-								 (member_id, member_name, member_phone, device_token)
+								 (member_id, member_pwd, member_name, member_phone, device_token)
 							 	 VALUES
-								 ('$member_id', '$member_name', 'new_member_phone', '$device_token')"
+								 ('$member_id', '$member_pwd','$member_name', 'new_member_phone', '$device_token')"
 			) or die('903');
 			
 			//新增完成，處理結果["ret_code"]返回YES，代表OK
