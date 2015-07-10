@@ -10,8 +10,9 @@
     <string name="txtLogin">登入</string>
     <string name="btnSubmit">確認送出</string>
     <string name="edtUserNameHint">輸入英文名字，例如 : Patrick、Samma ...</string>
-    <string name="edtDeviceNameHint">輸入完整裝置名，例如 : HTC One(M7) ...</string>
+    <string name="edtPassword">輸入密碼</string>
     <string name="txtUserName">Patrick</string>
     <string name="txtDeviceName">HTC ONE</string>
+    <string name="edtVerifyPassword">驗證密碼</string>
 
 </resources>

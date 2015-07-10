@@ -8,5 +8,7 @@ public class QuickstartPreferences {
     public static final String DEVICE_TOKEN ="deviceToken";
     public static final String DEVICE_NAME ="deviceName";
     public static final String USER_NAME ="userName";
+    public static final String PASSWORD ="password";
+    public static final String APP_SERVER_REGISTER = "appServerRegister";
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
 }

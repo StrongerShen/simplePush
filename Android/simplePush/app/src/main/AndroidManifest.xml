@@ -38,6 +38,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".VNewsListActivity"
+                  android:label="@string/news_list_title">
+        </activity>
+
         <!-- [START gcm_receiver] -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
