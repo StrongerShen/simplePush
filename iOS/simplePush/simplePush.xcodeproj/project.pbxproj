@@ -27,6 +27,7 @@
 		32CD04FB1B3BEE8C00C59A34 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CD04F01B3BEE8C00C59A34 /* AFURLRequestSerialization.m */; };
 		32CD04FC1B3BEE8C00C59A34 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CD04F21B3BEE8C00C59A34 /* AFURLResponseSerialization.m */; };
 		32CD04FD1B3BEE8C00C59A34 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CD04F41B3BEE8C00C59A34 /* AFURLSessionManager.m */; };
+		7AC42D581B534F8D00D4581B /* ToolPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC42D571B534F8D00D4581B /* ToolPackage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		32CD04F21B3BEE8C00C59A34 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		32CD04F31B3BEE8C00C59A34 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		32CD04F41B3BEE8C00C59A34 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		7AC42D561B534F8D00D4581B /* ToolPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolPackage.h; sourceTree = "<group>"; };
+		7AC42D571B534F8D00D4581B /* ToolPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolPackage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,8 @@
 			children = (
 				32CD04DE1B3BEA8500C59A34 /* SeverConfig.h */,
 				32CD04DF1B3BEA8500C59A34 /* SeverConfig.m */,
+				7AC42D561B534F8D00D4581B /* ToolPackage.h */,
+				7AC42D571B534F8D00D4581B /* ToolPackage.m */,
 				32CD04B01B3BE82000C59A34 /* Main.storyboard */,
 				32CD04AA1B3BE82000C59A34 /* AppDelegate.h */,
 				32CD04AB1B3BE82000C59A34 /* AppDelegate.m */,
@@ -310,6 +315,7 @@
 				32CD04F71B3BEE8C00C59A34 /* AFHTTPSessionManager.m in Sources */,
 				32CD04CE1B3BE94A00C59A34 /* HomeViewController.m in Sources */,
 				32CD04F81B3BEE8C00C59A34 /* AFNetworkReachabilityManager.m in Sources */,
+				7AC42D581B534F8D00D4581B /* ToolPackage.m in Sources */,
 				32CD04F61B3BEE8C00C59A34 /* AFHTTPRequestOperationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
