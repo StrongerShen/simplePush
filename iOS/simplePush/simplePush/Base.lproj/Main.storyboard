@@ -116,10 +116,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ose-R2-O8i">
-                                            <rect key="frame" x="220" y="11" width="92" height="38"/>
+                                            <rect key="frame" x="252" y="18" width="60" height="24"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="38" id="DNF-EQ-25Z"/>
-                                                <constraint firstAttribute="width" constant="92" id="ckc-nm-qAy"/>
+                                                <constraint firstAttribute="height" constant="24" id="DNF-EQ-25Z"/>
+                                                <constraint firstAttribute="width" constant="60" id="ckc-nm-qAy"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
@@ -127,7 +127,7 @@
                                     <constraints>
                                         <constraint firstItem="H3N-QA-whb" firstAttribute="leading" secondItem="sZp-cd-fOR" secondAttribute="leadingMargin" id="9Ja-4O-fVC"/>
                                         <constraint firstItem="H3N-QA-whb" firstAttribute="centerX" secondItem="AQg-ZS-ywc" secondAttribute="centerX" id="Exg-5A-iR9"/>
-                                        <constraint firstItem="Ose-R2-O8i" firstAttribute="top" secondItem="sZp-cd-fOR" secondAttribute="topMargin" constant="3" id="Ff2-tb-HtY"/>
+                                        <constraint firstItem="Ose-R2-O8i" firstAttribute="top" secondItem="sZp-cd-fOR" secondAttribute="topMargin" constant="10" id="Idc-JZ-UsJ"/>
                                         <constraint firstItem="Ose-R2-O8i" firstAttribute="trailing" secondItem="sZp-cd-fOR" secondAttribute="trailingMargin" id="iGT-g5-JeU"/>
                                         <constraint firstItem="AQg-ZS-ywc" firstAttribute="top" secondItem="H3N-QA-whb" secondAttribute="bottom" constant="1" id="paK-zX-Z5I"/>
                                         <constraint firstItem="H3N-QA-whb" firstAttribute="top" secondItem="sZp-cd-fOR" secondAttribute="topMargin" id="pdR-8D-mlU"/>
