@@ -98,6 +98,7 @@
         NSLog(@"Requst Fail!");
     }];
 }
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -150,14 +151,45 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [userMessageListArray removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView reloadData];
         
+        //取出要刪除的message ID
+        NSString *newsID = userMessageListArray[indexPath.row][@"newsId"];
+        
+        //post
+        NSDictionary *parameters = @{@"news_id":newsID};
+        
+        //設定HostURL
+        NSURL *url = [NSURL URLWithString:hostUrl];
+        
+        //設定連線manager
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:url];
+        
+        //設定manager 願意接收輸入的type
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+        
+        //將會員資料POST至PHP
+        [manager POST:@"delMsg.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSLog(@"處理結果:%@ ,說明:%@",responseObject[@"ret_code"],responseObject[@"ret_desc"]);
+            if ([responseObject[@"ret_code"]isEqualToString:@"YES"]) {
+                //刪除陣列內資料
+                [userMessageListArray removeObjectAtIndex:indexPath.row];
+                
+                //移除列
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                
+                //重整
+                [self.tableView reloadData];
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"發生錯誤:%@",error);
+        }];
+
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
+
 }
 #pragma mark - Navigation
 

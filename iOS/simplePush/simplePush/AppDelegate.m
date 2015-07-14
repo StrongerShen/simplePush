@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "HomeViewController.h"
+#import "MessageDetailViewController.h"
+#import "testViewController.h"
 
 @interface AppDelegate ()
 
@@ -47,31 +49,41 @@
         self.window.rootViewController = login;
     }
     
+    NSLog(@"你執行了didFinishLaunchingWithOptions");
+    
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+        NSLog(@"你執行了applicationWillResignActive");
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    NSLog(@"你執行了applicationDidEnterBackground");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"RELOADLIST" object:nil];
+    
+    NSLog(@"你執行了applicationWillEnterForeground");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        NSLog(@"你執行了applicationDidBecomeActive");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        NSLog(@"你執行了applicationWillTerminate");
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -90,6 +102,7 @@
     }else {
         NSLog(@"receiveDeviceToken 不存在");
     }
+        NSLog(@"你執行了didRegisterForRemoteNotificationsWithDeviceToken");
 }
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -103,5 +116,21 @@
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"RELOADLIST" object:nil];
+    
+    NSLog(@"%@",userInfo);
+    
+    //set content root controller
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    testViewController *testVC = [storyBoard instantiateViewControllerWithIdentifier:@"TEST"];
+    
+    
+    
+//    MessageDetailViewController *fullMsgVC = [storyBoard instantiateViewControllerWithIdentifier:@"FULLMSG"];
+//    if (userInfo[@"newsId"]!= nil) {
+//        fullMsgVC.receiveMessageID = userInfo[@"newsId"];
+//        self.window.rootViewController = fullMsgVC;
+//    }
+
 }
+
 @end

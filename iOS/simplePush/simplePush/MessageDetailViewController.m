@@ -39,7 +39,7 @@
     self.navigationItem.titleView = titleView;
     [titleView sizeToFit];
     
-    [self getUserMessageListArray];
+    [self getFullMessage];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -55,7 +55,7 @@
  // Pass the selected object to the new view controller.
  }
  */
--(void)getUserMessageListArray{
+-(void)getFullMessage{
     
     //設定要POST的參數
     NSDictionary *parameters = @{@"news_id":receiveMessageID};

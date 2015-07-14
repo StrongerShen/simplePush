@@ -27,6 +27,7 @@
 		32CD04FB1B3BEE8C00C59A34 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CD04F01B3BEE8C00C59A34 /* AFURLRequestSerialization.m */; };
 		32CD04FC1B3BEE8C00C59A34 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CD04F21B3BEE8C00C59A34 /* AFURLResponseSerialization.m */; };
 		32CD04FD1B3BEE8C00C59A34 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CD04F41B3BEE8C00C59A34 /* AFURLSessionManager.m */; };
+		32DFF2DD1B5507A60086695E /* testViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFF2DC1B5507A60086695E /* testViewController.m */; };
 		7AC42D581B534F8D00D4581B /* ToolPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC42D571B534F8D00D4581B /* ToolPackage.m */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,8 @@
 		32CD04F21B3BEE8C00C59A34 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		32CD04F31B3BEE8C00C59A34 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		32CD04F41B3BEE8C00C59A34 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		32DFF2DB1B5507A60086695E /* testViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testViewController.h; sourceTree = "<group>"; };
+		32DFF2DC1B5507A60086695E /* testViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testViewController.m; sourceTree = "<group>"; };
 		7AC42D561B534F8D00D4581B /* ToolPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolPackage.h; sourceTree = "<group>"; };
 		7AC42D571B534F8D00D4581B /* ToolPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToolPackage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +133,8 @@
 				7AC42D561B534F8D00D4581B /* ToolPackage.h */,
 				7AC42D571B534F8D00D4581B /* ToolPackage.m */,
 				32CD04B01B3BE82000C59A34 /* Main.storyboard */,
+				32DFF2DB1B5507A60086695E /* testViewController.h */,
+				32DFF2DC1B5507A60086695E /* testViewController.m */,
 				32CD04AA1B3BE82000C59A34 /* AppDelegate.h */,
 				32CD04AB1B3BE82000C59A34 /* AppDelegate.m */,
 				32CD04CC1B3BE94A00C59A34 /* HomeViewController.h */,
@@ -306,6 +311,7 @@
 				32CD04E01B3BEA8500C59A34 /* SeverConfig.m in Sources */,
 				32CD04FC1B3BEE8C00C59A34 /* AFURLResponseSerialization.m in Sources */,
 				32CD04D71B3BE9A900C59A34 /* MessageDetailViewController.m in Sources */,
+				32DFF2DD1B5507A60086695E /* testViewController.m in Sources */,
 				32CD04FB1B3BEE8C00C59A34 /* AFURLRequestSerialization.m in Sources */,
 				32CD04F91B3BEE8C00C59A34 /* AFSecurityPolicy.m in Sources */,
 				32CD04F51B3BEE8C00C59A34 /* AFHTTPRequestOperation.m in Sources */,

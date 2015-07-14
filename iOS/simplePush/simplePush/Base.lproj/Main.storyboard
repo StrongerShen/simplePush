@@ -192,10 +192,40 @@
             </objects>
             <point key="canvasLocation" x="1847" y="1391"/>
         </scene>
+        <!--Test View Controller-->
+        <scene sceneID="SD9-uW-aHQ">
+            <objects>
+                <viewController storyboardIdentifier="TEST" id="qdZ-0h-xcz" customClass="testViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XF2-Ee-69d"/>
+                        <viewControllerLayoutGuide type="bottom" id="y4Q-DI-kF6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ECe-pV-YOp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xoj-hr-Cdd">
+                                <rect key="frame" x="16" y="238" width="288" height="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="testLabel" destination="Xoj-hr-Cdd" id="c6X-aA-knv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="crm-7v-zqN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="383" y="1055"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Izf-Ty-hW1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="417-sp-kFi" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NAV" automaticallyAdjustsScrollViewInsets="NO" id="417-sp-kFi" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BpS-q4-KHe">

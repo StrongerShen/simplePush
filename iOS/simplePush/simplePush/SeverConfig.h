@@ -14,7 +14,7 @@
 #define hostUrl @"http://tomin.tw/api/simplePush/iOS"
 
 //George host path
-//#define hostUrl @"http://192.168.0.12/PHP/"
+//#define hostUrl @"http://127.0.0.1/simplePush/iOS/PHP/"
 
 //James host path
 //#define hostUrl @"http://172.20.10.12/PHP/"
