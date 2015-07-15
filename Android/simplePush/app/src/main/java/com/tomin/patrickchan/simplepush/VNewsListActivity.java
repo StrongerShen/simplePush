@@ -10,6 +10,10 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -27,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -36,9 +41,9 @@ public class VNewsListActivity extends Activity{
 
     private static final String TAG = "VNewsListActivity";
 
-    private TableLayout layoutNewsList;
-
-    private String[] mAryNewsTitle, mAryNewsId, mArySendTime, mAryHaveRead;
+    private SimpleAdapter newsArrayAdapter;
+    private ArrayList<HashMap<String, String>> news;
+    private ListView newsListView;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -46,6 +51,21 @@ public class VNewsListActivity extends Activity{
         setContentView(R.layout.activity_news_list);
 
         findView();
+    }
+
+   @Override
+   public void onResume(){
+       setNewsList();
+       super.onResume();
+   }
+
+    private void findView(){
+
+    }
+
+    private void setNewsList(){
+
+        news =new ArrayList<HashMap<String,String>>();
 
         //---TODO 寫成Class
         //開一個隊列
@@ -63,70 +83,32 @@ public class VNewsListActivity extends Activity{
                             String strGetContent = jsObjAppServerResponse.getString("content");
                             JSONArray jsAryGetContent = new JSONArray(strGetContent);
 
-                            mAryNewsId = new String[jsAryGetContent.length()];
-                            mAryNewsTitle = new String[jsAryGetContent.length()];
-                            mArySendTime = new String[jsAryGetContent.length()];
-                            mAryHaveRead = new String[jsAryGetContent.length()];
-
-                            layoutNewsList.setStretchAllColumns(true);
-                            TableLayout.LayoutParams rowLayout = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-                            TableRow.LayoutParams viewLayout = new TableRow.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-
                             for (int i = 0; i<jsAryGetContent.length(); i++){
 
+                                HashMap<String, String> item = new HashMap<String, String>();
+                                item.put("newsId",jsAryGetContent.getJSONObject(i).getString("newsId"));
+                                item.put("preMsg",jsAryGetContent.getJSONObject(i).getString("preMsg"));
+                                item.put("sendTime",jsAryGetContent.getJSONObject(i).getString("sendTime"));
+                                item.put("haveRead",jsAryGetContent.getJSONObject(i).getString("haveRead"));
 
-                                mAryNewsId[i] = jsAryGetContent.getJSONObject(i).getString("newsId");
-                                mAryNewsTitle[i] = jsAryGetContent.getJSONObject(i).getString("preMsg");
-                                mArySendTime[i] = jsAryGetContent.getJSONObject(i).getString("sendTime");
-                                mAryHaveRead[i] = jsAryGetContent.getJSONObject(i).getString("haveRead");
+                                news.add(item);
 
-                                final TableRow tr = new TableRow(VNewsListActivity.this);
-                                tr.setLayoutParams(rowLayout);
-                                tr.setGravity(Gravity.CENTER_HORIZONTAL);
-
-                                TextView txtNewsId = new TextView(VNewsListActivity.this);
-                                txtNewsId.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-                                txtNewsId.setText(mAryNewsId[i]);
-                                txtNewsId.setLayoutParams(viewLayout);
-
-                                TextView txtPreMsg = new TextView(VNewsListActivity.this);
-                                txtPreMsg.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
-                                txtPreMsg.setText(mAryNewsTitle[i]);
-                                txtPreMsg.setLayoutParams(viewLayout);
-
-
-                                TextView txtHaveRead = new TextView(VNewsListActivity.this);
-                                txtHaveRead.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
-                                txtHaveRead.setText(mAryHaveRead[i]);
-                                txtHaveRead.setLayoutParams(viewLayout);
-
-                                tr.addView(txtNewsId);
-                                tr.addView(txtPreMsg);
-                                tr.addView(txtHaveRead);
-
-                                tr.setTag(i);
-
-                                tr.setOnClickListener(new View.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(View v) {
-
-                                        int iTag = (int)v.getTag();
-
-                                        Intent intent = new Intent();
-                                        intent.setClass(VNewsListActivity.this, VNewsDetailActivity.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("newsId", mAryNewsId[iTag]);
-                                        bundle.putString("newsTitle", mAryNewsTitle[iTag]);
-                                        bundle.putString("sendTime", mArySendTime[iTag]);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                    }
-                                });
-
-                                layoutNewsList.addView(tr);
-
+//                                mAryNewsId[i] = jsAryGetContent.getJSONObject(i).getString("newsId");
+//                                mAryNewsTitle[i] = jsAryGetContent.getJSONObject(i).getString("preMsg");
+//                                mArySendTime[i] = jsAryGetContent.getJSONObject(i).getString("sendTime");
+//                                mAryHaveRead[i] = jsAryGetContent.getJSONObject(i).getString("haveRead");
                             }
+
+                            newsListView = (ListView)findViewById(R.id.newsListView);
+                            newsArrayAdapter = new SimpleAdapter(getApplicationContext(),news,R.layout.news_list_item,new String[]{"newsId","preMsg","sendTime","haveRead"},new int[]{R.id.txtNewsListItem1,R.id.txtNewsListItem2,R.id.txtNewsListItem3,R.id.txtNewsListItem4});
+                            newsListView.setAdapter(newsArrayAdapter);
+
+                            newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    openConversation(news, position);
+                                }
+                            });
 
                             Log.d(TAG,"Response : "+response);
 
@@ -139,8 +121,8 @@ public class VNewsListActivity extends Activity{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG,"Response Error :"+error);
-                }
-        }){
+                    }
+                }){
             // 帶參數
             @Override
             protected HashMap<String, String> getParams()
@@ -160,10 +142,19 @@ public class VNewsListActivity extends Activity{
 
         mQueue.add(stringRequest);
         //-------------
-
     }
 
-    private void findView(){
-        layoutNewsList = (TableLayout)findViewById(R.id.layout_news_list);
+    public void openConversation(ArrayList<HashMap<String, String>> news, int position){
+        Intent intent = new Intent();
+        intent.setClass(VNewsListActivity.this, VNewsDetailActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("newsId", news.get(position).get("newsId"));
+        bundle.putString("newsTitle", news.get(position).get("preMsg"));
+        bundle.putString("sendTime", news.get(position).get("sendTime"));
+        bundle.putString("haveRead", news.get(position).get("haveRead"));
+
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

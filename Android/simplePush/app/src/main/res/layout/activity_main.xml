@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,56 +10,99 @@
     tools:context=".MainActivity"
     android:weightSum="1">
 
-    <TextView
-        android:layout_width="88dp"
-        android:layout_height="44dp"
-        android:text="@string/txtLogin"
-        android:id="@+id/txtLogin"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.15"
-        android:gravity="center"
-        android:textSize="30sp" />
-
-    <EditText
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtUserName"
-        android:layout_gravity="center_horizontal"
-        android:hint="@string/edtUserNameHint"
-        />
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtPassword"
-        android:layout_gravity="center_horizontal"
-        android:hint="@string/edtPassword"
-        />
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/txtUserName"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/sinch_purple"
+            android:textSize="20sp"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtVerifyPassword"
-        android:hint="@string/edtVerifyPassword" />
+        <EditText
+            android:id="@+id/edtUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edtUserNameHint"
+            android:layout_marginTop="8dp"
+            android:inputType="text"
+            android:textSize="32sp"
+            android:padding="10dp"
+            android:textColor="@color/sinch_purple"
+            android:background="@drawable/inputbox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <requestFocus/>
+        </EditText>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btnSubmit"
-        android:id="@+id/btnSubmit"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"/>
+        <TextView
+            android:id="@+id/txtPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/txtPassword"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/sinch_purple"
+            android:textSize="20sp"/>
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/registrationProgressBar"
-        android:layout_gravity="center_horizontal" />
+        <EditText
+            android:id="@+id/edtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtShowInfo"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.13" />
-</LinearLayout>
+            android:hint="@string/edtPassword"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="40dp"
+            android:inputType="textPassword"
+            android:textSize="32sp"
+            android:padding="10dp"
+            android:textColor="@color/sinch_purple"
+            android:background="@drawable/inputbox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtVerifyPassword"
+            android:hint="@string/edtVerifyPassword"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="40dp"
+            android:inputType="textPassword"
+            android:textSize="32sp"
+            android:padding="10dp"
+            android:textColor="@color/sinch_purple"
+            android:background="@drawable/inputbox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnSubmit"
+            android:id="@+id/btnSubmit"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/registrationProgressBar"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtShowInfo"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.13" />
+    </LinearLayout>
+</RelativeLayout>
