@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_news_detail"
+    android:weightSum="1"
+    android:paddingTop="8dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtNewsId"
+            android:nestedScrollingEnabled="false"
+            android:textIsSelectable="false"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:textSize="30dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtNewsTitle"
+            android:layout_gravity="center_vertical"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtSendTime"
+        android:textSize="20dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNewsContent"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20dp" />
+</LinearLayout>

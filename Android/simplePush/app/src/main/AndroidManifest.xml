@@ -41,6 +41,9 @@
         <activity android:name=".VNewsListActivity"
                   android:label="@string/news_list_title">
         </activity>
+        <activity android:name=".VNewsDetailActivity"
+            android:label="@string/news_detail_title">
+        </activity>
 
         <!-- [START gcm_receiver] -->
         <receiver
