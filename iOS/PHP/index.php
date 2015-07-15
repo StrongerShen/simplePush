@@ -11,6 +11,7 @@
 	2015/06/30	Samma	1、增加全選、取消全選功能 => getUserList.js
 						2、增加News Broadcast Title 欄位，原本的 News Broadcast 更名為 News Broadcast Content 
 						3、增加重設按鈕
+	2015/07/15	Samma	1、增加表單送出前資料檢查
  ==============================
  */
 ?>
@@ -25,7 +26,7 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="pushNotification.php">
+<form id="form1" name="form1" method="post" action="pushNotification.php" OnSubmit="return dataCheck();">
   <p>
   	<label for="msgTitle">News Broadcast Title</label>
   	<br/>

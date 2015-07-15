@@ -17,6 +17,7 @@
 	 異動記錄 :
 	 2015/06/23	Samma	1、回傳內容增加newsId
 	 2015/06/30	Samma	1、調整回傳的訊息改讀msgTitle
+	 2015/07/15	Samma	1、調整回傳的訊息列表，如果 title 本身沒超過 10 個字元，後面不用加 "..."
 	 ==============================
 	 */
 
@@ -34,7 +35,7 @@
 		
 		//依指定的訊息 ID 從Database 取出訊息的完整內容
 		$sth = $db->prepare("select b.news_id,
-									concat(substr(b.msg_title,1,10),'...') pre_msg,
+									if( char_length(b.msg_title) <= 10,b.msg_title,concat(substr(b.msg_title,1,10),'...') ) pre_msg,
 									b.have_read,
 									date_format(b.send_time, '%Y-%m-%d %H:%i:%s') send_time
 							   from users a, news b

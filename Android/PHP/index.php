@@ -5,7 +5,7 @@
     建立者 	: Samma
     建立日期 : 2015/07/04
     異動記錄 :
-
+	2015/07/15	Samma	1、增加表單送出前資料檢查
  ==============================
  */
 ?>
@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="pushNotification.php">
+<form id="form1" name="form1" method="post" action="pushNotification.php" OnSubmit="return dataCheck();">
   <p>
   	<label for="msgTitle">News Broadcast Title</label>
   	<br/>

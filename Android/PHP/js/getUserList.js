@@ -5,6 +5,7 @@
     建立日期 : 2015/06/22
     異動記錄 :
 	2015/06/30	Samma	1、增加全選 & 取消全選功能
+	2015/07/15	Samma	1、增加dataCheck()，用於表單送出前的資料檢查
  ==============================
  */
 
@@ -58,4 +59,36 @@ function fn_cancelSelectAll () {
 		$("#CheckboxGroup1_"+i).removeAttr("checked");
 	}
 	$("#sendAll").val("0");
+}
+
+function dataCheck() {
+	
+	//檢查msgTitle是否有輸入資料
+	var msgTitle = $("#msgTitle").val();
+	if( msgTitle.length <= 0) {
+		alert("News Broadcast Title 尚未輸入");
+		return false;
+	}
+	
+	//檢查msg是否有輸入資料
+	var msg = $("#msg").val();
+	if( msg.length <= 0) {
+		alert("News Broadcast Content 尚未輸入");
+		return false;
+	}
+	
+	//檢查是否至少有選擇一個推播對象
+	var cnt = 0;
+	for(var i=0; i<$("input[name='list[]']").length; i++) {
+		if( $("#CheckboxGroup1_"+i).prop("checked") ){
+			cnt++;
+		}
+	}
+	if ( cnt <= 0 ) {
+		alert("請至少選擇一個推播對象");
+		return false;
+	}
+	
+	return true;
+	
 }
