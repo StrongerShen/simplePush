@@ -6,6 +6,7 @@
     建立日期 : 2015/07/04
     異動記錄 :
 	2015/07/15	Samma	1、增加表單送出前資料檢查
+	2015/07/16	Samma	1、調整 js 的檔名
  ==============================
  */
 ?>
@@ -16,7 +17,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>News Push</title>
   <script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-  <script type="text/javascript" src="js/getUserList.js"></script>
+  <script type="text/javascript" src="js/ctrl.js"></script>
 </head>
 
 <body>
