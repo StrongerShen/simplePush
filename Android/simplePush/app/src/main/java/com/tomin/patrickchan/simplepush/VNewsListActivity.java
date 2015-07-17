@@ -93,10 +93,6 @@ public class VNewsListActivity extends Activity{
 
                                 news.add(item);
 
-//                                mAryNewsId[i] = jsAryGetContent.getJSONObject(i).getString("newsId");
-//                                mAryNewsTitle[i] = jsAryGetContent.getJSONObject(i).getString("preMsg");
-//                                mArySendTime[i] = jsAryGetContent.getJSONObject(i).getString("sendTime");
-//                                mAryHaveRead[i] = jsAryGetContent.getJSONObject(i).getString("haveRead");
                             }
 
                             newsListView = (ListView)findViewById(R.id.newsListView);
