@@ -1,48 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:id="@+id/layout_news_detail"
-    android:weightSum="1"
-    android:paddingTop="8dp">
+    android:background="@color/off_white"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/news_detail_toolbar"
+        app:title="即時新聞"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary"/>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtNewsId"
-            android:nestedScrollingEnabled="false"
-            android:textIsSelectable="false"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:textSize="30dp" />
-
-        <TextView
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtNewsTitle"
-            android:layout_gravity="center_vertical"
-            android:textSize="30dp" />
+            android:layout_height="match_parent"
+
+            android:background="@color/off_white"
+            android:id="@+id/newsDetailView">
+        </ListView>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtSendTime"
-        android:textSize="20dp"
-        android:gravity="center_vertical"
-        android:layout_gravity="center_vertical" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtNewsContent"
-        android:layout_gravity="center_horizontal"
-        android:textSize="20dp" />
 </LinearLayout>
