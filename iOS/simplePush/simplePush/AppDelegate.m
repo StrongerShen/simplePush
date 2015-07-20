@@ -12,7 +12,9 @@
 #import "testViewController.h"
 
 @interface AppDelegate ()
-
+{
+    NSDictionary *nowInfo;
+}
 @end
 
 @implementation AppDelegate
@@ -55,16 +57,12 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     
         NSLog(@"你執行了applicationWillResignActive");
-    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
     NSLog(@"你執行了applicationDidEnterBackground");
 }
 
@@ -74,15 +72,23 @@
     [nc postNotificationName:@"RELOADLIST" object:nil];
     
     NSLog(@"你執行了applicationWillEnterForeground");
+    
+    //將當下收到的userInfo儲存，透過進入前景時，取出message ID 進行內容讀取，並將rootViewController 設定為 MessageDetailViewController
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    MessageDetailViewController *mdvc = [storyBoard instantiateViewControllerWithIdentifier:@"FULLMSG"];
+    mdvc.receiveMessageID = nowInfo[@"newsId"];
+    [navController.visibleViewController.navigationController pushViewController:mdvc animated:YES];
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
         NSLog(@"你執行了applicationDidBecomeActive");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
         NSLog(@"你執行了applicationWillTerminate");
 }
 
@@ -102,7 +108,7 @@
     }else {
         NSLog(@"receiveDeviceToken 不存在");
     }
-        NSLog(@"你執行了didRegisterForRemoteNotificationsWithDeviceToken");
+//        NSLog(@"你執行了didRegisterForRemoteNotificationsWithDeviceToken");
 }
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -114,22 +120,12 @@
     //badge++
     [UIApplication sharedApplication].applicationIconBadgeNumber++;
     
+    //trigger Notification Center
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"RELOADLIST" object:nil];
     
-    NSLog(@"%@",userInfo);
-    
-    //set content root controller
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    testViewController *testVC = [storyBoard instantiateViewControllerWithIdentifier:@"TEST"];
-    
-    
-    
-//    MessageDetailViewController *fullMsgVC = [storyBoard instantiateViewControllerWithIdentifier:@"FULLMSG"];
-//    if (userInfo[@"newsId"]!= nil) {
-//        fullMsgVC.receiveMessageID = userInfo[@"newsId"];
-//        self.window.rootViewController = fullMsgVC;
-//    }
+    nowInfo = [[NSDictionary alloc]init];
+    nowInfo = userInfo[@"aps"];
 
 }
 

@@ -9,9 +9,12 @@
 #import "CustomPushNotificationTableViewCell.h"
 
 @implementation CustomPushNotificationTableViewCell
-
+@synthesize readOrNotImageView;
 - (void)awakeFromNib {
     // Initialization code
+    readOrNotImageView.layer.cornerRadius = 5;
+    readOrNotImageView.clipsToBounds = YES;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

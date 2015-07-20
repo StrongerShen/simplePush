@@ -34,16 +34,16 @@
     device_token = [userDefault objectForKey:@"device_token"];
     
     //設定 navigationBar、title、barItem 顏色
-    UIColor *navgationBarColor = [UIColor colorWithRed:0.497 green:0.759 blue:0.175 alpha:1.000];
+    UIColor *navgationBarColor = [UIColor colorWithRed:0.561 green:0.765 blue:0.122 alpha:1.000];
     self.navigationController.navigationBar.barTintColor = navgationBarColor; //改變 Bar 顏色
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.081 green:0.437 blue:0.778 alpha:1.000]; //改變 BarItem 的顏色
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor]; //改變 BarItem 的顏色
     
     // 改變 title 顏色
     UILabel * titleView = [[UILabel alloc] initWithFrame:CGRectZero];
     titleView.backgroundColor = [UIColor clearColor];
-    titleView.font = [UIFont boldSystemFontOfSize:20.0];
+    titleView.font = [UIFont boldSystemFontOfSize:22.0];
     titleView.textColor = [UIColor whiteColor]; // Your color here
-    titleView.text = @"訊息內容";
+    titleView.text = @"即時新聞";
     self.navigationItem.titleView = titleView;
     [titleView sizeToFit];
     
