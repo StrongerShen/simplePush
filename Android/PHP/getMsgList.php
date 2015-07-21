@@ -19,11 +19,13 @@
 	 2015/06/30	Samma	1、調整回傳的訊息改讀msgTitle
 	 2015/07/15	Samma	1、調整回傳的訊息列表，如果 title 本身沒超過 10 個字元，後面不用加 "..."
 	 2015/07/21	Samma	1、調整回傳的訊息 title 不需要加 ...
+	 					2、加入 last_login_time 記錄
 	 ==============================
 	 */
 
 	//receive member_id
-	$member_id = $_POST['member_id'];
+	//$member_id = $_POST['member_id'];
+	$member_id = 'Samma2';
 	
 	//handle error
 	$errCode = 0;
@@ -32,6 +34,27 @@
 	//Database Connect
 	require_once('connectsql.php');
 	
+	//=======當前端每次與這個頁面連線，更新 users.last_login_time========
+	try {
+			
+		$db->beginTransaction();
+			
+		//當device token不存在時新增
+		$result = $db->query("update users
+							     set last_login_time = now()
+							   where member_id = '$member_id'");
+			
+		$db->commit();
+			
+	} catch (PDOException $err) {
+			
+		$db->rollback();
+		$errCode = $err->getCode();
+		$errMsg = $err->getMessage();
+			
+	}
+	
+	//==========取得訊息列表===========
 	try {
 		
 		//依指定的訊息 ID 從Database 取出訊息的完整內容

@@ -55,7 +55,6 @@
 			$this->member_pwd = isset($_POST['memPwd']) ? $_POST['memPwd'] : NULL;
 			$this->device_type = isset($_POST['device_type']) ? $_POST['device_type'] : NULL;
 			
-			
 			//如果密碼沒有傳入，自動預設 123，此設計是為了避免現階段前端錯誤而無法運作，後續的simpleTalk是不做這樣設計的
 			if (empty($this->member_pwd) or strlen($this->member_pwd) == 0) {
 				$this->member_pwd = md5('123');
@@ -69,69 +68,87 @@
 		function start() {
 			
 			try {
-			
-				$result = $this->connDB->query("select * 
-												  from users 
-									   			 where device_token = '$this->device_token'");
 				
-				//PDOStatement::rowCount — 取得上一個執行的SQL語法，影響到的資料筆數
+				//判斷 member_id 是否已存在
+				$result = $this->connDB->query("select *
+											  	  from users
+												 where member_id = '$this->member_id'");
+				
+				// member_id 不存在
 				if ($result->rowCount() <= 0 ) {
-						
-					try {
-				
-						$this->connDB->beginTransaction();
-				
-						//當device token不存在時新增
-						$result = $this->connDB->query("INSERT INTO users
-											  			(member_id, member_pwd,
-											  			 member_name, member_phone,
-											  			 device_token, device_type)
-											 			VALUES
-											  			('$this->member_id', '$this->member_pwd',
-											   			 '$this->member_name', 'new_member_phone',
-											   			 '$this->device_token', '$this->device_type')");
-				
-						//新增完成，處理結果["ret_code"]返回YES，代表OK
-						$this->message["ret_code"]='YES';
-				
-						$this->connDB->commit();
-				
-					} catch (PDOException $err) {
-				
-						$this->connDB->rollback();
-						$this->message["ret_code"]='NO';
-						$this->message["ret_desc"] = $err->getMessage();
-				
-					}
-						
+					
+					$result = $this->connDB->query("select *
+													  from users
+													 where device_token = '$this->device_token'");
+					
+					//PDOStatement::rowCount — 取得上一個執行的SQL語法，影響到的資料筆數
+					if ($result->rowCount() <= 0 ) {
+					
+						try {
+					
+							$this->connDB->beginTransaction();
+					
+							//當device token不存在時新增
+							$result = $this->connDB->query("INSERT INTO users
+															(member_id, member_pwd,
+															member_name, member_phone,
+															device_token, device_type)
+															VALUES
+															('$this->member_id', '$this->member_pwd',
+															'$this->member_name', 'new_member_phone',
+															'$this->device_token', '$this->device_type')");
+											
+							//新增完成，處理結果["ret_code"]返回YES，代表OK
+							$this->message["ret_code"]='YES';
+					
+							$this->connDB->commit();
+					
+						} catch (PDOException $err) {
+					
+							$this->connDB->rollback();
+							$this->message["ret_code"]='NO';
+							$this->message["ret_desc"] = $err->getMessage();
+					
+						}
+					
+					} else {
+							
+						$this->message["ret_code"] = 'NO';
+						$this->message["ret_desc"] = 'device token already exists';
+					
+					}	// end if ($result->rowCount() <=0 )
+					
+					
+				//member_id 已經存在
 				} else {
 					
 					try {
-						
-						$this->connDB->beginTransaction();
-						
-						//若device token已經存在，將使用者帳號、密碼、裝置名稱直接更新
-						$result = $this->connDB->query("update users
-														   set member_id = '$this->member_id',
-															   member_pwd = '$this->member_pwd',
-															   member_name = '$this->member_name'
-														 where device_token = '$this->device_token'
-														   and device_type = '$this->device_type'");
 							
-						$this->message["ret_code"] = 'YES';
-						$this->message["ret_desc"] = 'device token already exists';
-						
+						$this->connDB->beginTransaction();
+							
+						//當device token不存在時新增
+						$result = $this->connDB->query("update users
+														   set member_pwd = '$this->member_pwd',
+															   member_name = '$this->member_name',
+															   device_token = '$this->device_token',
+															   device_type = '$this->device_type'
+														 where member_id = '$this->member_id'");
+							
+						//新增完成，處理結果["ret_code"]返回YES，代表OK
+						$this->message["ret_code"]='YES';
+						$this->message["ret_desc"] = 'member id already exists';
+							
 						$this->connDB->commit();
-						
+							
 					} catch (PDOException $err) {
-				
+							
 						$this->connDB->rollback();
 						$this->message["ret_code"]='NO';
 						$this->message["ret_desc"] = $err->getMessage();
-				
+							
 					}
-						
-				}	// end if ($result->rowCount() <=0 )
+					
+				}	// end if ($result->rowCount() <= 0 )
 				
 				
 				//註冊成功的話，寫入使用者資訊，準備回傳
