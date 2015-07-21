@@ -23,6 +23,7 @@
 	2015/07/09	Samma	1、增加密碼預設功能
 						2、增加傳入 device_type [裝置類型]，便於後續整合成 simpleTalk 專案
 						3、重構程式，以 class 的方式重寫
+	2015/07/21	Samma	1、增加判斷 member_id 已經存在時，更新 device_token，不返回 device_token 已存在的訊息
  ==============================
  */
 
@@ -53,6 +54,7 @@
 			$this->member_name = isset($_POST['memName']) ? $_POST['memName'] : NULL;
 			$this->member_pwd = isset($_POST['memPwd']) ? $_POST['memPwd'] : NULL;
 			$this->device_type = isset($_POST['device_type']) ? $_POST['device_type'] : NULL;
+			
 			
 			//如果密碼沒有傳入，自動預設 123，此設計是為了避免現階段前端錯誤而無法運作，後續的simpleTalk是不做這樣設計的
 			if (empty($this->member_pwd) or strlen($this->member_pwd) == 0) {
@@ -103,10 +105,31 @@
 					}
 						
 				} else {
+					
+					try {
 						
-					//當device token已存在時，處理結果["ret_code"]返回NO，代表不OK
-					$this->message["ret_code"] = 'NO';
-					$this->message["ret_desc"] = 'device token already exists';
+						$this->connDB->beginTransaction();
+						
+						//若device token已經存在，將使用者帳號、密碼、裝置名稱直接更新
+						$result = $this->connDB->query("update users
+														   set member_id = '$this->member_id',
+															   member_pwd = '$this->member_pwd',
+															   member_name = '$this->member_name'
+														 where device_token = '$this->device_token'
+														   and device_type = '$this->device_type'");
+							
+						$this->message["ret_code"] = 'YES';
+						$this->message["ret_desc"] = 'device token already exists';
+						
+						$this->connDB->commit();
+						
+					} catch (PDOException $err) {
+				
+						$this->connDB->rollback();
+						$this->message["ret_code"]='NO';
+						$this->message["ret_desc"] = $err->getMessage();
+				
+					}
 						
 				}	// end if ($result->rowCount() <=0 )
 				
