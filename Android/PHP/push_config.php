@@ -5,7 +5,7 @@
 	 建立者	 : Samma
 	 建立日期 : 2015/07/11
 	 異動記錄 :
-	
+	 2015/07/22	Samma 1、api key update
 	 ==============================
 	 */
 
@@ -15,14 +15,14 @@
 			'development' => array(
 					'push_server'		=> 'https://android.googleapis.com/gcm/send',
 					'feedback_server'	=> 'no data',
-					'api_key'			=> 'AIzaSyB8cneIrOV1nRsr3pb8FD3XgC5tJLe637g'
+					'api_key'			=> 'AIzaSyBV_rkecXDwKl8dUeCTy_5pBDgE7KiVcgo'
 			),
 				
 			// for production environment settings
 			'production' => array(
 					'push_server'		=> 'https://android.googleapis.com/gcm/send',
 					'feedback_server'	=> 'no data',
-					'api_key'			=> 'AIzaSyB8cneIrOV1nRsr3pb8FD3XgC5tJLe637g'
+					'api_key'			=> 'AIzaSyBV_rkecXDwKl8dUeCTy_5pBDgE7KiVcgo'
 			)
 	);
 ?>
