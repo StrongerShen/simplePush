@@ -11,10 +11,10 @@
 @interface SeverConfig : NSObject
 
 //Mac mini Server
-//#define hostUrl @"http://tomin.tw/api/simplePush/iOS"
+#define hostUrl @"http://tomin.tw/api/simplePush/iOS"
 
 //George host path
-#define hostUrl @"http://10.0.1.33/simplePush/iOS/PHP/"
+//#define hostUrl @"http://localhost/simplePush/iOS/PHP/"
 
 //James host path
 //#define hostUrl @"http://172.20.10.12/PHP/"

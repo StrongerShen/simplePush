@@ -11,24 +11,27 @@
 #import "AFNetworking.h"
 
 @interface MessageDetailViewController ()
-
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *fullMessageTextView;
 @end
 
 @implementation MessageDetailViewController
-@synthesize receiveMessageID,fullMessageTextView;
+@synthesize receiveMessageID,fullMessageTextView,titleLabel,receiveMessageTitle;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+    NSLog(@"pushNotiInfo:%@",_pushNotiInfo);
+    [self getFullMessage];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     
     //設定 navigationBar、title、barItem 顏色
     UIColor *navgationBarColor = [UIColor colorWithRed:0.497 green:0.759 blue:0.175 alpha:1.000];
-    self.navigationController.navigationBar.barTintColor = navgationBarColor; //改變 Bar 顏色
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.081 green:0.437 blue:0.778 alpha:1.000]; //改變 BarItem 的顏色
+    self.navigationController.navigationBar.barTintColor = navgationBarColor;
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.081 green:0.437 blue:0.778 alpha:1.000];
+    self.navigationController.navigationBar.topItem.title = @"";
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     
     // 改變 title 顏色
     UILabel * titleView = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -39,7 +42,7 @@
     self.navigationItem.titleView = titleView;
     [titleView sizeToFit];
     
-    [self getFullMessage];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -78,6 +81,7 @@
         //根據errCode判定是否抓到完整訊息
         if (responseObject[@"fullMsg"] != nil && [responseObject[@"errCode"] isEqualToNumber:ok]) {
             fullMessageTextView.text = responseObject[@"fullMsg"];
+            titleLabel.text = receiveMessageTitle;
         }
         else if(responseObject[@"fullMsg"] == nil && [responseObject[@"errCode"] isEqualToNumber:fail]){
             NSLog(@"錯誤為:%@",responseObject[@"errMsg"]);
