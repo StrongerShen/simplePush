@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @interface MessageDetailViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextView *fullMessageTextView;
 @property(strong,nonatomic)NSString *receiveMessageID;
+@property(strong,nonatomic)NSString *receiveMessageTitle;
+@property(strong,nonatomic)NSMutableDictionary *pushNotiInfo;
 @end

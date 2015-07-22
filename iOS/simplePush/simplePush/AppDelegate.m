@@ -51,6 +51,12 @@
         self.window.rootViewController = login;
     }
     
+    NSDictionary *pushDict = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(pushDict)
+    {
+        [self application:application didReceiveRemoteNotification:pushDict];
+    }
+    
     NSLog(@"你執行了didFinishLaunchingWithOptions");
     
     return YES;
@@ -74,11 +80,15 @@
     NSLog(@"你執行了applicationWillEnterForeground");
     
     //將當下收到的userInfo儲存，透過進入前景時，取出message ID 進行內容讀取，並將rootViewController 設定為 MessageDetailViewController
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    MessageDetailViewController *mdvc = [storyBoard instantiateViewControllerWithIdentifier:@"FULLMSG"];
-    mdvc.receiveMessageID = nowInfo[@"newsId"];
-    [navController.visibleViewController.navigationController pushViewController:mdvc animated:YES];
+    if (nowInfo != nil) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        MessageDetailViewController *mdvc = [storyBoard instantiateViewControllerWithIdentifier:@"FULLMSG"];
+        
+        [navController.visibleViewController.navigationController pushViewController:mdvc animated:YES];
+        nowInfo = [[NSDictionary alloc]init];
+    }
+    
 
 }
 
@@ -108,6 +118,7 @@
     }else {
         NSLog(@"receiveDeviceToken 不存在");
     }
+    NSLog(@"%@",deviceToken);
 //        NSLog(@"你執行了didRegisterForRemoteNotificationsWithDeviceToken");
 }
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -124,8 +135,10 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"RELOADLIST" object:nil];
     
-    nowInfo = [[NSDictionary alloc]init];
+    //儲存要顯示的完整訊息ID
     nowInfo = userInfo[@"aps"];
+    NSLog(@"%@",userInfo[@"aps"]);
+    NSLog(@"%@",nowInfo);
 
 }
 

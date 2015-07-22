@@ -9,11 +9,11 @@
 #import "CustomPushNotificationTableViewCell.h"
 
 @implementation CustomPushNotificationTableViewCell
-@synthesize readOrNotImageView;
+@synthesize readMessageLabel;
 - (void)awakeFromNib {
     // Initialization code
-    readOrNotImageView.layer.cornerRadius = 5;
-    readOrNotImageView.clipsToBounds = YES;
+    readMessageLabel.layer.cornerRadius = 5;
+    readMessageLabel.clipsToBounds = YES;
     
 }
 

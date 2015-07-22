@@ -119,10 +119,12 @@
     customCell.timeLabel.text = userMessageListArray[indexPath.row][@"sendTime"];
     NSString *tag = userMessageListArray[indexPath.row][@"haveRead"];
     if (tag != nil && [tag isEqualToString:@"0"]) {
-        customCell.readOrNotImageView.image = [UIImage imageNamed:@"Unread"];
+        customCell.readMessageLabel.text = @"未讀";
+        customCell.readMessageLabel.backgroundColor = [UIColor colorWithRed:0.561 green:0.765 blue:0.122 alpha:1.000];
     }
     else if (tag != nil && [tag isEqualToString:@"1"]){
-        customCell.readOrNotImageView.image = [UIImage imageNamed:@"Read"];
+        customCell.readMessageLabel.text = @"已讀";
+        customCell.readMessageLabel.backgroundColor = [UIColor colorWithRed:0.788 green:0.792 blue:0.792 alpha:1.000];
     }
     else{
         NSLog(@"出現問題，沒有辦法判定Tag");
@@ -140,7 +142,9 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber--;
     
     NSString *newsId = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"newsId"]];
-    [self performSegueWithIdentifier:@"toFullMessage" sender:newsId];
+    NSString *newsTitle = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"preMsg"]];
+    NSArray *pass = [[NSArray alloc]initWithObjects:newsId,newsTitle, nil];
+    [self performSegueWithIdentifier:@"toFullMessage" sender:pass];
 }
 
 // Override to support conditional editing of the table view.
@@ -195,7 +199,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MessageDetailViewController *mdvc = [segue destinationViewController];
-    mdvc.receiveMessageID = sender;
+    mdvc.receiveMessageID = sender[0];
+    mdvc.receiveMessageTitle = sender[1];
 }
 
 @end

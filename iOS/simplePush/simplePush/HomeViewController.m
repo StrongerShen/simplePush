@@ -161,5 +161,11 @@
     [alertController addAction:ok];
     [self presentViewController:alertController animated:YES completion:nil];
 }
+- (IBAction)resignKeyBoard:(id)sender {
+    [inputDeviceNameTF resignFirstResponder];
+    [inputPasswordTF resignFirstResponder];
+    [inputNameTF resignFirstResponder];
+}
+
 
 @end
