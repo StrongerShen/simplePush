@@ -7,9 +7,9 @@
  	Input  					=>       lists           :   推播對象的 Member Id
  									 message         :   推播訊息
  	Output (payload format) =>   	 to				 :	 要推播的 device token,
-									 data			 :	 array("message" => 推播的訊息內容);
-									 badge			 :	 未讀訊息數
-									 newsId			 :	 news id  
+									 data (array)	 :	 message	:	推播的訊息內容
+														 badge		:	未讀訊息數
+									 					 newsId		:	news id  
 
  	建立者 : Samma
  	建立日期 : 2015/07/11
@@ -148,9 +148,6 @@ class GCM_Push {
 	// 傳送推播內容至 APNS 給指定對象
 	function sendNotification($msgTitle, $deviceToken, $memNo){
 		
-		//要傳送的訊息內容
-		$msgJSON = array("message" => $msgTitle);
-		
 		//取得badge number
 		$result = $this->db->prepare("select count(seq_no) badge, max(news_id) news_id
 										from news 
@@ -161,10 +158,14 @@ class GCM_Push {
 		$badge = $temp["badge"];
 		$newsIdMax = $temp["news_id"];
 		
+		//要傳送的訊息內容
+		$msgJSON = array("message"	=>	$msgTitle,
+						 "badge"	=>	$badge,
+						 "newsId"	=>	$newsIdMax
+						);
+		
 		$payload = array(	'to'		=>	$deviceToken,
-							'data'		=>	$msgJSON,
-							'badge'		=>	$badge,
-							'newsId'	=>	$newsIdMax
+							'data'		=>	$msgJSON
 						);
 		
 

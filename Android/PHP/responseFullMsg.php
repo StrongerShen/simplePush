@@ -5,12 +5,15 @@
 	 Input  =>	news_id	:	訊息ID
 	 Output =>	errCode	:	錯誤代碼 (沒有錯誤時回傳0)
 				errMsg	:	錯誤訊息
+				title	:	新聞標題
+				sendTime:	發送時間
 				fullMsg	:	完整訊息
 	 建立者 : Samma
 	 建立日期 : 2015/06/17
 	 異動記錄 :
 	 2015/06/18	Samma	1、加入 transaction 控制
 	 2015/07/09	Samma	1、針對一開始取出完整訊息的 SQL，增加 try catch 例外處理
+	 2015/07/22	Samma	1、增加回傳 title & send time
 	 ==============================
 	 */
 
@@ -27,7 +30,9 @@
 	try {
 		
 		//依指定的訊息 ID 從Database 取出訊息的完整內容
-		$sth = $db->prepare("select msg
+		$sth = $db->prepare("select msg,
+									msg_title,
+									date_format(send_time, '%Y-%m-%d %H:%i:%s') send_time
 						   	   from news
 						  	  where news_id = :id");
 		$sth->bindParam("id",$news_id,PDO::PARAM_INT);
@@ -35,6 +40,8 @@
 		$result = $sth->fetchAll();
 		$data = $result[0];
 		$msg = $data['msg'];
+		$msg_title = $data['msg_title'];
+		$send_time = $data['send_time'];
 		
 		if ( !$msg ) {
 		
@@ -86,6 +93,8 @@
 	$msgContent = array(
 			'errCode'	=>	$errCode,
 			'errMsg'	=>	$errMsg,
+			'title'		=>	$msg_title,
+			'sendTime'	=>	$send_time,
 			'fullMsg'	=>	$msg
 	);
 	
