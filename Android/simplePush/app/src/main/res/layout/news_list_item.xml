@@ -23,7 +23,8 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp">
+                    android:textSize="25sp"
+                    android:visibility="gone">
 
                 </TextView>
 
@@ -61,12 +62,13 @@
         android:layout_gravity="center_vertical|right">
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/txtNewsListItem4"
-            android:textColor="@color/very_dark_gray"
-
+            android:textColor="@color/have_read_gray"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:textSize="30sp"
+            android:background="@drawable/readbox"
+            android:textSize="15sp"
             android:layout_gravity="center_vertical|right">
 
         </TextView>
