@@ -16,15 +16,23 @@
 @end
 
 @implementation MessageDetailViewController
-@synthesize receiveMessageID,fullMessageTextView,titleLabel,receiveMessageTitle;
+@synthesize receiveMessageID,fullMessageTextView,titleLabel,receiveMessageTitle,pushNotiInfo,MessageDetailViewControllerTag;
 
 - (void)viewDidLoad {
+    
+    NSLog(@"你執行了MDVC的viewDidLoad");
     [super viewDidLoad];
-    NSLog(@"pushNotiInfo:%@",_pushNotiInfo);
-    [self getFullMessage];
+    if (MessageDetailViewControllerTag == 0) {
+        [self getFullMessage];
+    }else if(MessageDetailViewControllerTag == 1){
+        [self clickPushNotificationToGetFullMessage];
+        MessageDetailViewControllerTag = 0;
+    }
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
+    NSLog(@"你執行了MDVC的viewWillAppear");
     
     //設定 navigationBar、title、barItem 顏色
     UIColor *navgationBarColor = [UIColor colorWithRed:0.497 green:0.759 blue:0.175 alpha:1.000];
@@ -42,23 +50,15 @@
     self.navigationItem.titleView = titleView;
     [titleView sizeToFit];
     
-
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 -(void)getFullMessage{
+    
+    NSLog(@"你執行了MDVC的getFullMessage");
     
     //設定要POST的參數
     NSDictionary *parameters = @{@"news_id":receiveMessageID};
@@ -82,6 +82,50 @@
         if (responseObject[@"fullMsg"] != nil && [responseObject[@"errCode"] isEqualToNumber:ok]) {
             fullMessageTextView.text = responseObject[@"fullMsg"];
             titleLabel.text = receiveMessageTitle;
+            
+            receiveMessageID = [NSString new];
+            receiveMessageTitle = [NSString new];
+        }
+        else if(responseObject[@"fullMsg"] == nil && [responseObject[@"errCode"] isEqualToNumber:fail]){
+            NSLog(@"錯誤為:%@",responseObject[@"errMsg"]);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        //成功的話就執行此block
+        NSLog(@"Requst Fail!");
+    }];
+}
+-(void)clickPushNotificationToGetFullMessage{
+    
+    NSLog(@"你執行了MDVC的clickPushNotificationToGetFullMessage");
+    
+    //設定要POST的參數
+    NSDictionary *parameters = @{@"news_id":receiveMessageID};
+    
+    //設定HostURL
+    NSURL *url = [NSURL URLWithString:hostUrl];
+    
+    //設定連線manager
+    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:url];
+    
+    //設定manager 願意接收輸入的type
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    //將會員資料POST至PHP
+    [manager POST:@"responseFullMsg.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSNumber *ok = [NSNumber numberWithInt:0];
+        NSNumber *fail = [NSNumber numberWithInt:1];
+        
+        //根據errCode判定是否抓到完整訊息
+        if (responseObject[@"fullMsg"] != nil && [responseObject[@"errCode"] isEqualToNumber:ok]) {
+            fullMessageTextView.text = responseObject[@"fullMsg"];
+            titleLabel.text = receiveMessageTitle;
+            
+            receiveMessageID = [NSString new];
+            receiveMessageTitle = [NSString new];
+            MessageDetailViewControllerTag = 0;
         }
         else if(responseObject[@"fullMsg"] == nil && [responseObject[@"errCode"] isEqualToNumber:fail]){
             NSLog(@"錯誤為:%@",responseObject[@"errMsg"]);

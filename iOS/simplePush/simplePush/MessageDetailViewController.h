@@ -11,4 +11,5 @@
 @property(strong,nonatomic)NSString *receiveMessageID;
 @property(strong,nonatomic)NSString *receiveMessageTitle;
 @property(strong,nonatomic)NSMutableDictionary *pushNotiInfo;
+@property(nonatomic)int MessageDetailViewControllerTag;
 @end

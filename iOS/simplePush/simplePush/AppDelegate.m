@@ -14,12 +14,15 @@
 @interface AppDelegate ()
 {
     NSDictionary *nowInfo;
+    int appdelegateTag;
 }
 @end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    NSLog(@"你執行了didFinishLaunchingWithOptions");
     
     //ios本身系統版本判定
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
@@ -56,54 +59,52 @@
     {
         [self application:application didReceiveRemoteNotification:pushDict];
     }
-    
-    NSLog(@"你執行了didFinishLaunchingWithOptions");
-    
+
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     
-        NSLog(@"你執行了applicationWillResignActive");
+    NSLog(@"你執行了applicationWillResignActive");
+    
+    //找出根目錄來pop指定目標
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    
+    //執行pop動作
+    [navController popToRootViewControllerAnimated:NO];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-
+    
     NSLog(@"你執行了applicationDidEnterBackground");
+    
+    appdelegateTag = 1;
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     
+    NSLog(@"你執行了applicationWillEnterForeground");
+    
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"RELOADLIST" object:nil];
     
-    NSLog(@"你執行了applicationWillEnterForeground");
-    
-    //將當下收到的userInfo儲存，透過進入前景時，取出message ID 進行內容讀取，並將rootViewController 設定為 MessageDetailViewController
-    if (nowInfo != nil) {
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-        MessageDetailViewController *mdvc = [storyBoard instantiateViewControllerWithIdentifier:@"FULLMSG"];
-        
-        [navController.visibleViewController.navigationController pushViewController:mdvc animated:YES];
-        nowInfo = [[NSDictionary alloc]init];
-    }
-    
-
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
-        NSLog(@"你執行了applicationDidBecomeActive");
+    NSLog(@"你執行了applicationDidBecomeActive");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     
-        NSLog(@"你執行了applicationWillTerminate");
+    NSLog(@"你執行了applicationWillTerminate");
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+    NSLog(@"你執行了didRegisterForRemoteNotificationsWithDeviceToken");
+    
     NSString* receiveDeviceToken = [deviceToken description];
     receiveDeviceToken = [receiveDeviceToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     receiveDeviceToken = [receiveDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -119,7 +120,6 @@
         NSLog(@"receiveDeviceToken 不存在");
     }
     NSLog(@"%@",deviceToken);
-//        NSLog(@"你執行了didRegisterForRemoteNotificationsWithDeviceToken");
 }
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -128,6 +128,8 @@
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    NSLog(@"執行了didReceiveRemoteNotification");
+    
     //badge++
     [UIApplication sharedApplication].applicationIconBadgeNumber++;
     
@@ -136,10 +138,22 @@
     [nc postNotificationName:@"RELOADLIST" object:nil];
     
     //儲存要顯示的完整訊息ID
-    nowInfo = userInfo[@"aps"];
-    NSLog(@"%@",userInfo[@"aps"]);
-    NSLog(@"%@",nowInfo);
+    nowInfo = [[NSMutableDictionary alloc]initWithDictionary:userInfo[@"aps"]];
 
+    
+    //將當下收到的userInfo儲存，透過進入前景時，取出message ID 進行內容讀取，並將rootViewController 設定為 MessageDetailViewController
+    if (nowInfo != nil && appdelegateTag == 1) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        MessageDetailViewController *mdvc = [storyBoard instantiateViewControllerWithIdentifier:@"FULLMSG"];
+        
+        mdvc.receiveMessageID = nowInfo[@"newsId"];
+        mdvc.receiveMessageTitle = nowInfo[@"alert"];
+        mdvc.MessageDetailViewControllerTag = appdelegateTag;
+        
+        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+        [navController.visibleViewController.navigationController pushViewController:mdvc animated:YES];
+        appdelegateTag = 0;
+    }
+    
 }
-
 @end
