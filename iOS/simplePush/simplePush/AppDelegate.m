@@ -22,8 +22,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSLog(@"你執行了didFinishLaunchingWithOptions");
-    
     //ios本身系統版本判定
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     {
@@ -39,10 +37,6 @@
     //判斷NSUserDefaults裡的device token若不存在值，設定rootViewController為login畫面
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *mem_id = [defaults objectForKey:@"memID"];
-    //    NSString *memNO = [defaults objectForKey:@"memNo"];
-    //    NSString *memID = [defaults objectForKey:@"memID"];
-    //    NSString *memName = [defaults objectForKey:@"memName"];
-    //    NSLog(@"背景移除後，重新進來APP，抓取使用者NO:%@,使用者名字:%@，裝置名稱:%@,DT:%@",memNO,memID,memName,device_token);
     
     //badge 歸零
     [UIApplication sharedApplication].applicationIconBadgeNumber=0;
@@ -65,8 +59,6 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     
-    NSLog(@"你執行了applicationWillResignActive");
-    
     //找出根目錄來pop指定目標
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
     
@@ -76,42 +68,33 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
-    NSLog(@"你執行了applicationDidEnterBackground");
-    
     appdelegateTag = 1;
-    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     
-    NSLog(@"你執行了applicationWillEnterForeground");
-    
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:@"RELOADLIST" object:nil];
-    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
-    NSLog(@"你執行了applicationDidBecomeActive");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     
-    NSLog(@"你執行了applicationWillTerminate");
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSLog(@"你執行了didRegisterForRemoteNotificationsWithDeviceToken");
     
     NSString* receiveDeviceToken = [deviceToken description];
     receiveDeviceToken = [receiveDeviceToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     receiveDeviceToken = [receiveDeviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"Device Token:%@",receiveDeviceToken);
     
     //將deviceToken 傳送至 HomeViewController.m
     if (receiveDeviceToken) {
-        
         //將收到的deviceToken存入userDefault
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         [userDefault setObject:receiveDeviceToken forKey:@"device_token"];
@@ -119,7 +102,6 @@
     }else {
         NSLog(@"receiveDeviceToken 不存在");
     }
-    NSLog(@"%@",deviceToken);
 }
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -128,7 +110,6 @@
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"執行了didReceiveRemoteNotification");
     
     //badge++
     [UIApplication sharedApplication].applicationIconBadgeNumber++;

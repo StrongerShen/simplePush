@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     
-    NSLog(@"你執行了MDVC的viewDidLoad");
     [super viewDidLoad];
     if (MessageDetailViewControllerTag == 0) {
         [self getFullMessage];
@@ -31,8 +30,6 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    
-    NSLog(@"你執行了MDVC的viewWillAppear");
     
     //設定 navigationBar、title、barItem 顏色
     UIColor *navgationBarColor = [UIColor colorWithRed:0.497 green:0.759 blue:0.175 alpha:1.000];
@@ -57,8 +54,6 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)getFullMessage{
-    
-    NSLog(@"你執行了MDVC的getFullMessage");
     
     //設定要POST的參數
     NSDictionary *parameters = @{@"news_id":receiveMessageID};
@@ -97,8 +92,6 @@
     }];
 }
 -(void)clickPushNotificationToGetFullMessage{
-    
-    NSLog(@"你執行了MDVC的clickPushNotificationToGetFullMessage");
     
     //設定要POST的參數
     NSDictionary *parameters = @{@"news_id":receiveMessageID};
