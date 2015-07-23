@@ -4,10 +4,12 @@
     功能說明 :  存檔：將推播相關訊息存入資料庫(Table `news`)
                推播：製作推播內容，與 APNS 建立連線，並傳送至 APNS，發出推播給 users
 
-    Input  =>       lists           :   推播對象的 Member Id
-                    message         :   推播訊息
-    Output =>       fp              :   對 APNS 的連線檔
-                    msg             :   推播 command 1 的格式
+    Input 					=>       lists          :   推播對象的 Member Id
+                    				 message        :   推播訊息
+    Output (payload format) =>       alert			:	要推播的訊息內容
+									 sound			:	收到推播時的通知聲，預設值為 "default",
+									 badge			:	未讀訊息數
+									 newsId			:	news id
 
     建立者 : James
     建立日期 : 2015/06/20

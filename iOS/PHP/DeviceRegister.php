@@ -23,6 +23,7 @@
 	2015/07/09	Samma	1、增加密碼預設功能
 						2、增加傳入 device_type [裝置類型]，便於後續整合成 simpleTalk 專案
 						3、重構程式，以 class 的方式重寫
+	2015/07/21	Samma	1、增加判斷 member_id 已經存在時，更新 device_token，不返回 device_token 已存在的訊息
  ==============================
  */
 
@@ -67,48 +68,87 @@
 		function start() {
 			
 			try {
-			
-				$result = $this->connDB->query("select * 
-												  from users 
-									   			 where device_token = '$this->device_token'");
 				
-				//PDOStatement::rowCount — 取得上一個執行的SQL語法，影響到的資料筆數
+				//判斷 member_id 是否已存在
+				$result = $this->connDB->query("select *
+											  	  from users
+												 where member_id = '$this->member_id'");
+				
+				// member_id 不存在
 				if ($result->rowCount() <= 0 ) {
-						
+					
+					$result = $this->connDB->query("select *
+													  from users
+													 where device_token = '$this->device_token'");
+					
+					//PDOStatement::rowCount — 取得上一個執行的SQL語法，影響到的資料筆數
+					if ($result->rowCount() <= 0 ) {
+					
+						try {
+					
+							$this->connDB->beginTransaction();
+					
+							//當device token不存在時新增
+							$result = $this->connDB->query("INSERT INTO users
+															(member_id, member_pwd,
+															member_name, member_phone,
+															device_token, device_type)
+															VALUES
+															('$this->member_id', '$this->member_pwd',
+															'$this->member_name', 'new_member_phone',
+															'$this->device_token', '$this->device_type')");
+											
+							//新增完成，處理結果["ret_code"]返回YES，代表OK
+							$this->message["ret_code"]='YES';
+					
+							$this->connDB->commit();
+					
+						} catch (PDOException $err) {
+					
+							$this->connDB->rollback();
+							$this->message["ret_code"]='NO';
+							$this->message["ret_desc"] = $err->getMessage();
+					
+						}
+					
+					} else {
+							
+						$this->message["ret_code"] = 'NO';
+						$this->message["ret_desc"] = 'device token already exists';
+					
+					}	// end if ($result->rowCount() <=0 )
+					
+					
+				//member_id 已經存在
+				} else {
+					
 					try {
-				
+							
 						$this->connDB->beginTransaction();
-				
+							
 						//當device token不存在時新增
-						$result = $this->connDB->query("INSERT INTO users
-											  			(member_id, member_pwd,
-											  			 member_name, member_phone,
-											  			 device_token, device_type)
-											 			VALUES
-											  			('$this->member_id', '$this->member_pwd',
-											   			 '$this->member_name', 'new_member_phone',
-											   			 '$this->device_token', '$this->device_type')");
-				
+						$result = $this->connDB->query("update users
+														   set member_pwd = '$this->member_pwd',
+															   member_name = '$this->member_name',
+															   device_token = '$this->device_token',
+															   device_type = '$this->device_type'
+														 where member_id = '$this->member_id'");
+							
 						//新增完成，處理結果["ret_code"]返回YES，代表OK
 						$this->message["ret_code"]='YES';
-				
+						$this->message["ret_desc"] = 'member id already exists';
+							
 						$this->connDB->commit();
-				
+							
 					} catch (PDOException $err) {
-				
+							
 						$this->connDB->rollback();
 						$this->message["ret_code"]='NO';
 						$this->message["ret_desc"] = $err->getMessage();
-				
+							
 					}
-						
-				} else {
-						
-					//當device token已存在時，處理結果["ret_code"]返回NO，代表不OK
-					$this->message["ret_code"] = 'NO';
-					$this->message["ret_desc"] = 'device token already exists';
-						
-				}	// end if ($result->rowCount() <=0 )
+					
+				}	// end if ($result->rowCount() <= 0 )
 				
 				
 				//註冊成功的話，寫入使用者資訊，準備回傳

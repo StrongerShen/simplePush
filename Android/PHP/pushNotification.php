@@ -4,14 +4,17 @@
  	功能說明 :  存檔：將推播相關訊息存入資料庫(Table `news`)
  			   推播：製作推播內容，與 APNS 建立連線，並傳送至 APNS，發出推播給 users
 
- 	Input  =>       lists           :   推播對象的 Member Id
- 					message         :   推播訊息
- 	Output =>       NO
+ 	Input  					=>       lists           :   推播對象的 Member Id
+ 									 message         :   推播訊息
+ 	Output (payload format) =>   	 to				 :	 要推播的 device token,
+									 data (array)	 :	 message	:	推播的訊息內容
+														 badge		:	未讀訊息數
+									 					 newsId		:	news id  
 
  	建立者 : Samma
  	建立日期 : 2015/07/11
  	異動記錄 :
-
+	2015/07/22	Samma	1、改寫 sendNotificiation() 為單一 device token 推播
  ==============================
  */
 	 
@@ -32,6 +35,7 @@ class GCM_Push {
 	private $db;
 	private $push_server;
 	private $api_key;
+	private $ch = NULL;
 	
 	function __construct($db, $push_config) {
 		$this->db = $db;
@@ -41,6 +45,9 @@ class GCM_Push {
 	
 	function start() {
 		
+		// connect to GCM
+		$this->connectToGCM();
+		
 		// 取得推播對象的 device_token, msg
 		$sendAllFlag = $_POST["sendAll"];
 		$lists = $_POST["list"];
@@ -48,9 +55,6 @@ class GCM_Push {
 		$message = $_POST["msg"];
 	
 		if ($lists && $msgTitle){
-			
-			$device_tokens = array();
-			$i = 0;
 			
 			foreach ($lists as $value) {
 				 
@@ -69,9 +73,9 @@ class GCM_Push {
 						
 						//寫入訊息
 						$this->insertDataBase($msgTitle, $message, $temp[0], $temp[1]);
-						$device_tokens[$i] = $temp["device_token"];
-						$i++;
-	
+						//執行推播
+						$this->sendNotification($msgTitle, $temp[0], $temp[1]);
+
 						$this->db->commit();
 	
 					} catch (PDOException $err) {
@@ -82,13 +86,41 @@ class GCM_Push {
 				}
 	
 			}	// end foreach ($lists as $value)
-				
-			//執行推播
-			$this->sendNotification($msgTitle, $device_tokens, $sendAllFlag);
 			 
 		}	//end if ($lists && $message)
+			
+		//disconncet from GCM
+		$this->disconnectFromGCM();
 		 
 	}	//end function start()
+	
+	//open connect to gcm
+	function connectToGCM () {
+		
+		$headers = array(
+				'Authorization: key=' . $this->api_key,
+				'Content-Type: application/json'
+		);
+		
+		$this->ch = curl_init();
+		//發出 request 的網址
+		curl_setopt($this->ch, CURLOPT_URL, $this->push_server);
+		//使用 GET or POST 方式發出 request
+		curl_setopt($this->ch, CURLOPT_POST, true);
+		curl_setopt($this->ch, CURLOPT_HTTPHEADER, $headers);
+		//指定curl_exec()執行後獲得的資料以stream的形式回傳，不直接輸出
+		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
+		
+		if (!$this->ch) exit("<p>Failed to connect GCM</p>");
+		echo "<p>Connected to GCM</p>";
+	}
+	
+	function disconnectFromGCM () {
+		curl_close($this->ch);
+		$this->ch = NULL;
+		echo "<p>Close connect with GCM</p>";
+	}
 	
 	//存檔：將推播訊息存入資料表
 	function insertDataBase($msgTitle, $message, $deviceToken, $memNo) {
@@ -114,51 +146,38 @@ class GCM_Push {
 	}	//end function insertDataBase()
 	
 	// 傳送推播內容至 APNS 給指定對象
-	function sendNotification($msgTitle, $device_tokens, $sendAllFlag){
+	function sendNotification($msgTitle, $deviceToken, $memNo){
+		
+		//取得badge number
+		$result = $this->db->prepare("select count(seq_no) badge, max(news_id) news_id
+										from news 
+									   where have_read = '0' 
+										 and mem_No = $memNo");
+		$result->execute();
+		$temp = $result->fetch();
+		$badge = $temp["badge"];
+		$newsIdMax = $temp["news_id"];
 		
 		//要傳送的訊息內容
-		$msgJSON = array("message" => $msgTitle);
+		$msgJSON = array("message"	=>	$msgTitle,
+						 "badge"	=>	$badge,
+						 "newsId"	=>	$newsIdMax
+						);
 		
-		$payload = array();
+		$payload = array(	'to'		=>	$deviceToken,
+							'data'		=>	$msgJSON
+						);
 		
-		//部份發送
-		if ( $sendAllFlag == 0 ) {
-			$payload = array(	'registration_ids'  => $device_tokens,
-								'data'              => $msgJSON,
-			);
-		
-		//全部發送
-		} else {
-			$payload = array(	'to'	=> '/topics/global',
-								'data'	=> $msgJSON,
-			);
-		}
-		
-		
-		$headers = array(
-				'Authorization: key=' . $this->api_key,
-				'Content-Type: application/json'
-		);
-		
-		$ch = curl_init();
-		//發出 request 的網址
-		curl_setopt($ch, CURLOPT_URL, $this->push_server);
-		//使用 GET or POST 方式發出 request
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		//指定curl_exec()執行後獲得的資料以stream的形式回傳，不直接輸出
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
 		//設定要傳過去的參數
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+		curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($payload));
 		
-		$result = curl_exec($ch);
-		if ($result === FALSE) {
-			die('push error: ' . curl_error($ch));
+		$result = curl_exec($this->ch);
+		if ( !$result ) {
+			echo "mem_No=".$memNo." Message not delivered => ". curl_error($this->ch) ."</br>";
+		} else {
+			echo "mem_No=".$memNo." Message successfully delivered.</br>";
 		}
-		
-		curl_close($ch);
-		echo $result;
 
 	}	//end function sendNotification()
 	

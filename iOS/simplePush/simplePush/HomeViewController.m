@@ -141,12 +141,6 @@
     }
    
 }
-//- (void)alertWithTitle:(NSString *)title message:(NSString *)message handler:(dispatch_block_t *)handler{
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-//    [alertController addAction:ok];
-//    [self presentViewController:alertController animated:YES completion:nil];
-//}
 - (BOOL)validatePassword:(NSString *)password{
     NSString *regex = @"[A-Z0-9a-z]{6,18}";
     NSPredicate *predicate =[NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
@@ -161,5 +155,11 @@
     [alertController addAction:ok];
     [self presentViewController:alertController animated:YES completion:nil];
 }
+- (IBAction)resignKeyBoard:(id)sender {
+    [inputDeviceNameTF resignFirstResponder];
+    [inputPasswordTF resignFirstResponder];
+    [inputNameTF resignFirstResponder];
+}
+
 
 @end
