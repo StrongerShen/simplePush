@@ -5,54 +5,49 @@
     android:orientation="horizontal"
     android:padding="16dp">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical|left">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical|left">
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/txtNewsListItem1"
-                    android:textColor="@color/very_dark_gray"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:visibility="gone">
-
-                </TextView>
-
-                <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/txtNewsListItem2"
-                    android:textColor="@color/very_dark_gray"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="25sp">
-
-                </TextView>
-
-
-            </LinearLayout>
+            android:orientation="horizontal">
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/txtNewsListItem3"
+                android:id="@+id/txtNewsListItem1"
                 android:textColor="@color/very_dark_gray"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp">
+                android:textSize="25sp"
+                android:visibility="gone">
+            </TextView>
 
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/txtNewsListItem2"
+                android:textColor="@color/very_dark_gray"
+                android:maxWidth="240dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp">
             </TextView>
 
         </LinearLayout>
 
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/txtNewsListItem3"
+            android:textColor="@color/very_dark_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp">
+        </TextView>
+
+    </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
@@ -60,6 +55,7 @@
         android:orientation="vertical"
         android:layout_weight="1"
         android:layout_gravity="center_vertical|right">
+
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/txtNewsListItem4"
             android:textColor="@color/have_read_gray"
@@ -70,8 +66,8 @@
             android:background="@drawable/readbox"
             android:textSize="15sp"
             android:layout_gravity="center_vertical|right">
-
         </TextView>
+
     </LinearLayout>
 
 </LinearLayout>

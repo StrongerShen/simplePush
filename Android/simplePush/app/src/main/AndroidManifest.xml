@@ -17,19 +17,22 @@
     Created by patrickchan on 15/7/6.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tomin.patrickchan.simplepush" >
+    package="com.tomin.simplepush" >
+
     <!-- [START gcm_permission] -->
     <uses-permission android:name="android.permission.WAKE_LOCK" /><!--在睡眠狀態仍保持接收 -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" /><!--app 可以註冊和接收訊息 -->
     <user-permission android:name="android.permission.INTERNET"/><!--開啟存取網路權限-->
     <!-- [END gcm_permission] -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
-            android:name=".MainActivity"
+            android:name=".VCLoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,11 +41,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".VNewsListActivity"
-                  android:label="@string/news_list_title">
+        <activity android:name=".VCNewsListActivity">
         </activity>
-        <activity android:name=".VNewsDetailActivity"
-            android:label="@string/news_detail_title">
+
+        <activity android:name=".VCNewsDetailActivity">
         </activity>
 
         <!-- [START gcm_receiver] -->
@@ -59,7 +61,7 @@
 
         <!-- [START gcm_listener] -->
         <service
-            android:name="com.tomin.patrickchan.simplepush.MyGcmListenerService"
+            android:name="com.tomin.simplepush.MyGcmListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -68,7 +70,7 @@
         <!-- [END gcm_listener] -->
         <!-- [START instanceId_listener] -->
         <service
-            android:name="com.tomin.patrickchan.simplepush.MyInstanceIDListenerService"
+            android:name="com.tomin.simplepush.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"/>

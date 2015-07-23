@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/submodule/badges/badges.iml" filepath="$PROJECT_DIR$/submodule/badges/badges.iml" />
       <module fileurl="file://$PROJECT_DIR$/simplePush.iml" filepath="$PROJECT_DIR$/simplePush.iml" />
       <module fileurl="file://$PROJECT_DIR$/submodule/submodule.iml" filepath="$PROJECT_DIR$/submodule/submodule.iml" />
       <module fileurl="file://$PROJECT_DIR$/submodule/volley/volley.iml" filepath="$PROJECT_DIR$/submodule/volley/volley.iml" />

@@ -1,1 +1,1 @@
-include ':app', ':submodule:volley'
+include ':app', ':submodule:volley', ':submodule:badges'
