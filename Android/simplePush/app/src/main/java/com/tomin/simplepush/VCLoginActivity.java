@@ -45,6 +45,8 @@ public class VCLoginActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
 
+    private RequestQueue mRequestQueue;
+
     String mStrUrl = "http://tomin.tw/api/simplePush/Android/DeviceRegister.php";
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -122,6 +124,14 @@ public class VCLoginActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(TAG);
+            Log.d(TAG,"Cancel a Request");
+        }
+    }
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
@@ -180,7 +190,7 @@ public class VCLoginActivity extends AppCompatActivity {
 
                 //---TODO 寫成Class
                 //開一個隊列
-                RequestQueue mQueue = Volley.newRequestQueue(VCLoginActivity.this);
+                mRequestQueue = Volley.newRequestQueue(VCLoginActivity.this);
                 //String Request (POST)
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, mStrUrl, new Response.Listener<String>() {
                     @Override
@@ -230,7 +240,9 @@ public class VCLoginActivity extends AppCompatActivity {
 
                 };
 
-                mQueue.add(stringRequest);
+                stringRequest.setTag(TAG);
+
+                mRequestQueue.add(stringRequest);
                 //-------------
 
             }

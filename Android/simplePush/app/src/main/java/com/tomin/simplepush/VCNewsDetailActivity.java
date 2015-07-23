@@ -29,10 +29,11 @@ import java.util.HashMap;
  */
 public class VCNewsDetailActivity extends AppCompatActivity {
 
-
     private static final String TAG = "VNewsDetailActivity";
 
-    private String strNewsId,strNewsTitle,strSendtime;
+    private RequestQueue mRequestQueue;
+
+    private String strNewsId;
 
     private SimpleAdapter newsArrayAdapter;
     private ArrayList<HashMap<String, String>> news;
@@ -56,6 +57,14 @@ public class VCNewsDetailActivity extends AppCompatActivity {
 
         showNewsContent();
     }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(TAG);
+            Log.d(TAG,"Cancel a Request");
+        }
+    }
 
     private void updateBadge(int count) {
         try {
@@ -68,9 +77,6 @@ public class VCNewsDetailActivity extends AppCompatActivity {
     private void showNewsContent(){
         Bundle bundle = VCNewsDetailActivity.this.getIntent().getExtras();
         strNewsId = bundle.getString("newsId");
-        strNewsTitle = bundle.getString("newsTitle");
-        strSendtime = bundle.getString("sendTime");
-
         int iBadgeNumber = bundle.getInt("badgeNumber");
 
         if (iBadgeNumber>0){
@@ -81,11 +87,11 @@ public class VCNewsDetailActivity extends AppCompatActivity {
 
         news =new ArrayList<HashMap<String,String>>();
 
-        Log.d(TAG, strNewsId + strNewsTitle + strSendtime);
+        Log.d(TAG, "newId : "+strNewsId);
 
         //---TODO 寫成Class
         //開一個隊列
-        RequestQueue mQueue = Volley.newRequestQueue(VCNewsDetailActivity.this);
+        mRequestQueue = Volley.newRequestQueue(VCNewsDetailActivity.this);
         String mStrUrl = "http://tomin.tw/api/simplePush/Android/responseFullMsg.php";
         //String Request (POST)
         StringRequest stringRequest = new StringRequest(Request.Method.POST, mStrUrl, new Response.Listener<String>() {
@@ -95,14 +101,15 @@ public class VCNewsDetailActivity extends AppCompatActivity {
                 JSONObject jsAppServerResponse;
                 try{
                     jsAppServerResponse  = new JSONObject(response);
-
-                    String strAppServerRegister = jsAppServerResponse.getString("fullMsg");
+                    String strTitle = jsAppServerResponse.getString("title");
+                    String strSendTime = jsAppServerResponse.getString("sendTime");
+                    String strFullMsg = jsAppServerResponse.getString("fullMsg");
 
                     HashMap<String, String> item = new HashMap<String, String>();
 
-                    item.put("newsTitle",strNewsTitle);
-                    item.put("sendTime",strSendtime);
-                    item.put("fullMsg", strAppServerRegister);
+                    item.put("newsTitle",strTitle);
+                    item.put("sendTime",strSendTime);
+                    item.put("fullMsg", strFullMsg);
 
                     news.add(item);
                     newsDetailView = (ListView)findViewById(R.id.newsDetailView);
@@ -142,8 +149,8 @@ public class VCNewsDetailActivity extends AppCompatActivity {
             }
 
         };
-
-        mQueue.add(stringRequest);
+        stringRequest.setTag(TAG);
+        mRequestQueue.add(stringRequest);
         //-------------
     }
 }

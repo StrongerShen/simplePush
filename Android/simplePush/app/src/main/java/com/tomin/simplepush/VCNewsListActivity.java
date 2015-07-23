@@ -48,7 +48,7 @@ public class VCNewsListActivity extends AppCompatActivity {
 
     private int iItemCount;
     private int iBadgeNumber;
-    private RequestQueue mQueue;
+    private RequestQueue mRequestQueue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,14 @@ public class VCNewsListActivity extends AppCompatActivity {
     public void onResume(){
         setNewsList();
         super.onResume();
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(TAG);
+            Log.d(TAG,"Cancel a Request");
+        }
     }
     //覆寫 back 鍵，按下後回到主螢幕
     @Override
@@ -98,7 +106,7 @@ public class VCNewsListActivity extends AppCompatActivity {
         //取得新聞列表
         //---TODO 寫成Class
         //開一個隊列
-        mQueue = Volley.newRequestQueue(VCNewsListActivity.this);
+        mRequestQueue = Volley.newRequestQueue(VCNewsListActivity.this);
         String strUrl = "http://tomin.tw/api/simplePush/Android/getMsgList.php";
         //String Request (POST)
         StringRequest stringRequest = new StringRequest(Request.Method.POST, strUrl,
@@ -137,7 +145,11 @@ public class VCNewsListActivity extends AppCompatActivity {
 
                             updateBadge(iBadgeNumber);
 
+                            //[begin] - newsListView -> newsArrayAdapter
+                            //指定給 newsListView 的轉接器 newsArrayAdapter ，連結 R.layout.news_list_item
+
                             newsListView = (ListView)findViewById(R.id.newsListView);
+
                             newsArrayAdapter = new SimpleAdapter(
                                     getApplicationContext(),
                                     news,R.layout.news_list_item,
@@ -147,32 +159,27 @@ public class VCNewsListActivity extends AppCompatActivity {
                                             R.id.txtNewsListItem2,
                                             R.id.txtNewsListItem3,
                                             R.id.txtNewsListItem4}){
+                                //取得 newsListView 的 subview ，更改 subview 的 未讀 textView 背景顏色
                                 @Override
                                 public View getView(int position, View convertView, ViewGroup parent) {
 
                                     View view = super.getView(position, convertView, parent);
-                                    TextView txtHeavRead = (TextView) view.findViewById(R.id.txtNewsListItem4);
+                                    TextView txtHaveRead = (TextView) view.findViewById(R.id.txtNewsListItem4);
 
-                                    String strHeavRead = news.get(position).get("haveRead");
+                                    String strHaveRead = news.get(position).get("haveRead");
 
-                                    Log.d(TAG, strHeavRead);
-
-                                    if (strHeavRead.equals("未讀")){
-                                        txtHeavRead.setBackgroundResource(R.drawable.unreadbox);
-                                        txtHeavRead.setTextColor(getResources().getColor(R.color.off_white));
+                                    if (strHaveRead.equals("未讀")){
+                                        txtHaveRead.setBackgroundResource(R.drawable.unreadbox);
+                                        txtHaveRead.setTextColor(getResources().getColor(R.color.off_white));
                                     }
                                     return view;
                                 }
                             };
 
                             newsListView.setAdapter(newsArrayAdapter);
+                            //[end] - newsListView -> newsArrayAdapter
 
-                            View newsListViewChildAt = newsListView.getChildAt(0);
-
-                            newsListView.getAdapter(
-
-                            );
-
+                            //click 監聽事件，點擊 newsListView Item 進 VCNewsDetailActivity
                             newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -248,7 +255,7 @@ public class VCNewsListActivity extends AppCompatActivity {
 
                                             };
 
-                                            mQueue.add(stringRequest);
+                                            mRequestQueue.add(stringRequest);
                                             //-------------
                                         }
                                     });
@@ -288,8 +295,8 @@ public class VCNewsListActivity extends AppCompatActivity {
             }
 
         };
-
-        mQueue.add(stringRequest);
+        stringRequest.setTag(TAG);
+        mRequestQueue.add(stringRequest);
         //-------------
     }
 
@@ -299,8 +306,6 @@ public class VCNewsListActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
 
         bundle.putString("newsId", news.get(position).get("newsId"));
-        bundle.putString("newsTitle", news.get(position).get("preMsg"));
-        bundle.putString("sendTime", news.get(position).get("sendTime"));
         bundle.putInt("badgeNumber", iBadgeNumber);
 
         intent.putExtras(bundle);

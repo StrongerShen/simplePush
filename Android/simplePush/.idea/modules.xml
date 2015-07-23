@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/simplePush.iml" filepath="$PROJECT_DIR$/simplePush.iml" />
       <module fileurl="file://$PROJECT_DIR$/submodule/submodule.iml" filepath="$PROJECT_DIR$/submodule/submodule.iml" />
       <module fileurl="file://$PROJECT_DIR$/submodule/volley/volley.iml" filepath="$PROJECT_DIR$/submodule/volley/volley.iml" />
-      <module fileurl="file://$PROJECT_DIR$/submodule/volley/volley.iml" filepath="$PROJECT_DIR$/submodule/volley/volley.iml" />
     </modules>
   </component>
 </project>

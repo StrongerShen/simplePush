@@ -52,7 +52,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        sendNotification(message, newsId, badge);
         updateBadge(badge);
     }
     // [END receive_message]
@@ -70,9 +70,14 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, VCNewsListActivity.class);
+    private void sendNotification(String message, String newsId, int badge) {
+        Intent intent = new Intent(this, VCNewsDetailActivity.class);
+        Bundle bundle = new Bundle();
 
+        bundle.putString("newsId", newsId);
+        bundle.putInt("badgeNumber", badge);
+
+        intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
