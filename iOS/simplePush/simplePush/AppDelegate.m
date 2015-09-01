@@ -137,14 +137,9 @@
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter postNotificationName:@"JudgeHowtoDisplay" object:nil userInfo:@{@"aps":userInfo[@"aps"],@"appDeletegateFlag":appDeletegateFlag}];
         
-        
         UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
         [navigationController.visibleViewController.navigationController pushViewController:mlTVC animated:YES];
     }
-    
-}
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event{
-    
 }
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler{
     

@@ -19,11 +19,21 @@
 @end
 
 @implementation MessageListsTableViewController
-@synthesize memNo,memID,memName,device_token,userMessageListArray,MessageListsTableViewControllerFlag;
+@synthesize memNo,memID,memName,device_token,userMessageListArray = _userMessageListArray,MessageListsTableViewControllerFlag;
+
+- (void)setUserMessageListArray:(NSMutableArray *)userMessageListArray
+{
+    _userMessageListArray = userMessageListArray;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     NSLog(@"MessageListsTableViewController-viewDidLoad");
+    //建立 NotificationCenter
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(receivePushNotificationJudgeHowtoDisplay:) name:@"JudgeHowtoDisplay" object:nil];
     
@@ -50,29 +60,29 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-        NSLog(@"MessageListsTableViewController-viewWillAppear");
+    NSLog(@"MessageListsTableViewController-viewWillAppear");
     
     [self receivePushNotificationJudgeHowtoDisplay:nil];
     [self.tableView reloadData];
 }
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:YES];
-        NSLog(@"MessageListsTableViewController-viewDidAppear");
-}
-- (void)viewWillDisappear:(BOOL)animated{
-    NSLog(@"MessageListsTableViewController-viewWillDisappear");
-}
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:YES];
-        NSLog(@"MessageListsTableViewController-viewDidDisappear");
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
+//- (void)viewDidAppear:(BOOL)animated{
+//    [super viewDidAppear:YES];
+//    NSLog(@"MessageListsTableViewController-viewDidAppear");
+//}
+//- (void)viewWillDisappear:(BOOL)animated{
+//    NSLog(@"MessageListsTableViewController-viewWillDisappear");
+//}
+//- (void)viewDidDisappear:(BOOL)animated{
+//    [super viewDidDisappear:YES];
+//    NSLog(@"MessageListsTableViewController-viewDidDisappear");
+//}
+//- (void)didReceiveMemoryWarning {
+//    [super didReceiveMemoryWarning];
+//}
 
 - (void)receivePushNotificationJudgeHowtoDisplay:(NSNotification *)notification{
     
-    userMessageListArray = [NSMutableArray new];
+    self.userMessageListArray = [NSMutableArray new];
     
     //設定POST參數
     NSDictionary *parameters = @{@"member_id":memID};
@@ -88,16 +98,17 @@
     [manager POST:@"getMsgList.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         //取得訊息清單、發送時間、訊息大綱、已讀或未讀Tag
-        userMessageListArray = [NSMutableArray arrayWithArray:responseObject[@"content"]];
-        [self.tableView reloadData];
+        self.userMessageListArray = [NSMutableArray arrayWithArray:responseObject[@"content"]];
+//        [self.tableView reloadData];
         
         //設定 badge: 最新的未讀訊息筆數
         int badge = 0;
-        for (NSDictionary *temp in userMessageListArray) {
+        for (NSDictionary *temp in self.userMessageListArray) {
             if ([temp[@"haveRead"] isEqualToString:@"0"] ) {
                 badge++;
             }
         }
+        
         [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
         
         NSDictionary *fromAppDelegate = [notification userInfo];
@@ -117,15 +128,15 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return userMessageListArray.count;
+    return self.userMessageListArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     CustomPushNotificationTableViewCell *customCell = [tableView dequeueReusableCellWithIdentifier:@"CustomPushNotificationTableViewCell" forIndexPath:indexPath];
-    customCell.messageLabel.text = userMessageListArray[indexPath.row][@"preMsg"];
-    customCell.timeLabel.text = userMessageListArray[indexPath.row][@"sendTime"];
-    NSString *tag = userMessageListArray[indexPath.row][@"haveRead"];
+    customCell.messageLabel.text = self.userMessageListArray[indexPath.row][@"preMsg"];
+    customCell.timeLabel.text = self.userMessageListArray[indexPath.row][@"sendTime"];
+    NSString *tag = self.userMessageListArray[indexPath.row][@"haveRead"];
     if (tag != nil && [tag isEqualToString:@"0"]) {
         customCell.readMessageLabel.text = @"未讀";
         customCell.readMessageLabel.textColor = [UIColor whiteColor];
@@ -154,7 +165,7 @@
     //badge--
     [UIApplication sharedApplication].applicationIconBadgeNumber--;
     
-    NSString *newsId = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"newsId"]];
+    NSString *newsId = [NSString stringWithFormat:@"%@",self.userMessageListArray[indexPath.row][@"newsId"]];
     //    NSString *newsTitle = [NSString stringWithFormat:@"%@",userMessageListArray[indexPath.row][@"preMsg"]];
     //    NSArray *pass = [[NSArray alloc]initWithObjects:newsId,newsTitle, nil];
     //    [self performSegueWithIdentifier:@"toFullMessage" sender:pass];
@@ -165,11 +176,12 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {    
         //取出要刪除的message ID
-        NSString *newsID = userMessageListArray[indexPath.row][@"newsId"];
+        NSString *newsID = self.userMessageListArray[indexPath.row][@"newsId"];
         
         //post
         NSDictionary *parameters = @{@"news_id":newsID};
@@ -184,35 +196,29 @@
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
         
         //將會員資料POST至PHP
-        [manager POST:@"delMsg.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
+        [manager POST:@"delMsg.php" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
+        {
             NSLog(@"處理結果:%@ ,說明:%@",responseObject[@"ret_code"],responseObject[@"ret_desc"]);
-            if ([responseObject[@"ret_code"]isEqualToString:@"YES"]) {
+            if ([responseObject[@"ret_code"]isEqualToString:@"YES"])
+            {
                 //刪除陣列內資料
-                [userMessageListArray removeObjectAtIndex:indexPath.row];
+                [self.userMessageListArray removeObjectAtIndex:indexPath.row];
                 
-                //移除列
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                
-                //重整
-                [self.tableView reloadData];
             }
             
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"發生錯誤:%@",error);
+        }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+             NSLog(@"發生錯誤:%@",error);
         }];
-        
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
     }
-    
 }
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MessageDetailViewController *mdvc = [segue destinationViewController];
     mdvc.receiveNewsId = sender;
-//    mdvc.receiveNewsId = sender[0];
-//    mdvc.receiveNewsTitle = sender[1];
+    //    mdvc.receiveNewsId = sender[0];
+    //    mdvc.receiveNewsTitle = sender[1];
 }
 
 @end
