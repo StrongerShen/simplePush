@@ -35,7 +35,7 @@
     NSLog(@"MessageListsTableViewController-viewDidLoad");
     //建立 NotificationCenter
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(receivePushNotificationJudgeHowtoDisplay:) name:@"JudgeHowtoDisplay" object:nil];
+    [notificationCenter addObserver:self selector:@selector(receivePushNotificationJudgeHowtoDisplay) name:@"JudgeHowtoDisplay" object:nil];
     
     //set user's profile
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
@@ -62,7 +62,7 @@
     [super viewWillAppear:YES];
     NSLog(@"MessageListsTableViewController-viewWillAppear");
     
-    [self receivePushNotificationJudgeHowtoDisplay:nil];
+    [self receivePushNotificationJudgeHowtoDisplay];
     [self.tableView reloadData];
 }
 //- (void)viewDidAppear:(BOOL)animated{
@@ -80,8 +80,9 @@
 //    [super didReceiveMemoryWarning];
 //}
 
-- (void)receivePushNotificationJudgeHowtoDisplay:(NSNotification *)notification{
-    
+- (void)receivePushNotificationJudgeHowtoDisplay
+{
+    NSLog(@"我被叫了");
     self.userMessageListArray = [NSMutableArray new];
     
     //設定POST參數
@@ -99,24 +100,18 @@
         
         //取得訊息清單、發送時間、訊息大綱、已讀或未讀Tag
         self.userMessageListArray = [NSMutableArray arrayWithArray:responseObject[@"content"]];
-//        [self.tableView reloadData];
         
         //設定 badge: 最新的未讀訊息筆數
         int badge = 0;
-        for (NSDictionary *temp in self.userMessageListArray) {
-            if ([temp[@"haveRead"] isEqualToString:@"0"] ) {
+        for (NSDictionary *temp in self.userMessageListArray)
+        {
+            if ([temp[@"haveRead"] isEqualToString:@"0"])
+            {
                 badge++;
             }
         }
         
         [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
-        
-        NSDictionary *fromAppDelegate = [notification userInfo];
-        MessageListsTableViewControllerFlag = fromAppDelegate[@"appDeletegateFlag"];
-        if ([MessageListsTableViewControllerFlag isEqualToNumber:[NSNumber numberWithInteger:1]]) {
-            [self performSegueWithIdentifier:@"toFullMessage" sender:fromAppDelegate[@"aps"][@"newsId"]];
-        }
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"未取得訊息清單，Request Fail !");
     }];

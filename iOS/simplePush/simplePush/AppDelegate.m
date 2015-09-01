@@ -130,16 +130,19 @@
     
     
     //將當下收到的userInfo儲存，透過進入前景時，取出message ID 進行內容讀取，並將rootViewController 設定為 MessageDetailViewController
-    if (userInfoNow != nil && [appDeletegateFlag isEqualToNumber:[NSNumber numberWithInteger:1]]) {
-        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        MessageListsTableViewController *mlTVC = [storyBoard instantiateViewControllerWithIdentifier:@"MSGLIST"];
-        
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter postNotificationName:@"JudgeHowtoDisplay" object:nil userInfo:@{@"aps":userInfo[@"aps"],@"appDeletegateFlag":appDeletegateFlag}];
-        
-        UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-        [navigationController.visibleViewController.navigationController pushViewController:mlTVC animated:YES];
-    }
+//    if (userInfoNow != nil && [appDeletegateFlag isEqualToNumber:[NSNumber numberWithInteger:1]]) {
+//        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+//        MessageListsTableViewController *mlTVC = [storyBoard instantiateViewControllerWithIdentifier:@"MSGLIST"];
+//        
+//        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+//        [notificationCenter postNotificationName:@"JudgeHowtoDisplay" object:nil userInfo:@{@"aps":userInfo[@"aps"],@"appDeletegateFlag":appDeletegateFlag}];
+//        
+//        UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+//        [navigationController.visibleViewController.navigationController pushViewController:mlTVC animated:YES];
+//    }
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter postNotificationName:@"JudgeHowtoDisplay" object:nil userInfo:nil];
 }
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler{
     
